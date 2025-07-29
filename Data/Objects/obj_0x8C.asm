@@ -27,7 +27,7 @@ Offset_0x03FEB6:
 Offset_0x03FEBE:
                 lea     Ball_Shooter_Setup_Data(PC), A1        ; Offset_0x0405D2
                 jsr     Object_Settings(PC)                    ; Offset_0x041D72
-                move.b  #$01, Obj_Boss_Hit(A0)                           ; $0029
+                move.b  #$08, Obj_Boss_Hit(A0)                           ; $0029
                 move.b  #$01, (Boss_Flag).w                          ; $FFFFF7AA
                 moveq   #Volume_Down, D0                                  ; -$20
                 jsr     (Play_Music)                           ; Offset_0x001176

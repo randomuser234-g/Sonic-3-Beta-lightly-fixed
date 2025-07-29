@@ -18,6 +18,7 @@ LevelResults_Index:	offsetTable
 ; ===========================================================================
 ; Offset_0x0247E6:
 LevelResults_Init:
+
 		lea	(Title_Card_Results).l,a1
 		move.w	#$A400,d2
 		jsr	(Queue_Kos_Module).l
@@ -107,7 +108,8 @@ LevelResults_MakeObject:
 		dbne	d1,LevelResults_MakeObject
 		addq.b	#2,Obj_Routine(a0)
 
-Offset_0x02490C:
+Offset_0x02490C:move.w	#41,d0
+		jmp	(Play_Music).l
 		rts             
 ; ===========================================================================
 ; Offset_0x02490E:
@@ -317,7 +319,7 @@ LevelResults_MoveOffScreen:
 		move.w	#-$20,d0
 		tst.b	Obj_Routine(a0)
 		beq.s	Offset_0x024A90
-		neg.w	d0
+		neg.w	d0		
 
 Offset_0x024A90:
 		add.w	Obj_X(a0),d0
