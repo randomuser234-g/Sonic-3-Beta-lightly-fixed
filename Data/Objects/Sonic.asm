@@ -50,11 +50,10 @@ Sonic_Init:
 		move.w	Obj_Y(a0),(Saved_Obj_Y_P1).w
 		move.w	Obj_Art_VRAM(a0),(Saved_Obj_Art_VRAM_P1).w
 		move.w	Obj_Player_Top_Solid(a0),(Saved_Top_Solid_P1).w
-; Offset_0x00AAEA:
+
 Sonic_Init_Continued:
 		move.b	#0,Obj_P_Flips_Remaining(a0)
 		move.b	#4,Obj_Player_Flip_Speed(a0)
-		move.b	#0,(Super_Sonic_flag).w
 		move.b	#$1E,Obj_Subtype(a0)
 		subi.w	#$20,Obj_X(a0)
 		addi.w	#4,Obj_Y(a0)
@@ -62,7 +61,10 @@ Sonic_Init_Continued:
 		addi.w	#$20,Obj_X(a0)
 		subi.w	#4,Obj_Y(a0)
 		move.w	#0,(Dropdash_flag).w
-
+		move.b	#0,(Super_Sonic_flag).w
+		cmpi.w	#Sonic_Alone,(Player_Selected_Flag).w	; is this a Sonic or Sonic and Tails game?
+		bls.s	Sonic_Control
+                move.l  $4(A0, D0), (Palette_Row_0_Offset+04).w    ; $FFFFED58
 ; ---------------------------------------------------------------------------
 ; Normal state for Sonic
 ; ---------------------------------------------------------------------------
@@ -520,8 +522,6 @@ Sonic_NotRight:
 		subq.w	#2,d2
 		add.w	Obj_X(a0),d1
 		sub.w	Obj_X(a1),d1
-		tst.b	(Super_Sonic_flag).w
-		bne.w	SuperSonic_Balance
 		cmpi.w	#2,d1
 		blt.s	Sonic_BalanceOnObjLeft
 		cmp.w	d2,d1
@@ -902,7 +902,7 @@ Sonic_RollSpeed:				               ; Offset_0x00B3AC
 		move.w  (A4), D6
 		asl.w   #$01, D6
 		move.w  Acceleration(A4), D5		             ; $0002
-		asr.w   #$01, D5
+		moveq	#6,d5					; natural roll deceleration = 1/2 normal acceleration
 		move.w  #$0020, D4
 		tst.b   Obj_Player_Status(A0)		            ; $002F
 		bmi     Offset_0x00B448
@@ -1015,11 +1015,14 @@ Sonic_ChgJumpDir:
 		move.w	(a4),d6
 		move.w	Acceleration(a4),d5
 		asl.w	#1,d5
-		btst	#4,Obj_Status(a0)			; did Sonic jump from rolling?
+		btst	#3,Obj_Status(a0)			; did Sonic jump from rolling?
 		bne.s	Sonic_Jump_ResetScr			; if yes, branch to skip bidair control
 		move.w	Obj_Speed_X(a0),d0
 		btst	#2,(Control_Ports_Logical_Data).w	; is left being held?
 		beq.s	@jumpRight				; if not, branch
+
+
+
 
 		bset	#0,Obj_Status(a0)
 		sub.w	d5,d0					; add acceleration to the left
@@ -1247,7 +1250,6 @@ Offset_0x00B674:
 		sub.b	Obj_Height_3(a0),d0
 		ext.w	d0
 		sub.w	d0,Obj_Y(a0)
-
 Offset_0x00B6F0:
 		rts
 ; ---------------------------------------------------------------------------
@@ -1276,16 +1278,17 @@ Sonic_JumpHeight:
 
 Offset_0x00B710:
 		cmp.w	Obj_Speed_Y(a0),d1			; if Sonic is not going up faster than d1, branch
-		ble.w	Sonic_ThrowRings			; this is altered from Sonic 2 to prevent the Super Sonic transformation,
-								; change the branch to B726 to re-enable him
+		ble.w   Sonic_ThrowRings
+
 		move.b	(Control_Ports_Logical_Data).w,d0
 		andi.b	#$70,d0					; is A/B/C pressed?
 		bne.s	Offset_0x00B726				; if yes, branch
 		move.w	d1,Obj_Speed_Y(a0)			; immediately reduce Sonic's upward speed to d1
 
 Offset_0x00B726:
-		tst.b	Obj_Speed_Y(a0)				; is Sonic exactly at the height of his jump?
-		beq.s	Sonic_CheckGoSuper			; if yes, test for turning into Super Sonic
+		move.b	(Control_Ports_Logical_Data+1).w,d0
+		andi.b	#$70,d0					; is A/B/C pressed?
+		bne.s	Sonic_CheckGoSuper			; if yes, test for turning into Super Sonic
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x00B72E:
@@ -1294,7 +1297,7 @@ Sonic_UpVelCap:
 		bne.s	Offset_0x00B742				; if yes, branch
 		cmpi.w	#-$FC0,Obj_Speed_Y(a0)			; is Sonic moving up really fast?
 		bge.s	Offset_0x00B742				; if not, branch
-		move.w	#-$FC0,Obj_Speed_Y(a0)			; cap upward speed
+		rts
 
 Offset_0x00B742:
 		rts
@@ -1328,9 +1331,9 @@ Sonic_CheckGoSuper:
 		move.w	#$100,Deceleration(a4)
 		move.b	#$0,Obj_P_Invcbility_Time(a0)
 		bset	#1,Obj_Player_Status(a0)
-		move.w	#Super_Form_Change_Sfx,d0
+		move.w	#187,d0
 		jsr	(Play_Music).l
-		move.w	#Super_Sonic_Snd,d0
+		move.w	#44,d0
 		jmp	(Play_Music).l
 
 Offset_0x00B7B6:
@@ -1340,7 +1343,7 @@ Offset_0x00B7B6:
 ; ---------------------------------------------------------------------------
 ; Offset_0x00B7B8:
 Sonic_ThrowRings:
-		bra.w	Offset_0x00B8B6
+		
 ; ---------------------------------------------------------------------------
 ; An unused ability that lets Sonic shoot rings while jumping; the rings were
 ; likely meant to be a placeholder until proper graphics were added, which they
