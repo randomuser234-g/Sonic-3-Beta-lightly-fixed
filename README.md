@@ -1,5 +1,6 @@
 -Turn Super Sonic requires 2,4,5,6 in the Level Select Sound Test and pressing B+A or C+A at roughly the same time from the ground. 
 -Sonic and Tails both have no roll-lock
+-Sonic's Y-velocity cap when rolling is removed
 -Act Clear jingle is there at the end of the act
 -Sega Screen palette has been fixed
 -Debug is turned off by default except for the pause function, The Sonic 2 options let you select character as well as listen to the sound test.
