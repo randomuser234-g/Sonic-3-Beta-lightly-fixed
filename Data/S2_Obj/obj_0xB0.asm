@@ -130,7 +130,7 @@ Offset_0x034604:
                 bchg    #00, Obj_Status(A0)                              ; $002A
                 lea     (Horizontal_Scroll_Buffer).w, A1             ; $FFFFE000
                 moveq   #$00, D0
-                move.w  #$0400, D1
+                move.w  #$00FF, D1
 Offset_0x034636:
                 move.l  D0, (A1)+
                 dbra    D1, Offset_0x034636
