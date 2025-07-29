@@ -1283,7 +1283,7 @@ Miles_ChgJumpDir:                                              ; Offset_0x00E0EC
                 move.w  (A4), D6
                 move.w  Acceleration(A4), D5                             ; $0002
                 asl.w   #$01, D5
-                btst    #$04, Obj_Status(A0)                             ; $002A
+                btst    #$03, Obj_Status(A0)                             ; $002A
                 bne.s   Offset_0x00E140
                 move.w  Obj_Speed_X(A0), D0                              ; $0018
                 btst    #$02, (Control_Ports_Logical_Data_2).w       ; $FFFFF66A

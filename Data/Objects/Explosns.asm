@@ -41,7 +41,7 @@ Obj_Normal_Explode:                                            ; Offset_0x041C30
                 subq.b  #$01, Obj_Control_Var_09(A0)                     ; $0039
                 bmi.s   Offset_0x041C76
                 move.w  #$0002, Obj_Timer(A0)                            ; $002E
-                moveq   #Level_Projectile_Sfx, D0                          ; $75
+                moveq   #124, D0                          ; $75
                 jsr     (Play_Music)                           ; Offset_0x001176
                 lea     Offset_0x041D5A(PC), A2
                 jsr     Load_Child_Object_A2(PC)               ; Offset_0x041D9A

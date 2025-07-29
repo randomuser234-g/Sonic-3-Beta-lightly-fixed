@@ -75,8 +75,8 @@ TitleCard_MakeObject:
 
 Offset_0x02461A:
 		addq.b	#2,Obj_Routine(a0)
-
 Offset_0x02461E:
+                jsr     Level_Load_Music
 		rts
 ; ===========================================================================
 ; Offset_0x024620:
