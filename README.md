@@ -20,6 +20,8 @@
 
 -Proper explosion sound.
 
+-EndPanel now loads based off the player object, so now Sonic Alone and Tails Alone are fixed (not Knuckles since he's just Sonic's object at the moment)
+
 -Robotnik in LBZ2 takes 8 hits instead of 1.
 
 Sonic Retro and TCRF for source of some changes
