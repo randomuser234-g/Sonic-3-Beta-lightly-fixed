@@ -64,7 +64,7 @@ Offset_0x0418CC:
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl.s   Offset_0x0418E2
                 move.b  #$06, Obj_Routine(A0)                            ; $0005
-                move.b  (Player_Selected_Flag+$01).w, Obj_Map_Id(A0) ; $FFFFFF09, $0022
+                move.b  (Obj_Player_One+Obj_Player_Selected).w, Obj_Map_Id(A0) ; $FFFFFF09, $0022
 Offset_0x0418E2:
                 btst    #$00, Obj_Control_Var_08(A0)                     ; $0038
                 bne.s   Offset_0x0418FC
