@@ -61,10 +61,10 @@ Sonic_Init_Continued:
 		addi.w	#$20,Obj_X(a0)
 		subi.w	#4,Obj_Y(a0)
 		move.w	#0,(Dropdash_flag).w
-		move.b	#0,(Super_Sonic_flag).w
+		move.b	#0,(Super_Sonic_flag).w		
 		cmpi.w	#Sonic_Alone,(Player_Selected_Flag).w	; is this a Sonic or Sonic and Tails game?
-		bls.s	Sonic_Control
-                move.l  $4(A0, D0), (Palette_Row_0_Offset+04).w    ; $FFFFED58
+		bls.s	Sonic_Control  	
+                subi.l  #$08180A36, (Palette_Row_0_Offset+$04)    		
 ; ---------------------------------------------------------------------------
 ; Normal state for Sonic
 ; ---------------------------------------------------------------------------
@@ -1331,8 +1331,6 @@ Sonic_CheckGoSuper:
 		move.w	#$100,Deceleration(a4)
 		move.b	#$0,Obj_P_Invcbility_Time(a0)
 		bset	#1,Obj_Player_Status(a0)
-		move.w	#187,d0
-		jsr	(Play_Music).l
 		move.w	#44,d0
 		jmp	(Play_Music).l
 
@@ -3122,7 +3120,7 @@ Offset_0x00CBE0:
 		jsr     (DMA_68KtoVRAM)		        ; Offset_0x0012FC
 		dbra    D5, Offset_0x00CBE0
 Offset_0x00CC08:
-		rts																								        
+		rts																				        
 ;===============================================================================
 ; Objeto Sonic
 ; <<<-  
