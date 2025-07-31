@@ -14,6 +14,8 @@
 
 -Knuckles is "playable", although he's mostly just Sonic. A palette change is made, but it doesn't work underwater or with super forms. Obj_Player_Selected is set to 2 so his signpost works.
 
+-Due to Obj_Player_Selected, his rock breaking ability does work, although the collision is iffy. Try it in AIZ Act 2 and run into that wall at the start
+
 -UP UP, DOWN DOWN, UP UP for Level select and Debug Mode.
 
 -When Level Select is enabled, A+Start for Sonic&Tails, B for Sonic Alone, C for Tails Alone, and sound test code 1,3,5,7 for Knuckles.
