@@ -902,7 +902,6 @@ Offset_0x00B3AA:
 Sonic_RollSpeed:				               ; Offset_0x00B3AC
 		move.w  (A4), D6
 		asl.w   #$01, D6
-		move.w  Acceleration(A4), D5		             ; $0002
 		moveq	#6,d5					; natural roll deceleration = 1/2 normal acceleration
 		move.w  #$0020, D4
 		tst.b   Obj_Player_Status(A0)		            ; $002F
@@ -1298,6 +1297,7 @@ Sonic_UpVelCap:
 		bne.s	Offset_0x00B742				; if yes, branch
 		cmpi.w	#-$FC0,Obj_Speed_Y(a0)			; is Sonic moving up really fast?
 		bge.s	Offset_0x00B742				; if not, branch
+		move.w	#-$FC0,Obj_Speed_Y(a0)			; cap upward speed
 		rts
 
 Offset_0x00B742:
@@ -1324,7 +1324,6 @@ Sonic_CheckGoSuper:
 		move.b	#1,(Super_Sonic_Palette_Status).w
 		move.b	#$F,(Super_Sonic_Palette_Timer).w
 		move.b	#1,(Super_Sonic_flag).w
-		move.b	#$81,Obj_Player_Control(a0)
 		move.b	#$1F,Obj_Ani_Number(a0)
 		move.l	#Obj_Super_Sonic_Stars,(Obj_Super_Sonic_Stars_RAM).w
 		move.w	#$A00,(a4)
