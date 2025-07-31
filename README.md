@@ -30,5 +30,6 @@ For the changes go to the commits section
 
 Sonic Retro and TCRF for source of some changes
 https://forums.sonicretro.org/threads/transform-at-will-in-sonic-2.28959/
+https://info.sonicretro.org/SCHG_How-to:Fix_bugs_relating_to_Super_Sonic
 https://tcrf.net/Proto:Sonic_the_Hedgehog_3#Sega_Screen
 Plus the original disassembly was MASSIVE help
