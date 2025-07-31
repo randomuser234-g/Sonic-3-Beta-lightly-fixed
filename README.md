@@ -12,7 +12,7 @@
 
 -Debug is turned off by default except for the pause function, The Sonic 2 options let you select character as well as listen to the sound test.
 
--Knuckles is "playable", although he's mostly just Sonic. A palette change is made, but it doesn't always work. (The 3rd shade of blue isn't touched, as well as underwater and super palettes. Doing these actions will change the color back)
+-Knuckles is "playable", although he's mostly just Sonic. A palette change is made, but it doesn't work underwater or with super forms. Obj_Player_Selected is set to 2 so his signpost works.
 
 -UP UP, DOWN DOWN, UP UP for Level select and Debug Mode.
 
@@ -20,7 +20,7 @@
 
 -Proper explosion sound.
 
--EndPanel now loads based off the player object, so now Sonic Alone and Tails Alone are fixed (not Knuckles since he's just Sonic's object at the moment)
+-EndPanel now loads based off Obj_Player_Selected, so now Sonic Alone, Tails Alone, and Knuckles are fixed
 
 -Robotnik in LBZ2 takes 8 hits instead of 1.
 
