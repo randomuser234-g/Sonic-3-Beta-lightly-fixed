@@ -1,6 +1,6 @@
 -Turn Super Sonic requires 2,4,5,6 in the Level Select Sound Test and pressing B+A or C+A at roughly the same time from the ground. 
 
--Sonic and Tails both have no roll-lock.
+-Sonic and Tails both have no roll-lock. Obj Status check changed to 3 which is seemingly not used so it always passes
 
 -Sonic's Y-velocity cap when rolling is removed, potentially making him go higher than before
 
@@ -25,6 +25,8 @@
 -EndPanel now loads based off Obj_Player_Selected, so now Sonic Alone, Tails Alone, and Knuckles are fixed
 
 -Robotnik in LBZ2 takes 8 hits instead of 1.
+
+For the changes go to the commits section
 
 Sonic Retro and TCRF for source of some changes
 https://forums.sonicretro.org/threads/transform-at-will-in-sonic-2.28959/
