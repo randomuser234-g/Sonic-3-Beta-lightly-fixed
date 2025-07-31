@@ -64,7 +64,8 @@ Sonic_Init_Continued:
 		move.b	#0,(Super_Sonic_flag).w		
 		cmpi.w	#Sonic_Alone,(Player_Selected_Flag).w	; is this a Sonic or Sonic and Tails game?
 		bls.s	Sonic_Control  	
-                subi.l  #$08180A36, (Palette_Row_0_Offset+$04)    		
+		move.b	#2,Obj_Player_Selected(a0)
+                subi.l  #$08180A36, (Palette_Row_0_Offset+$04)    
 ; ---------------------------------------------------------------------------
 ; Normal state for Sonic
 ; ---------------------------------------------------------------------------
