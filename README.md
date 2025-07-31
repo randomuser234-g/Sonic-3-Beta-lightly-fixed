@@ -2,7 +2,7 @@
 
 -Sonic and Tails both have no roll-lock. Obj Status check changed to 3 which is seemingly not used so it always passes
 
--Sonic's Y-velocity cap when rolling is removed, potentially making him go higher than before
+-Super Sonic's pause in the air is removed
 
 -The title screen now lasts a more appropriate length.
 
@@ -27,6 +27,8 @@
 -Robotnik in LBZ2 takes 8 hits instead of 1.
 
 For the changes go to the commits section
+
+Note that in some instances when code is removed it is to "make room" for different code. I can't seem to get it to work in those instances without the game freaking out by breaking all the music.
 
 Sonic Retro and TCRF for source of some changes
 https://forums.sonicretro.org/threads/transform-at-will-in-sonic-2.28959/
