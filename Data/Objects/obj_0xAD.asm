@@ -54,7 +54,7 @@ Offset_0x037EAE:
 ;-------------------------------------------------------------------------------
 Offset_0x037EEC:
                 move.l  #Offset_0x037EFC, (A0)
-                moveq   #Boss_Snd, D0                                      ; $19
+                moveq   #24, D0                                      ; $18 in sound test, Miniboss
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x037EFA:                
                 rts                                          
