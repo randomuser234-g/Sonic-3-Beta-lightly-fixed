@@ -66,6 +66,7 @@ Sonic_Init_Continued:
 		bls.s	Sonic_Control  	
 		move.b	#2,Obj_Player_Selected(a0)
                 subi.l  #$08180A36, (Palette_Row_0_Offset+$04)    
+                subi.l  #$061C, (Palette_Row_0_Offset+$06) 
 ; ---------------------------------------------------------------------------
 ; Normal state for Sonic
 ; ---------------------------------------------------------------------------

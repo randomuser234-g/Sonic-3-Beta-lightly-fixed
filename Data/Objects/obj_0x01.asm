@@ -204,12 +204,7 @@ MonitorContents_Init:
 		; all of this up to Offset_0x13192 are remnants from Sonic 2's multiplayer
 		tst.w	(Two_Player_Flag).w			; is this two player mode?
 		beq.s	Offset_0x013192				; if not, branch
-		move.w	(Level_Frame_Count).w,d0		; use the timer to determine which item
-		andi.w	#7,d0					; and 7 means there are 8 different items
-		addq.w	#1,d0					; add 1 to prevent getting the static monitor
-		tst.w	(Two_Player_Items_Mode).w		; are monitors set to 'teleport only'?
-		beq.s	Offset_0x013178				; if not, branch
-		moveq	#8,d0					; force contents to be teleport
+								;deleted leftovers
 
 Offset_0x013178:
 		; keep teleport monitor from causing unwanted effects
