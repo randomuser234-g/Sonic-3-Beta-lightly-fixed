@@ -4703,7 +4703,7 @@ Level_GetBgm:
 		tst.w	(Auto_Control_Player_Flag).w
 		bmi.s	Offset_0x003BAE
 		moveq	#0,d0
-		move.w	(Current_ZoneAndAct).w,d0
+		move.w	(Apparent_ZoneAndAct).w,d0
 		ror.b	#1,d0
 		lsr.w	#7,d0
 		lea	(PlayList).l,a1
@@ -7025,7 +7025,7 @@ Menu_Level_Select_Array:                                       ; Offset_0x005BF2
                 dc.w    LBz_Act_2                                        ; $0601
                 dc.w    Disabled_Level                                  ; $5555
                 dc.w    Disabled_Level                                  ; $5555
-                dc.w    Disabled_Level                                  ; $5555
+                dc.w    Disabled_Level                          	; $5555
                 dc.w    Disabled_Level                                  ; $5555
                 dc.w    Alz_Act_1                                        ; $0E00
                 dc.w    BPz_Act_1                                        ; $0F00
