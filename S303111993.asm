@@ -27088,7 +27088,7 @@ Null_Mappings:                                                 ; Offset_0x0432C8
 ;===============================================================================
 Level_Load_Music:                                              ; Offset_0x0432CA    
                 moveq   #$00, D0
-                lea     (Current_ZoneAndAct).w, A1                             ; $FFFFFE10
+                lea     (Apparent_ZoneAndAct).w, A1                             ; $FFFFFE10
                 move.b  (A1)+, D0
                 add.b   D0, D0
                 add.b   (A1), D0
