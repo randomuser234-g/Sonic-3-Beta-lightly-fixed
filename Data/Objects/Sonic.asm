@@ -162,8 +162,7 @@ Sonic_ChkInvin:
 		bne.s	Sonic_RmvInvin
 		cmpi.b	#$C,Obj_Subtype(a0)
 		bcs.s	Sonic_RmvInvin
-		move.w	(Level_Music_Buffer).w,d0
-		jsr	(Play_Music).l
+                jsr     Level_Load_Music
 ; Offset_0x00AC1C:
 Sonic_RmvInvin:
 		bclr	#1,Obj_Player_Status(a0)
