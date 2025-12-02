@@ -107,9 +107,10 @@ LevelResults_MakeObject:
 		jsr	(AllocateObject_Immediate).l
 		dbne	d1,LevelResults_MakeObject
 		addq.b	#2,Obj_Routine(a0)
-
-Offset_0x02490C:move.w	#41,d0
+		move.w	#41,d0
 		jmp	(Play_Music).l
+
+Offset_0x02490C:
 		rts             
 ; ===========================================================================
 ; Offset_0x02490E:
@@ -175,6 +176,7 @@ LevelResults_LoadAct2:
 		move.l	#Obj_TitleCard,(a0)
 		clr.b	Obj_Routine(A0)
 		st	Obj_Control_Var_0E(a0)
+		jsr	Level_Load_Music
 		rts
 
 ; ===========================================================================
@@ -336,11 +338,13 @@ LevelResults_MoveOntoScreen:
 
 Offset_0x024AA6:
 		add.w	d1,d0
+
 ; Offset_0x024AA8:
 LevelResults_ApplySpeed:
 		move.w	d0,Obj_X(a0)
 
 Offset_0x024AAC:
+
 		rts
 ; End of function LevelResults_MoveElement
 
