@@ -6004,10 +6004,6 @@ Clear_End_Level_Art_Load_Flag:                                 ; Offset_0x004B0A
 ; ->>>
 ;===============================================================================                 
 S2_Test_End_Level_Art_Load:                                    ; Offset_0x004B12
-                tst.w   (Apparent_Act).w                          ; $FFFFFFD8
-                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
-                tst.w   (Current_Act).w                          ; $FFFFFFD8
-                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
                 cmpi.w  #AIz_Act_2,(Current_Zone).w
                 beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
                 cmpi.w  #MGz_Act_1,(Current_Zone).w
