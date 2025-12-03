@@ -203,7 +203,8 @@ Offset_0x03BC20:
                 move.l  #Offset_0x03BC46, (A0)
                 st      (Player_Control_Lock_Flag).w                 ; $FFFFFAA8
                 clr.b   (Boss_Flag).w                                ; $FFFFF7AA
-                jsr     (Level_Load_Music)                     ; Offset_0x0432CA
+                jsr     (AllocateObject)                     ; Offset_0x011DD8
+                move.l  #Obj_LevelResults, (A1)             ; Offset_0x0311BC
                 move.w  #$48F0, (Target_Camera_Max_X).w              ; $FFFFFA92
                 lea     (Level_Resize_Max_X), A2               ; Offset_0x04261C
                 jmp     (Load_Child_Object_Simple_A2)          ; Offset_0x041F5A   
