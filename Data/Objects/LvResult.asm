@@ -176,6 +176,7 @@ LevelResults_LoadAct2:
 		move.l	#Obj_TitleCard,(a0)
 		clr.b	Obj_Routine(A0)
 		st	Obj_Control_Var_0E(a0)
+		jsr	S2_Test_End_Level_Art_Load
 		jsr	Level_Load_Music
 		rts
 
