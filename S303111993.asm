@@ -6004,33 +6004,21 @@ Clear_End_Level_Art_Load_Flag:                                 ; Offset_0x004B0A
 ; ->>>
 ;===============================================================================                 
 S2_Test_End_Level_Art_Load:                                    ; Offset_0x004B12
-                move.w  #$0000, (End_Level_Art_Load_Flag).w          ; $FFFFFFC8
-                tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
-                bne.s   Set_End_Level_Flag                     ; Offset_0x004B80
-                cmpi.w  #S2_EHz_Act_2, (Current_ZoneAndAct).w           ; $0001, $FFFFFE10
-                beq     Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_Mz_Act_3, (Current_ZoneAndAct).w            ; $0500, $FFFFFE10
-                beq     Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_WFz, (Current_ZoneAndAct).w                 ; $0600, $FFFFFE10
-                beq     Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_HTz_Act_2, (Current_ZoneAndAct).w           ; $0701, $FFFFFE10
-                beq     Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_OOz_Act_2, (Current_ZoneAndAct).w           ; $0A01, $FFFFFE10
-                beq     Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_MCz_Act_2, (Current_ZoneAndAct).w           ; $0B01, $FFFFFE10
-                beq.s   Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_CNz_Act_2, (Current_ZoneAndAct).w           ; $0C01, $FFFFFE10
-                beq.s   Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_CPz_Act_2, (Current_ZoneAndAct).w           ; $0D01, $FFFFFE10
-                beq.s   Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_DEz, (Current_ZoneAndAct).w                 ; $0E00, $FFFFFE10
-                beq.s   Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_ARz_Act_2, (Current_ZoneAndAct).w           ; $0F01, $FFFFFE10
-                beq.s   Dont_Set_End_Level_Flag                ; Offset_0x004B86
-                cmpi.w  #S2_SCz, (Current_ZoneAndAct).w                 ; $1000, $FFFFFE10
-                beq.s   Dont_Set_End_Level_Flag                ; Offset_0x004B86
+                tst.w   (Apparent_Act).w                          ; $FFFFFFD8
+                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
+                tst.w   (Current_Act).w                          ; $FFFFFFD8
+                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
+                cmpi.w  #AIz_Act_2,(Current_Zone).w
+                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
+                cmpi.w  #MGz_Act_1,(Current_Zone).w
+                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
+                cmpi.w  #Iz_Act_2,(Current_Zone).w
+                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
+		move.b	#1,(Current_Act).w  
+		move.b	#0,(Saved_Level_Flag).w
+		move.w  #$0001, (Restart_Level_Flag).w               ; $FFFFFE02
 Set_End_Level_Flag:                                            ; Offset_0x004B80
-                move.w  #$0001, (End_Level_Art_Load_Flag).w          ; $FFFFFFC8
+		rts
 Dont_Set_End_Level_Flag:                                       ; Offset_0x004B86
                 rts
 ;===============================================================================
