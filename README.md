@@ -10,6 +10,8 @@
 
 -Act Clear jingle is there at the end of the act. (Level_Load_Music only goes up to Launch Base Act 2, Mushroom Valley onwards are broken. 2P and Bonus stages work since the title card isn't there)
 
+-Act Transitions work in most situations (Zone transitions still don't)
+
 -Fixed act transition music so it will correctly go to Act 2's sound during transition (MGz, LBz, etc)
 
 -Sega Screen palette has been fixed. (SEGA_Bg.pal at offset 40 in hex editor is Sonic's SEGA palette)
