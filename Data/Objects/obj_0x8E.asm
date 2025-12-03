@@ -153,9 +153,9 @@ Offset_0x03B1DC:
 ;-------------------------------------------------------------------------------
 Offset_0x03B20E:
                 clr.b   (Boss_Flag).w                                ; $FFFFF7AA
-                jsr     (Level_Load_Music)                     ; Offset_0x0432CA
                 jsr     After_Boss_Clean_Up(PC)                ; Offset_0x041ACA
-                jsr     Set_End_Pose_And_Load_Level_Results ; Offset_0x04381E 
+                jsr     (AllocateObject)                     ; Offset_0x011DD8
+                move.l  #Obj_LevelResults, (A1)             ; Offset_0x0311BC
                 jmp     Go_Delete_Object_A0_2(PC)              ; Offset_0x042D4C    
 ;-------------------------------------------------------------------------------
 Offset_0x03B220:
