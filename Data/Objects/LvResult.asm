@@ -168,6 +168,7 @@ LevelResults_EndLevel:
 		beq.s	LevelResults_LoadAct2			; if not, branch
 		clr.b	(Player_Control_Lock_Flag).w
 		st	(End_Level_Flag).w
+		jsr	CheckLoadSignpostArt
 		jmp	(DeleteObject).l
 ; Offset_0x02498A:
 LevelResults_LoadAct2:
