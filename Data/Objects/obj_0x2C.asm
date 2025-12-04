@@ -245,7 +245,7 @@ Offset_0x02224E:
 Offset_0x02228C:
                 move.w  #$0000, Obj_Speed_X(A3)                          ; $0018
                 move.w  #$0000, Obj_Speed_Y(A3)                          ; $001A
-                move.w  #S2_Smash_Sfx, D0                                ; $00B9
+                move.w  #Smash_Sfx, D0                                ; $00B9
                 jmp     (Play_Music)                           ; Offset_0x001176   
 ;-------------------------------------------------------------------------------
 Collapsing_Bridge_Mappings:                                    ; Offset_0x0222A2
