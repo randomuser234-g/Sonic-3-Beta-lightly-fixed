@@ -4898,7 +4898,6 @@ Offset_0x003E1E:
 		jsr	(Process_Kos_Module_Queue).l
 		bsr.w	Oscillate_Num_Do
 		bsr.w	ChangeRingFrame
-		bsr.w	CheckLoadSignpostArt
 		jsr	(Build_Sprites).l
 		jsr	(ObjectsManager).l
 		cmpi.b	#gm_DemoMode,(Game_Mode).w
@@ -6030,43 +6029,25 @@ Dont_Set_End_Level_Flag:                                       ; Offset_0x004B86
 
 ; Offset_0x004B88: Check_End_Level_Art_Load:
 CheckLoadSignpostArt:
-		tst.w	(End_Level_Art_Load_Flag).w
-		beq.s	SignpostUpdateEnd
-		tst.w	(Debug_Mode_Flag_Index).w
-		bne.s	SignpostUpdateEnd
-		move.w	(Camera_X).w,d0
-		move.w	(Sonic_Level_Limits_Max_X).w,d1
-		subi.w	#$100,d1
-		cmp.w	d1,d0
-		blt.s	SignpostUpdateTailsBounds
-		tst.b	(Update_HUD_timer).w
-		beq.s	SignpostUpdateTailsBounds
-		cmp.w	(Sonic_Level_Limits_Min_X).w,d1
-		beq.s	SignpostUpdateTailsBounds
-		move.w	d1,(Sonic_Level_Limits_Min_X).w
-		tst.w	(Two_Player_Flag).w
-		bne.s	SignpostUpdateEnd
+                cmpi.w  #AIz_Act_2,(Current_Zone).w
+                beq.s   SignpostUpdateTailsBounds                     ; Offset_0x004BC2
+                cmpi.w  #LBz_Act_2,(Current_Zone).w
+                beq.s   SignpostUpdateEnd                     ; Offset_0x004BC2
+		addi.w	#$100,(Current_ZoneAndAct).w  
+		addi.w	#$100,(Apparent_ZoneAndAct).w  
+		move.b	#0,(Current_Act).w  
+		move.b	#0,(Apparent_Act).w  
+		move.b	#0,(Saved_Level_Flag).w
+		move.w  #$0001, (Restart_Level_Flag).w               ; $FFFFFE02
 		rts
-; ---------------------------------------------------------------------------
-		moveq	#$27,d0
-		bra.w	LoadPLC2
+
 ; ---------------------------------------------------------------------------
 ; Offset_0x004BC2: S2_Set_End_Level_Miles_Boundaries: 
 SignpostUpdateTailsBounds:
-		tst.w	(Two_Player_Flag).w
-		beq.s	SignpostUpdateEnd
-		move.w	(Camera_X_P2).w,d0
-		move.w	(Miles_Level_Limits_Max_X).w,d1
-		subi.w	#$100,d1
-		cmp.w	d1,d0
-		blt.s	SignpostUpdateEnd
-		tst.b	(HUD_Timer_Refresh_Flag_P2).w
-		beq.s	SignpostUpdateEnd
-		cmp.w	(Miles_Level_Limits_Min_X).w,d1
-		beq.s	SignpostUpdateEnd
-		move.w	d1,(Miles_Level_Limits_Min_X).w
+		rts
 ; Offset_0x004BE8 Exit_S2_Check_End_Level_Art_Load:
 SignpostUpdateEnd:
+		jsr	Menu_Game_Reset
 		rts
 ; End of function CheckLoadSignpostArt
 
