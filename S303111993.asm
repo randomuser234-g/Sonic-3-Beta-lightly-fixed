@@ -6011,6 +6011,8 @@ S2_Test_End_Level_Art_Load:                                    ; Offset_0x004B12
                 beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
                 cmpi.w  #Iz_Act_2,(Current_Zone).w
                 beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
+;unused                cmpi.w  #LBz_Act_1,(Current_Zone).w
+;unused                beq.s   Set_End_Level_Flag                     ; Offset_0x004B80
 		move.b	#1,(Current_Act).w  
 		move.b	#0,(Saved_Level_Flag).w
 		move.w  #$0001, (Restart_Level_Flag).w               ; $FFFFFE02
@@ -22790,7 +22792,7 @@ LBz_1_Normal:                                                  ; Offset_0x03376E
                 lea     (Blocks_Mem_Address+$0628).w, A2             ; $FFFF9628
                 jsr     (Queue_Kos)          ; Offset_0x0019AE
                 lea     (Launch_Base_2_Tiles_2), A1            ; Offset_0x18D03A
-                move.w  #$2D60, D2
+                move.w  #$2CA0, D2
                 jsr     (Queue_Kos_Module)                 ; Offset_0x0018A8
                 moveq   #$24, D0
                 jsr     (LoadPLC)                              ; Offset_0x0014D0
@@ -22843,6 +22845,12 @@ LBz_1_Transition:                                              ; Offset_0x0337F6
                 sub.w   D1, (Camera_Y).w                             ; $FFFFEE7C
                 sub.w   D0, (Screen_Pos_Buffer_X).w                  ; $FFFFEE80
                 sub.w   D1, (Screen_Pos_Buffer_Y).w                  ; $FFFFEE84
+                move.l  #$00006000, D0
+                move.l  D0, (Sonic_Level_Limits_Min_X).w             ; $FFFFEE14
+                move.l  D0, (Level_Limits_Min_X).w                   ; $FFFFEE0C
+                move.l  #$00001000, D0
+                move.l  D0, (Sonic_Level_Limits_Min_Y).w             ; $FFFFEE18
+                move.l  D0, (Level_Limits_Min_Y).w                   ; $FFFFEE10
                 jsr     Reset_Tile_Offset_Position_Actual(PC)  ; Offset_0x02FEF2
                 clr.w   (Level_Events_Routine_2).w                   ; $FFFFEEC2
 Offset_0x033878:                                     
