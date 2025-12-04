@@ -4800,6 +4800,8 @@ Level_FromCheckpoint:
 		bne.s	Offset_0x003CCC				; if yes, branch
 		tst.w	(Current_ZoneAndAct).w
 		bne.s	Offset_0x003CCC
+		cmpi.w	#Sonic_Alone,(Player_Selected_Flag).w	; is this a Sonic or Sonic and Tails game?
+		bhi.s	Offset_0x003CCC				; if not, branch
 		move.l	#Obj_AIz_Intro_Surfboard,(Obj_05_Mem_Address).w
 
 
@@ -13320,6 +13322,8 @@ LevelSize_SpawnPlayer:
 		move.w	d0,(Obj_Player_One+Obj_Y).w
 		cmpi.w	#AIz_Act_1,(Current_ZoneAndAct).w	; are we in AIZ1 intro?
 		bne.s	Offset_0x012098				; if not, branch
+		cmpi.w	#Sonic_Alone,(Player_Selected_Flag).w	; is this a Sonic or Sonic and Tails game?
+		bhi.s	Offset_0x012098				; if not, branch
 		move.w	#$40,d1
 		move.w	d1,(Obj_Player_One+Obj_X).w
 		move.w	#$420,d0
