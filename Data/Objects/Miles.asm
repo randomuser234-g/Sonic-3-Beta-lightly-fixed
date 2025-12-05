@@ -777,8 +777,7 @@ Offset_0x00DB24:
                 bgt.s   Offset_0x00DB50
                 move.w  #$F000, Obj_Speed_Y(A0)                          ; $001A
 Offset_0x00DB50:
-                move.w  #Water_Splash_Sfx, D0                            ; $0039
-                jmp     (Play_Music)                           ; Offset_0x001176  
+		rts							; originally water splash
 ;-------------------------------------------------------------------------------
 Miles_MdNormal:                                                ; Offset_0x00DB5A
                 bsr     Miles_Spindash                         ; Offset_0x00E39C

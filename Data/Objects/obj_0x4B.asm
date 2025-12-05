@@ -62,7 +62,7 @@ Offset_0x028DF8:
                 clr.b   Obj_Control_Var_10(A1)                           ; $0040
                 bset    #$01, Obj_Status(A1)                             ; $002A
                 bclr    #$05, Obj_Status(A1)                             ; $002A
-                move.w  #S2_Spring_Sfx, D0                               ; $00CC
+                move.w  #Spring_Sfx, D0                               ; $00CC
                 jmp     (Play_Music)                           ; Offset_0x001176
 ;===============================================================================
 ; Objeto 0x4B - Molas triangulares na Carnival Night

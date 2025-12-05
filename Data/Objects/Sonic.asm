@@ -162,7 +162,8 @@ Sonic_ChkInvin:
 		bne.s	Sonic_RmvInvin
 		cmpi.b	#$C,Obj_Subtype(a0)
 		bcs.s	Sonic_RmvInvin
-                jsr     Level_Load_Music
+		move.w	(Level_Music_Buffer).w,d0
+		jsr	(Play_Music).l
 ; Offset_0x00AC1C:
 Sonic_RmvInvin:
 		bclr	#1,Obj_Player_Status(a0)
@@ -352,8 +353,7 @@ Offset_0x00ADFC:
 		move.w	#-$1000,Obj_Speed_Y(a0)			; limit upward y velocity exiting the water
 
 Offset_0x00AE28:
-		move.w	#Water_Splash_Sfx,d0
-		jmp	(Play_Music).l
+		rts						;originally water splash sfx
 ; End of subroutine Sonic_Water
 
 ; ===========================================================================

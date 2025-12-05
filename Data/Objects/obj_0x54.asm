@@ -206,8 +206,7 @@ Offset_0x02577A:
                 cmp.w   D0, D1
                 bcs     Offset_0x02583C
                 jsr     (Resume_Music)                         ; Offset_0x00F89E
-                move.w  #Collect_Oxygen_Sfx, D0                          ; $0038
-                jsr     (Play_Music)                           ; Offset_0x001176
+		nop							;Collect_Oxygen_Sfx
                 clr.w   Obj_Speed_X(A1)                                  ; $0018
                 clr.w   Obj_Speed_Y(A1)                                  ; $001A
                 clr.w   Obj_Inertia(A1)                                  ; $001C
