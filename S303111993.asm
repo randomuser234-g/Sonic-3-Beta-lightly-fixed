@@ -10999,7 +10999,7 @@ Offset_0x00F8BC:
 Offset_0x00F8C8:
                 tst.b   (Boss_Flag).w                                ; $FFFFF7AA
                 beq.s   Offset_0x00F8D2
-                move.w  #Icecap_2_Snd, D0                                ; $000C
+                move.w  #Boss_Snd, D0                                ; $000C
 Offset_0x00F8D2:
                 jsr     (Play_Music)                           ; Offset_0x001176
 Offset_0x00F8D8:
@@ -27069,12 +27069,13 @@ Null_Mappings:                                                 ; Offset_0x0432C8
                 dc.w    Null_Mappings-Null_Mappings
 ;===============================================================================
 Level_Load_Music:                                              ; Offset_0x0432CA    
-                moveq   #$00, D0
-                lea     (Apparent_ZoneAndAct).w, A1                             ; $FFFFFE10
-                move.b  (A1)+, D0
-                add.b   D0, D0
-                add.b   (A1), D0
-                move.b  Level_PlayList(PC, D0), D0             ; Offset_0x0432E0
+		moveq	#0,d0
+		move.w	(Apparent_ZoneAndAct).w,d0
+		ror.b	#1,d0
+		lsr.w	#7,d0
+		lea	(Level_Playlist).l,a1
+		move.b	(a1,d0.w),d0
+		move.w	d0,(Level_Music_Buffer).w
                 jmp     (Play_Music)                           ; Offset_0x001176
 ;------------------------------------------------------------------------------- 
 Level_PlayList:                                                ; Offset_0x0432E0
