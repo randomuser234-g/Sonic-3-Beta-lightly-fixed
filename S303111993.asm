@@ -4120,6 +4120,7 @@ TitleScreen_ClrSpecStg:
 ; Leftovers from Sonic 2
 ; Offset_0x00349A:
 Title_Screen_Check_2_Player_Vs:
+		move.b	#gm_S2_Versus_Mode_Menu, (Game_Mode).w
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x0034C4:
@@ -6288,7 +6289,7 @@ Offset_0x005296:
 ; Menu de op  es, menu de sele  o de fases no modo 1 e 2 jogadores 
 ; ->>>
 ;===============================================================================
-S2_Versus_Mode_Menu: 
+S2_Versus_Mode_Menu:
 S2_Options_Menu:
 S2_Level_Select_Menu:
 S2_Menus:                                                      ; Offset_0x0052CC
@@ -6299,8 +6300,6 @@ S2_Menus:                                                      ; Offset_0x0052CC
                 move.w  D0, (VDP_Control_Port)                       ; $00C00004
                 bsr     ClearScreen                            ; Offset_0x001002
                 lea     (VDP_Control_Port), A6                       ; $00C00004
-                move.w   #47, D0                                  ; $20
-                bsr     Play_Music                             ; Offset_0x001176
                 move.w  #$8004, (A6)
                 move.w  #$8230, (A6)
                 move.w  #$8407, (A6)
@@ -6347,6 +6346,8 @@ Offset_0x005322:
 ;-------------------------------------------------------------------------------                
 ; Level_Select_Menu_2P:                  
                 lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+                move.w   #45, D0                                  ; $20
+                bsr     Play_Music                             ; Offset_0x001176
                 lea     (Vs_Level_Select_Frame_Mappings), A0   ; Offset_0x006410
                 move.w  #$0070, D0
                 bsr     EnigmaDec                              ; Offset_0x00168A
@@ -6418,13 +6419,13 @@ Offset_0x00549C:
                 bne.s   Offset_0x0054D8
                 bra     Offset_0x00549C
 Offset_0x0054D8:
-                bsr     Offset_0x005600
+		bsr     Offset_0x005600
                 bmi.s   Offset_0x0054EA
                 move.w  #$00ED, D0
                 bsr     Play_Music                             ; Offset_0x001176
-                bra     Offset_0x00549C
+                bra     Offset_0x0054EA				;originally 549C
 Offset_0x0054EA:
-                move.b  #gm_SEGALogo, (Game_Mode).w             ; $00, $FFFFF600
+		jsr	Load_Selected_Level_2P
                 rts
 ;-------------------------------------------------------------------------------
 Load_Selected_Level_2P:                                        ; Offset_0x0054F2
@@ -6453,7 +6454,7 @@ Menu_Load_Special_Stage_2P:                                    ; Offset_0x00553C
                 move.w  D0, (Two_Player_Flag_2).w                    ; $FFFFFF8A
                 rts  
 Menu_Level_Select_Array_2P:                                    ; Offset_0x005554               
-                dc.w    $0000, $0B00, $0C00, $FFFF   
+                dc.w    $0E00, $0F00, $1100, $1000   
 ;-------------------------------------------------------------------------------
 Offset_0x00555C:
                 move.b  (Control_Ports_Buffer_Data+$0001).w, D0      ; $FFFFF605
@@ -6484,7 +6485,7 @@ Offset_0x005580:
                 bsr     Offset_0x0056BC
                 lea     (M68K_RAM_Start+$00D8), A2                   ; $FFFF00D8
                 move.l  $0004(A3), A1
-                bsr     Offset_0x005600
+		bsr     Offset_0x005600
                 bmi.s   Offset_0x0055C4
                 lea     (M68K_RAM_Start+$0468), A1                   ; $FFFF0468
 Offset_0x0055C4:
@@ -6578,6 +6579,8 @@ Offset_0x0056C0:
 ;-------------------------------------------------------------------------------
 Options_Menu:                                                  ; Offset_0x0056CA
                 lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+                move.w   #47, D0                                  ; $20
+                bsr     Play_Music                             ; Offset_0x001176
                 lea     (Options_Frame_Mappings), A0           ; Offset_0x006462
                 move.w  #$0070, D0
                 bsr     EnigmaDec                              ; Offset_0x00168A
@@ -6640,7 +6643,7 @@ Offset_0x0057B4:
                 moveq   #$01, D0
                 move.w  D0, (Two_Player_Flag).w                      ; $FFFFFFD8
                 move.w  D0, (Two_Player_Flag_2).w                    ; $FFFFFF8A
-                move.b  #gm_SEGALogo, (Game_Mode).w  ; $1C, $FFFFF600
+                move.b  #gm_S2_Versus_Mode_Menu, (Game_Mode).w  ; $1C, $FFFFF600
                 move.b  #$00, (Level_Id_2P).w                        ; $FFFFFF88
                 move.w  #$0000, (Player_Selected_Flag).w             ; $FFFFFF08
                 rts
@@ -6839,6 +6842,8 @@ Map_Sound_Test_Idx:                                            ; Offset_0x0059EC
 ;-------------------------------------------------------------------------------
 Level_Select_Menu:                                             ; Offset_0x0059F0
                 lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+                move.w   #47, D0                                  ; $20
+                bsr     Play_Music                             ; Offset_0x001176
                 lea     (S2_Menu_Level_Select_Text), A0        ; Offset_0x00648E
                 move.w  #$0000, D0
                 bsr     EnigmaDec                              ; Offset_0x00168A
@@ -7352,7 +7357,7 @@ Map_Tails_Alone:                                               ; Offset_0x0060AA
 ;-------------------------------------------------------------------------------     
 Map_Vs_Mode_Items_Caption:                                     ; Offset_0x0060BA
                 dc.b    $10
-                dc.b    _st,__,__,_G,_O,__,_T,_O,__,_T,_I,_T,_L,_E,__,__,_st  
+                dc.b    _st,__,__,_V,_E,_R,_S,_U,_S,__,_M,_O,_D,_E,__,__,_st  
 Map_All_Kinds_Items:                                           ; Offset_0x0060CC 
                 dc.b    $0E
                 dc.b    _K,_N,_U,_C,_K,_L,_E,_S,__,_A,_L,_O,_N,_E,__
@@ -7368,19 +7373,19 @@ Map_Sound_Test_Sound:                                          ; Offset_0x0060FE
                 dc.b    __,__,__,__,__,__,_0,_0,__,__,__,__,__,__,__                    
 ;-------------------------------------------------------------------------------  
 Map_Emerald_Hill:                                              ; Offset_0x00610E
-                dc.b    $0B,_E,_M,_E,_R,_A,_L,_D,__,_H,_I,_L,_L              
+                dc.b    $0B,__,_A,_Z,_U,_R,_E,__,_L,_A,_K,_E,__              
 Map_Mystic_Cave:                                               ; Offset_0x00611B
-                dc.b    $0B,__,_M,_Y,_S,_T,_I,_C,__,_C,_A,_V,_E              
+                dc.b    $0B,_B,_A,_L,_L,_O,_O,_N,__,_P,_A,_R,_K              
 Map_Casino_Night:                                              ; Offset_0x006128
-                dc.b    $0B,_C,_A,_S,_I,_N,_O,__,_N,_I,_G,_H,_T
+                dc.b    $0B,_C,_H,_R,_O,_M,_E,_G,_A,_D,_G,_E,_T
 ; Map_Special_Stage:                                           ; Offset_0x006135
                 dc.b    $0C,_S,_P,_E,_C,_I,_A,_L,__,_S,_T,_A,_G,_E  
 Map_Special:                                                   ; Offset_0x006143    
-                dc.b    $0B,__,__,__,_S,_P,_E,_C,_I,_A,_L,__,__  
+                dc.b    $0B,_D,_E,_S,_E,_R,_T,_P,_A,_L,_A,_C,_E  
 Map_Zone:                                                      ; Offset_0x006150
                 dc.b    $04,_Z,_O,_N,_E,__ 
 Map_Stage:                                                     ; Offset_0x006156
-                dc.b    $04,_S,_T,_A,_G,_E                  
+                dc.b    $04,_Z,_O,_N,_E,__                  
 ; Map_Game_Over: 
                 dc.b    $08,_G,_A,_M,_E,__,_O,_V,_E,_R
 ; Map_Time_Over:              
