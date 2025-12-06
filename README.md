@@ -18,6 +18,8 @@
 
 -Debug is turned off by default except for the pause function, The Sonic 2 options let you select character as well as listen to the sound test.
 
+-Versus mode available by selecting the middle option. Pressing C during 2P menu lets you cycle characters
+
 -Knuckles is "playable", although he's mostly just Sonic. A palette change is made, but it doesn't work underwater or with super forms.
 
 -Due to Obj_Player_Selected, his rock breaking ability does work, although the collision is iffy. Hz2 has the walls to run into
