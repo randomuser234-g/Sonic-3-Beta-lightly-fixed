@@ -1,8 +1,8 @@
--Turn Super Sonic requires 2,4,5,6 in the Level Select Sound Test and pressing B+A or C+A at roughly the same time from the ground. 
+-Turn Super Sonic requires 2,4,5,6 in the Level Select Sound Test and pressing A/B/C twice in the air with 50 rings. 
+
+-Ring throwing available as Super Sonic only
 
 -Sonic and Tails both have no roll-lock. Obj Status check changed to 3 which is seemingly not used so it always passes
-
--Super Sonic's pause in the air is removed
 
 -The title screen now lasts a more appropriate length.
 
@@ -26,7 +26,7 @@
 
 -When Level Select is enabled, A+Start for Sonic&Tails, B for Sonic Alone, C for Tails Alone, and sound test code 1,3,5,7 for Knuckles.
 
--Proper explosion sound.
+-Proper sound IDs for certain objects. (Explosions, AIz bridge, etc)
 
 -EndPanel now loads based off Obj_Player_Selected, so now Sonic Alone, Tails Alone, and Knuckles are fixed
 
