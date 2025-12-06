@@ -1324,6 +1324,7 @@ Sonic_CheckGoSuper:
 		move.b	#1,(Super_Sonic_Palette_Status).w
 		move.b	#$F,(Super_Sonic_Palette_Timer).w
 		move.b	#1,(Super_Sonic_flag).w
+		move.b	#$81,Obj_Player_Control(a0)
 		move.b	#$1F,Obj_Ani_Number(a0)
 		move.l	#Obj_Super_Sonic_Stars,(Obj_Super_Sonic_Stars_RAM).w
 		move.w	#$A00,(a4)
@@ -1341,6 +1342,8 @@ Offset_0x00B7B6:
 ; ---------------------------------------------------------------------------
 ; Offset_0x00B7B8:
 Sonic_ThrowRings:
+		tst.b	(Super_Sonic_flag).w
+		ble.w	Offset_0x00B726
 		
 ; ---------------------------------------------------------------------------
 ; An unused ability that lets Sonic shoot rings while jumping; the rings were
