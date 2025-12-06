@@ -6410,6 +6410,7 @@ Offset_0x00549C:
                 bsr     Offset_0x00561A
                 bsr     Offset_0x00555C
                 bsr     Offset_0x005580
+		bsr	Offset_0x005DB0
                 move    #$2300, SR
                 lea     (Menu_Animate), A2                     ; Offset_0x006614
                 jsr     (Dynamic_Normal)                       ; Offset_0x01F2DE
