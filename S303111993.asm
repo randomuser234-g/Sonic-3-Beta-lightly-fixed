@@ -1374,14 +1374,14 @@ Pause_AlreadyPaused:                                           ; Offset_0x001200
 Pause_Loop:                                                    ; Offset_0x001228
                 move.b  #$10, (VBlank_Index).w                       ; $FFFFF62A
                 bsr     Wait_For_VSync                         ; Offset_0x001AEE
-                tst.b   (Slow_Motion_Flag).w                         ; $FFFFFFD1
-                beq.s   Pause_CheckStart                       ; Offset_0x00125A
                 btst    #$06, (Control_Ports_Buffer_Data+$0001).w    ; $FFFFF605
                 beq.s   Pause_CheckBC                          ; Offset_0x00124A
                 move.b  #gm_TitleScreen, (Game_Mode).w          ; $04, $FFFFF600
                 nop
                 bra.s   Offset_0x001268
 Pause_CheckBC:                                                 ; Offset_0x00124A
+                tst.b   (Slow_Motion_Flag).w                         ; $FFFFFFD1
+                beq.s   Pause_CheckStart                       ; Offset_0x00125A
                 btst    #$04, (Control_Ports_Buffer_Data).w          ; $FFFFF604
                 bne.s   Pause_SlowMotion                       ; Offset_0x001292
                 btst    #$05, (Control_Ports_Buffer_Data+$0001).w    ; $FFFFF605
@@ -4033,7 +4033,6 @@ Offset_0x003300:
 
 		move.w	#0,(Secret_Code_Input_Entries).w
 		move.w	#0,(Secret_Code_Input_Entries_2).w
-		move.w	#$001,(Level_Select_Flag).w		; enable level select without cheats
 		nop
 		nop
 		nop
@@ -5086,7 +5085,6 @@ InitPlayers:
 		move.w	(Obj_Player_One+Obj_X).w,(Obj_Player_Two+Obj_X).w
 		move.w	(Obj_Player_One+Obj_Y).w,(Obj_Player_Two+Obj_Y).w
 		subi.w	#$20,(Obj_Player_Two+Obj_X).w
-		addi.w	#4,(Obj_Player_Two+Obj_Y).w
 		move.l	#Obj_Dust_Water_Splash,(Obj_P2_Dust_Water_Splash).w
 		rts
 ; ===========================================================================
@@ -5100,11 +5098,14 @@ InitPlayers_Alone:
 ; ===========================================================================
 ; Offset_0x0040DA:
 InitPlayers_TailsAlone:
+		subq.w	#1,d0
+		bne.s	InitPlayers_KnucklesAlone
 		move.l	#Obj_Miles,(Obj_Player_One).w
 		move.l	#Obj_Dust_Water_Splash,(Obj_P2_Dust_Water_Splash).w
-		addi.w	#4,(Obj_Player_One+Obj_Y).w
-		cmpi.w	#03,(Player_Selected_Flag).w	; is this a Knuckles game?
-		beq.s	InitPlayers_Alone				; if yes, branch
+		rts
+InitPlayers_KnucklesAlone
+		move.l	#Obj_Sonic,(Obj_Player_One).w
+		move.l	#Obj_Dust_Water_Splash,(Obj_P1_Dust_Water_Splash).w
 		rts
 ; End of function InitPlayers
 
