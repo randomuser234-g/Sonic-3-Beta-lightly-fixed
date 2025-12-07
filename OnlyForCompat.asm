@@ -20,7 +20,7 @@ Sonic_Alone           equ $01
 Miles_Alone           equ $02
 Knuckles_Alone        equ $03
 
-; Bot�es dos Controles
+; Bot es dos Controles
 Btn_Up                equ $00    
 Btn_Down              equ $01  
 Btn_Left              equ $02    
@@ -30,7 +30,7 @@ Btn_C                 equ $05
 Btn_A                 equ $06
 Btn_Start             equ $07
 
-; Var�aveis de objetos
+; Var aveis de objetos
 Obj_Pointer           equ $00     ; Longword      ; 00          ; 00..03
 Obj_Flags             equ $04     ; Byte          ; 01          ; 04
 Obj_Routine           equ $05     ; Byte          ; 24          ; 05
@@ -131,7 +131,7 @@ Obj_Player_LRB_Solid  equ $47     ; Byte          ; 3F          ; 47 ; Left / Ri
 Obj_Boss_Hit          equ $29
 
 
-; Status dos jogadores. Tamb�m usado pelos escudos para prote��o
+; Status dos jogadores. Tamb m usado pelos escudos para prote  o
 Classic_Type       equ $00
 Invincibility_Type equ $01
 Speed_Type         equ $02
@@ -208,7 +208,7 @@ Disabled_Level        equ $5555
 Reset_Game            equ $FFFF
 
 
-; M�sicas 
+; M sicas 
 Angel_Island_1_Snd       equ $0001
 Angel_Island_2_Snd       equ $0002
 Hydrocity_1_Snd          equ $0003
@@ -316,14 +316,14 @@ Spring_Sfx               equ -$2E   ; $00D2
 Error_Sfx                equ $00D3       
 
 S2_Enter_Big_Ring_Sfx    equ $0032
-S2_Extra_Life_Snd        equ $0098
-S2_Panic_Snd             equ $009F 
-S2_Smash_Sfx             equ $00B9 
-S2_Cha_Ching_Sfx         equ $00C5 
+S2_Extra_Life_Snd        equ $002A
+S2_Panic_Snd             equ $0031
+S2_Smash_Sfx             equ $0062 
+S2_Cha_Ching_Sfx         equ $0071
 S2_Spring_Sfx            equ $00CC
-S2_Add_Points_Blip_Sfx   equ $00CD
-S2_Panel_Spinning_Sfx    equ $00CF 
-S2_Baaaang_Bumper_Sfx    equ $00D9
+S2_Add_Points_Blip_Sfx   equ $0064
+S2_Panel_Spinning_Sfx    equ $0032 
+S2_Baaaang_Bumper_Sfx    equ $008B
 
 
 ; Comandos
@@ -742,7 +742,7 @@ Miles_Max_Speed                  equ M68K_RAM_Start+$FEC0
 Miles_Acceleration               equ M68K_RAM_Start+$FEC2
 Miles_Deceleration               equ M68K_RAM_Start+$FEC4
 Life_Count_P2                    equ M68K_RAM_Start+$FEC6
-Ring_Status_Flag_P2              equ M68K_RAM_Start+$FEC7 ; Vida extra com 100 e 200 an�is e continue
+Ring_Status_Flag_P2              equ M68K_RAM_Start+$FEC7 ; Vida extra com 100 e 200 an is e continue
 HUD_Life_Refresh_Flag_P2         equ M68K_RAM_Start+$FEC8
 HUD_Rings_Refresh_Flag_P2        equ M68K_RAM_Start+$FEC9
 HUD_Timer_Refresh_Flag_P2        equ M68K_RAM_Start+$FECA
@@ -832,7 +832,7 @@ Init_Flag                        equ M68K_RAM_Start+$FFFC
 ; CRAM
 Color_RAM_Address              equ $C0000000
 
-; Variaveis para os menus exceto sele��o de fases que � comprimido
+; Variaveis para os menus exceto sele  o de fases que   comprimido
 __                      equ  $00
 _0                      equ  $10
 _1                      equ  $11
