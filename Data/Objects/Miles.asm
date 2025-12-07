@@ -7,7 +7,12 @@
                 lea     (Distance_From_Top_P2).w, A5                 ; $FFFFEE2E
                 lea     (Obj_P2_Dust_Water_Splash).w, A6             ; $FFFFCC9E
                 cmpi.w  #Miles_Alone, (Player_Selected_Flag).w  ; $0002, $FFFFFF08
-                bne.s   Offset_0x00D144
+                bne.s   Miles_Limits2P
+		tst.w	(Debug_Mode_Flag_Index).w		; is debug mode being used?
+		beq.s	Offset_0x00D144				; if not, branch
+		jmp	(Debug_Mode).l
+                jmp   	Offset_0x00D144
+Miles_Limits2P:
                 move.w  (Sonic_Level_Limits_Min_X).w, (Miles_Level_Limits_Min_X).w ; $FFFFEE14, $FFFFEE1C
                 move.w  (Sonic_Level_Limits_Max_X).w, (Miles_Level_Limits_Max_X).w ; $FFFFEE16, $FFFFEE1E
                 move.w  (Sonic_Level_Limits_Max_Y).w, (Miles_Level_Limits_Max_Y).w ; $FFFFEE1A, $FFFFEE22
@@ -73,6 +78,16 @@ Offset_0x00D202:
                 move.w  A0, (Obj_Miles_Tails_RAM+Obj_Control_Var_00).w ; $FFFFCC3A
 ;-------------------------------------------------------------------------------
 Miles_Control:                                                 ; Offset_0x00D24A
+                cmpi.w  #Miles_Alone, (Player_Selected_Flag).w  ; $0002, $FFFFFF08
+                bne.s   Miles_ControlNoDebug
+		tst.w	(Debug_Mode_Active).w			; is debug cheat enabled?
+		beq.s	Miles_ControlNoDebug				; if not, branch
+		btst	#4,(Control_Ports_Buffer_Data+1).w	; is button B pressed?
+		beq.s	Miles_ControlNoDebug				; if not, branch
+		move.w	#1,(Debug_Mode_Flag_Index).w		; change Tails into a ring/item
+		clr.b	(Control_Locked_Flag_P1).w		; unlock controls
+		rts
+Miles_ControlNoDebug: 
                 cmpa.w  #Obj_Player_One, A0                              ; $B000
                 bne.s   Offset_0x00D26A
                 move.w  (Control_Ports_Logical_Data).w, (Control_Ports_Logical_Data_2).w ; $FFFFF602, $FFFFF66A

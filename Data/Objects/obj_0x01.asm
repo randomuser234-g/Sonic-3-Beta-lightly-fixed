@@ -207,17 +207,10 @@ MonitorContents_Init:
 								;deleted leftovers
 
 Offset_0x013178:
-		; keep teleport monitor from causing unwanted effects
-		cmpi.w	#8,d0					; is it the teleport monitor?
-		bne.s	Offset_0x01318E				; if not, branch
-		move.b	(Update_HUD_timer).w,d1
-		add.b	(HUD_Timer_Refresh_Flag_P2).w,d1
-		cmpi.b	#2,d1					; is either player done with the act?
-		beq.s	Offset_0x01318E				; if not, branch
-		moveq	#7,d0					; give invincibility instead
+		rts
 
 Offset_0x01318E:
-		move.b	d0,Obj_Ani_Number(a0)
+		rts
 
 Offset_0x013192:
 		; determine correct mappings offset
