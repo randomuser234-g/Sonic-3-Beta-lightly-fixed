@@ -5727,25 +5727,9 @@ Init_Demo_Control:                                             ; Offset_0x0047F6
                 rts
 ;-------------------------------------------------------------------------------
 ; Offset_0x004800: ; Sonic 2 Left over
-                lea     (Demo_Index), A1                       ; Offset_0x00491E
-                moveq   #$00, D0
-                move.b  (Current_Zone).w, D0                             ; $FFFFFE10
-                lsl.w   #$02, D0
-                move.l  $00(A1, D0), A1
-                move.w  (Demo_Button_Index).w, D0                    ; $FFFFF790
-                adda.w  D0, A1
-                move.b  (Control_Ports_Buffer_Data).w, D0            ; $FFFFF604
-                cmp.b   (A1), D0
-                bne.s   Offset_0x00482E
-                addq.b  #$01, $0001(A1)
-                cmpi.b  #$FF, $0001(A1)
-                beq.s   Offset_0x00482E
-                bra.s   Offset_0x004842
+		rts
 Offset_0x00482E:
-                move.b  D0, $0002(A1)
-                move.b  #$00, $0003(A1)
-                addq.w  #$02, (Demo_Button_Index).w                  ; $FFFFF790
-                andi.w  #$03FF, (Demo_Button_Index).w                ; $FFFFF790
+		rts
 Offset_0x004842:
                 rts
 ;-------------------------------------------------------------------------------  
