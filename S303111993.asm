@@ -6697,7 +6697,7 @@ Offset_0x005872:
 Menu_Options_Boundaries:                                       ; Offset_0x005874
                 dc.l    ($03<<$18)|(Player_Select_Flag&$00FFFFFF)    ; Jogador selecionado 
                 dc.l    ($00<<$18)|(Two_Player_Items_Mode&$00FFFFFF) ; Op  es do modo 2 Player
-                dc.l    ($C9<<$18)|(Sound_Test_Sound&$00FFFFFF)      ; Intervalo do Sound Test
+                dc.l    ($FF<<$18)|(Sound_Test_Sound&$00FFFFFF)      ; Intervalo do Sound Test
 ;-------------------------------------------------------------------------------
 Offset_0x005880:
                 bsr     Offset_0x005962
@@ -7731,7 +7731,7 @@ Add_Points_Max_Score_P1:                                       ; Offset_0x007AC8
                 addi.l  #$00001388, (Next_Extra_Life_Score).w        ; $FFFFFFC0
                 addq.b  #$01, (Life_count).w                         ; $FFFFFE12
                 addq.b  #$01, (Update_HUD_lives).w              ; $FFFFFE1C
-                move.w  #42, D0                           ; $0098
+                move.w  #S2_Extra_Life_Snd, D0                           ; $0098
                 jmp     (Play_Music)                           ; Offset_0x001176
 Offset_0x007AEA:
                 rts 
@@ -11497,7 +11497,7 @@ Offset_0x010A32:
 Offset_0x010A68:
                 addq.b  #$01, (Life_count).w                         ; $FFFFFE12
                 addq.b  #$01, (Update_HUD_lives).w              ; $FFFFFE1C
-                move.w  #42, D0                               ; $0034
+                move.w  #S2_Extra_Life_Snd, D0                               ; $0034
 Offset_0x010A74:
                 jmp     (Play_Music)                           ; Offset_0x001176  
                 rts     ; N o usado

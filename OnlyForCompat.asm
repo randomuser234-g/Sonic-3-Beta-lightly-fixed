@@ -322,7 +322,7 @@ S2_Smash_Sfx             equ $00D5
 S2_Cha_Ching_Sfx         equ $00D1
 S2_Spring_Sfx            equ $00D2
 S2_Add_Points_Blip_Sfx   equ $0064
-S2_Panel_Spinning_Sfx    equ $00D7 
+S2_Panel_Spinning_Sfx    equ $00D9 
 S2_Baaaang_Bumper_Sfx    equ $00CB
 
 
