@@ -2,7 +2,7 @@
 
 -Ring throwing available as Super Sonic only
 
--Tails can use debug mode (but accidentally broke screen locks so P1 go past edges during bosses)
+-Tails can use debug mode (but not as powerful as Sonic's, can't be used during death)
 
 -Sonic and Tails both have no roll-lock. Obj Status check changed to 3 which is seemingly not used so it always passes
 
