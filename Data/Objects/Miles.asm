@@ -6,16 +6,15 @@
                 lea     (Miles_Max_Speed).w, A4                         ; $FFFFFEC0
                 lea     (Distance_From_Top_P2).w, A5                 ; $FFFFEE2E
                 lea     (Obj_P2_Dust_Water_Splash).w, A6             ; $FFFFCC9E
+                move.w  (Sonic_Level_Limits_Min_X).w, (Miles_Level_Limits_Min_X).w ; $FFFFEE14, $FFFFEE1C
+                move.w  (Sonic_Level_Limits_Max_X).w, (Miles_Level_Limits_Max_X).w ; $FFFFEE16, $FFFFEE1E
+                move.w  (Sonic_Level_Limits_Max_Y).w, (Miles_Level_Limits_Max_Y).w ; $FFFFEE1A, $FFFFEE22
                 cmpi.w  #Miles_Alone, (Player_Selected_Flag).w  ; $0002, $FFFFFF08
                 bne.s   Miles_Limits2P
 		tst.w	(Debug_Mode_Flag_Index).w		; is debug mode being used?
 		beq.s	Offset_0x00D144				; if not, branch
 		jmp	(Debug_Mode).l
-                jmp   	Offset_0x00D144
 Miles_Limits2P:
-                move.w  (Sonic_Level_Limits_Min_X).w, (Miles_Level_Limits_Min_X).w ; $FFFFEE14, $FFFFEE1C
-                move.w  (Sonic_Level_Limits_Max_X).w, (Miles_Level_Limits_Max_X).w ; $FFFFEE16, $FFFFEE1E
-                move.w  (Sonic_Level_Limits_Max_Y).w, (Miles_Level_Limits_Max_Y).w ; $FFFFEE1A, $FFFFEE22
 Offset_0x00D144:
                 moveq   #$00, D0
                 move.b  Obj_Routine(A0), D0                              ; $0005
