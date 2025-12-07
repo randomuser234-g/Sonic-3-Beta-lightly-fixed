@@ -139,6 +139,8 @@ LevelResults_AddTotalBonus:
 		tst.w	d0
 		beq.s	LevelResults_SetTimer
 		jsr	(Add_Points_P1).l
+		move.w	#S2_Add_Points_Blip_Sfx,d0			
+		jmp	(Play_Music).l
 		move.w	(Level_Frame_Count).w,d0
 		andi.w	#3,d0
 		rts
@@ -147,6 +149,8 @@ LevelResults_AddTotalBonus:
 LevelResults_SetTimer:
 		move.w	#$3C,Obj_Timer(a0)
 		addq.b	#2,Obj_Routine(a0)
+		move.w	#S2_Cha_Ching_Sfx,d0			
+		jmp	(Play_Music).l
 ; Offset_0x02495E:
 LevelResults_Wait2:
 		tst.w	Obj_Timer(a0)
