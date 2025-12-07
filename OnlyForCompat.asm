@@ -315,14 +315,14 @@ Special_Stage_Entry_Sfx  equ -$30   ; $00D0
 Spring_Sfx               equ -$2E   ; $00D2
 Error_Sfx                equ $00D3       
 
-S2_Enter_Big_Ring_Sfx    equ $0032
-S2_Extra_Life_Snd        equ $002A
+S2_Enter_Big_Ring_Sfx    equ $00D4
+S2_Extra_Life_Snd        equ $00CD
 S2_Panic_Snd             equ $0031
-S2_Smash_Sfx             equ $0062 
-S2_Cha_Ching_Sfx         equ $0071
+S2_Smash_Sfx             equ $00D5
+S2_Cha_Ching_Sfx         equ $00D1
 S2_Spring_Sfx            equ $00D2
 S2_Add_Points_Blip_Sfx   equ $0064
-S2_Panel_Spinning_Sfx    equ $0032 
+S2_Panel_Spinning_Sfx    equ $00D7 
 S2_Baaaang_Bumper_Sfx    equ $008B
 
 
