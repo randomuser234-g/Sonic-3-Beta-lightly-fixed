@@ -92,7 +92,7 @@ Offset_0x04191A:
                 jmp     Go_Delete_Object_A0(PC)                ; Offset_0x042D3E   
 ;-------------------------------------------------------------------------------
 PLC_Spikes_Springs:                                            ; Offset_0x04192C 
-                dc.w    (((PLC_SpSp_End-PLC_SpSp)/$06)-$01) ; Auto Detecção do número de itens na lista por Esrael Neto
+                dc.w    (((PLC_SpSp_End-PLC_SpSp)/$06)-$01) ; Auto Detec  o do n mero de itens na lista por Esrael Neto
 PLC_SpSP:
                 dc.l    Art_Spikes_Springs                     ; Offset_0x108E64
                 dc.w    $9280
@@ -169,9 +169,12 @@ Offset_0x041A02:
                 move.w  #$FE00, Obj_Speed_Y(A0)                          ; $001A
                 lea     Offset_0x041AA4(PC), A2
                 jsr     Load_Child_Object_Simple_A2(PC)        ; Offset_0x041F5A
+		move.w	#S2_Panel_Spinning_Sfx,d0
+		jsr	(Play_Music).l
                 moveq   #$0A, D0
                 move.l  A1, A3
                 jmp     (Add_Points)                           ; Offset_0x007AEC
+
 Offset_0x041A20:
                 subq.b  #$01, Obj_Ani_Number(A0)                         ; $0020
 Offset_0x041A24:

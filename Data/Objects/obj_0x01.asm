@@ -281,7 +281,7 @@ MonitorContents_SonicLife:
 		addq.w	#1,(Monitors_Broken).w
 		addq.b	#1,(Life_count).w
 		addq.b	#1,(Update_HUD_lives).w
-		moveq	#Extra_Life_Snd,d0
+		move.w	#S2_Extra_Life_Snd,d0
 		jmp	(Play_Music).l
 ; ===========================================================================
 ; Offset_0x01321E: Monitor_Rings:
@@ -484,7 +484,7 @@ Monitors_AnimateData:
 		dc.w	MonAni_Invincibility-Monitors_AnimateData
 		dc.w	MonAni_SuperSonic-Monitors_AnimateData
 		dc.w	MonAni_Broken-Monitors_AnimateData
-MonAni_Static:		dc.b	  1,  0,  1,$FF
+MonAni_Static:		dc.b	  1,  0,  3,  3,  1,  3,  3,$FF
 MonAni_Sonic:		dc.b	  1,  0,  2,  2,  1,  2,  2,$FF
 MonAni_Eggman:		dc.b	  1,  0,  3,  3,  1,  3,  3,$FF
 MonAni_Rings:		dc.b	  1,  0,  4,  4,  1,  4,  4,$FF
