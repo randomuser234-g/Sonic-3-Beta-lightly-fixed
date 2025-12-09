@@ -13907,6 +13907,8 @@ Offset_0x012588:
                 move.b  #$01, (Palette_Cycle_Flag).w                 ; $FFFFF72E
                 cmpi.w  #$1300, (Camera_X).w                         ; $FFFFEE78
                 bcs.s   Offset_0x0125D8
+		cmpi.w	#Sonic_Alone,(Player_Selected_Flag).w	; is this a Sonic or Sonic and Tails game?
+		bhi.s	Offset_0x0125BE				; if not, branch
                 jsr     (AllocateObject)                     ; Offset_0x011DD8
                 bne.s   Offset_0x0125BE
                 move.l  #Obj_Knuckles, (A1)                    ; Offset_0x018EA0
