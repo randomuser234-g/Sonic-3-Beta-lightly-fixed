@@ -5740,6 +5740,8 @@ Offset_0x004844: ; Sonic 2 Left over modified for MGz act 2 boss
 		move.w	#0,Obj_Speed_Y(a0)
 		move.w	#$06BA,d0
 		move.w	d0,(Obj_Player_One+Obj_Y).w
+		move.w	(Obj_Player_One+Obj_X).w,(Obj_Player_Two+Obj_X).w
+		move.w	(Obj_Player_One+Obj_Y).w,(Obj_Player_Two+Obj_Y).w
 		rts
 Offset_0x00486E:
 		rts
