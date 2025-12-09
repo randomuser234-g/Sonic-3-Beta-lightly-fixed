@@ -1123,7 +1123,12 @@ Sonic_Boundary_CheckBottom:
 ; ---------------------------------------------------------------------------
 ; Offset_0x00B598:
 Sonic_Boundary_Bottom:
+                cmpi.w  #MGz_Act_2,(Current_Zone).w
+                beq.s   Sonic_MarbleGarden                     ; Offset_0x004BC2
 		jmp	(Kill_Player).l
+Sonic_MarbleGarden:
+		jsr	Offset_0x004844		;MGZ2 boss function
+		rts
 ; ===========================================================================
 ; Offset_0x00B59E:
 Sonic_Boundary_Sides:

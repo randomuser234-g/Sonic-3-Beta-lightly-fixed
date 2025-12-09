@@ -1376,6 +1376,8 @@ Offset_0x00E1A4:
                 blt.s   Offset_0x00E1B4
                 rts
 Offset_0x00E1B4:
+		cmpi.w  #MGz_Act_2,(Current_Zone).w
+                beq.s   Miles_MarbleGarden                     ; Offset_0x004BC2
                 jmp     (Kill_Player)                          ; Offset_0x00A4A4
 Offset_0x00E1BA:
                 move.w  D0, Obj_X(A0)                                    ; $0010
@@ -1383,6 +1385,10 @@ Offset_0x00E1BA:
                 move.w  #$0000, Obj_Speed_X(A0)                          ; $0018
                 move.w  #$0000, Obj_Inertia(A0)                          ; $001C
                 bra.s   Offset_0x00E1A4      
+		rts
+Miles_MarbleGarden:
+		jsr	Offset_0x004844		;
+		rts
 ;-------------------------------------------------------------------------------                
 Miles_Roll:                                                    ; Offset_0x00E1D2
                 tst.b   Obj_Player_Status(A0)                            ; $002F
