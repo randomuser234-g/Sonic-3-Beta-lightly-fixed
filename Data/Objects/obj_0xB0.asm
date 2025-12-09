@@ -168,7 +168,7 @@ Offset_0x039EA0:
 ;-------------------------------------------------------------------------------
 Offset_0x039EBC:
                 move.b  #$1A, Obj_Routine(A0)                            ; $0005
-                move.b  #$08, Obj_Boss_Hit(A0)                           ; $0029
+                move.b  #$04, Obj_Boss_Hit(A0)                           ; $0029
                 bset    #$00, Obj_Flags(A0)                              ; $0004
                 move.w  #$3E80, Obj_X(A0)                                ; $0010
                 move.w  #$0700, Obj_Y(A0)                                ; $0014
