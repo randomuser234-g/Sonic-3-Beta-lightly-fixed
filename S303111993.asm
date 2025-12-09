@@ -5734,24 +5734,15 @@ Offset_0x00482E:
 Offset_0x004842:
                 rts
 ;-------------------------------------------------------------------------------  
-; Offset_0x004844: ; Sonic 2 Left over
-                cmpi.b  #S2_EHz_Id, (Current_Zone).w                ; $00, $FFFFFE10
-                bne.s   Offset_0x004882
-                lea     ((M68K_Dev_RAM_Start+$C000)&$00FFFFFF), A1           ; $00FEC000
-                move.w  (Demo_Button_Index_2P).w, D0                 ; $FFFFF732
-                adda.w  D0, A1
-                move.b  (Control_Ports_Buffer_Data+$02).w, D0        ; $FFFFF606
-                cmp.b   (A1), D0
-                bne.s   Offset_0x00486E
-                addq.b  #$01, $0001(A1)
-                cmpi.b  #$FF, $0001(A1)
-                beq.s   Offset_0x00486E
-                bra.s   Offset_0x004882
+Offset_0x004844: ; Sonic 2 Left over modified for MGz act 2 boss
+		cmpi.b	#6,(Obj_Player_One+Obj_Routine).w	; is the player dead?
+		bcc.s	Offset_0x00486E		; if yes, branch
+		move.w	#0,Obj_Speed_Y(a0)
+		move.w	#$06BA,d0
+		move.w	d0,(Obj_Player_One+Obj_Y).w
+		rts
 Offset_0x00486E:
-                move.b  D0, $0002(A1)
-                move.b  #$00, $0003(A1)
-                addq.w  #$02, (Demo_Button_Index_2P).w               ; $FFFFF732
-                andi.w  #$03FF, (Demo_Button_Index_2P).w             ; $FFFFF732
+		rts
 Offset_0x004882:
                 rts
 ;-------------------------------------------------------------------------------               
