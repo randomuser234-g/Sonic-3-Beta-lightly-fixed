@@ -4056,7 +4056,8 @@ TitleScreen_Loop:
 		or.b	(Control_Ports_Buffer_Data+3).w,d0
 		andi.b	#$80,d0
 		beq.w	TitleScreen_Loop
-		move.b	#gm_S2_Options_Menu, (Game_Mode).w
+		jsr	TitleScreen_SonicAlone
+		move.b	#gm_PlayMode, (Game_Mode).w
 		move.b	#3,(Life_count).w
 		move.b	#3,(Life_Count_P2).w
 		moveq	#0,d0
@@ -4085,27 +4086,28 @@ TitleScreen_Loop:
 		tst.b	(Level_Select_Flag).w
 		beq.s	TitleScreen_ClrSpecStg
 		move.b	#gm_Level_Select_Menu, (Game_Mode).w
-; TitleScreen_SonicAndTails:
+TitleScreen_SonicAlone:
 		btst	#Btn_A,(Control_Ports_Buffer_Data).w
-		beq.s	TitleScreen_SonicAlone
-		move.w	#Sonic_And_Miles, (Player_Select_Flag).w
+		beq.s	TitleScreen_TailsAlone
+		move.w	#Sonic_Alone, (Player_Select_Flag).w
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x003466:
-TitleScreen_SonicAlone:
+TitleScreen_TailsAlone:
 		btst	#Btn_B,(Control_Ports_Buffer_Data).w
-		beq.s	TitleScreen_TailsAlone
-		move.w	#Sonic_Alone,(Player_Select_Flag).w
+		beq.s	TitleScreen_KnucklesAlone
+		move.w	#Miles_Alone,(Player_Select_Flag).w
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x003476:
-TitleScreen_TailsAlone:
+TitleScreen_KnucklesAlone:
 		btst	#Btn_C,(Control_Ports_Buffer_Data).w
-		beq.s	Offset_0x003486
-		move.w	#Miles_Alone,(Player_Select_Flag).w
+		beq.s	TitleScreen_SonicAndTails
+		move.w	#Knuckles_Alone,(Player_Select_Flag).w
 		rts
 
-Offset_0x003486:
+TitleScreen_SonicAndTails:
+		move.w	#Sonic_And_Miles, (Player_Select_Flag).w
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x003488:
@@ -6324,8 +6326,6 @@ Offset_0x005322:
 ;-------------------------------------------------------------------------------                
 ; Level_Select_Menu_2P:                  
                 lea     (M68K_RAM_Start), A1                         ; $FFFF0000
-                move.w   #45, D0                                  ; $20
-                bsr     Play_Music                             ; Offset_0x001176
                 lea     (Vs_Level_Select_Frame_Mappings), A0   ; Offset_0x006410
                 move.w  #$0070, D0
                 bsr     EnigmaDec                              ; Offset_0x00168A
@@ -6400,7 +6400,7 @@ Offset_0x00549C:
 Offset_0x0054D8:
 		bsr     Offset_0x005600
                 bmi.s   Offset_0x0054EA
-                move.w  #$00ED, D0
+                move.w  #Error_Sfx, D0
                 bsr     Play_Music                             ; Offset_0x001176
                 bra     Offset_0x0054EA				;originally 549C
 Offset_0x0054EA:
