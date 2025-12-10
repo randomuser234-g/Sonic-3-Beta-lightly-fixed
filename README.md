@@ -10,21 +10,20 @@
 
 -Sonic's surfboard is enabled during gameplay
 
--Act Clear jingle is there at the end of the act. (Level_Load_Music only goes up to Launch Base Act 2, Mushroom Valley onwards are broken. 2P and Bonus stages work since the title card isn't there)
+-Act Clear jingle is there at the end of the act. (Level_Load_Music only goes up to Launch Base Act 2, Mushroom Valley onwards are broken.)
 
 -Act and Zone Transitions work in most situations (basic fade to black rather than cutscene)
 
--Fixed act transition music so it will correctly go to Act 2's sound during transition (MGz, LBz, etc)
+-Fixed act transition music so it will correctly go to Act 2's sound during transition (MGz, Iz, etc)
 
 -Sega Screen palette has been fixed. (SEGA_Bg.pal at offset 40 in hex editor is Sonic's SEGA palette)
 
 -Debug is turned off by default except for the pause function, The Sonic 2 options let you select character as well as listen to the sound test.
 
+(2P versus is bugged and can crash loading the menu, BlastEm)
 -Versus mode available by selecting the middle option. Pressing C during 2P menu lets you cycle characters
 
--Knuckles is "playable", although he's mostly just Sonic. A palette change is made, but it doesn't work underwater or with super forms.
-
--Due to Obj_Player_Selected, his rock breaking ability does work, although the collision is iffy. Hz2 has the walls to run into
+-Knuckles is "playable", although he's mostly just Sonic. A palette change is made, but it doesn't work underwater or with super forms. Some minor properties remain, like running into walls
 
 -UP UP, DOWN DOWN, UP UP for Level select and Debug Mode.
 
