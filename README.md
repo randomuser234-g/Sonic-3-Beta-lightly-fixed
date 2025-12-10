@@ -18,16 +18,14 @@
 
 -Sega Screen palette has been fixed. (SEGA_Bg.pal at offset 40 in hex editor is Sonic's SEGA palette)
 
--Debug is turned off by default except for the pause function, The Sonic 2 options let you select character as well as listen to the sound test.
-
-(2P versus is bugged and can crash loading the menu, BlastEm)
--Versus mode available by selecting the middle option. Pressing C during 2P menu lets you cycle characters
+-Debug is turned off by default except for the pause function.
 
 -Knuckles is "playable", although he's mostly just Sonic. A palette change is made, but it doesn't work underwater or with super forms. Some minor properties remain, like running into walls
 
 -UP UP, DOWN DOWN, UP UP for Level select and Debug Mode.
 
--When Level Select is enabled, A+Start for Sonic&Tails, B for Sonic Alone, C for Tails Alone, and sound test code 1,3,5,7 for Knuckles.
+-Select character with buttons works without Debug Mode
+-Start for Sonic&Tails, A+Start for Sonic Alone, B+Start for Tails Alone, C+Start for Knuckles.
 
 -Proper sound IDs for certain objects. (Explosions, AIz bridge, etc)
 
@@ -38,6 +36,8 @@
 -Hz Act 1 boss plays the correct theme
 
 For the changes go to the commits section
+
+(2P versus is bugged and can crash loading the old S2 versus menu, tested on BlastEm)
 
 Note that in some instances when code is removed it is to "make room" for different code. I can't seem to get it to work in those instances without the game freaking out by breaking all the music.
 
