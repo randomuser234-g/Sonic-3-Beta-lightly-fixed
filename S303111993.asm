@@ -7273,8 +7273,8 @@ Menu_Check_Secret_Codes:                                       ; Offset_0x005FD8
                 addq.w  #$01, (Secret_Code_Input_Entries).w          ; $FFFFFFD4
                 tst.b   $0001(A0)
                 bne.s   Offset_0x006002
-		move.w	#03, (Player_Select_Flag).w
-                moveq   #31, D0                                      ; $32
+		move.w	#$0101, (Debug_Mode_Flag).w                  ; $FFFFFFD2
+                moveq   #Ring_Sfx, D0                                      ; $32
                 jsr     (Play_Music)  
 Offset_0x005FFC:
                 move.w  #$0000, (Secret_Code_Input_Entries).w        ; $FFFFFFD4
