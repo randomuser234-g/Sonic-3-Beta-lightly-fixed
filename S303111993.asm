@@ -4056,8 +4056,7 @@ TitleScreen_Loop:
 		or.b	(Control_Ports_Buffer_Data+3).w,d0
 		andi.b	#$80,d0
 		beq.w	TitleScreen_Loop
-		jsr	TitleScreen_SonicAlone
-		move.b	#gm_PlayMode, (Game_Mode).w
+		move.b	#gm_S2_Options_Menu, (Game_Mode).w
 		move.b	#3,(Life_count).w
 		move.b	#3,(Life_Count_P2).w
 		moveq	#0,d0
@@ -6608,7 +6607,7 @@ Offset_0x005758:
                 bra     Offset_0x005758
 Offset_0x005794:
                 move.b  (Options_Menu_Cursor).w, D0                  ; $FFFFFF8C
-                bne.s   Offset_0x0057B4
+                bne.s   Offset_0x0057D6
                 moveq   #$00, D0
                 move.w  D0, (Two_Player_Flag).w                      ; $FFFFFFD8
                 move.w  D0, (Two_Player_Flag_2).w                    ; $FFFFFF8A
