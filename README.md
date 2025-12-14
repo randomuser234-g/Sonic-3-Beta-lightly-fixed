@@ -36,6 +36,15 @@
 
 For the changes go to the commits section
 
+Current progress of zones 1-7
+With debug all zones playable starting from AIz, all characters can use debug mode and 2P skip cutscene events
+Progress without debug:
+Tails Alone: Flying Battery Act 2, then softlock
+Sonic & Tails: Flying Battery Act 2, then softlock (requires co-op to get to this)
+Sonic Alone: Flying Battery Act 1 softlock, no platforms in area
+"Knuckles" Alone: Flying Battery Act 1 softlock, no platforms in area
+Zones before the listed up here are beatable without debug (AIz to CNz)
+
 (2P versus is bugged and can crash loading the old S2 versus menu, tested on BlastEm)
 
 Note that in some instances when code is removed it is to "make room" for different code. I can't seem to get it to work in those instances without the game freaking out by breaking all the music.
