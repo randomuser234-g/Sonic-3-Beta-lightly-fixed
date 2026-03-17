@@ -139,10 +139,12 @@ LevelResults_AddTotalBonus:
 		tst.w	d0
 		beq.s	LevelResults_SetTimer
 		jsr	(Add_Points_P1).l
-		move.w	#S2_Add_Points_Blip_Sfx,d0			
-		jmp	(Play_Music).l
 		move.w	(Level_Frame_Count).w,d0
 		andi.w	#3,d0
+		bne.s	LevelResults_AddTotalBonusEND
+		move.w	#S2_Add_Points_Blip_Sfx,d0			
+		jmp	(Play_Music).l
+LevelResults_AddTotalBonusEND:
 		rts
 ; ===========================================================================
 ; Offset_0x024954:
