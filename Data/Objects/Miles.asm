@@ -812,8 +812,11 @@ Offset_0x00DB90:
                 rts   
 ;-------------------------------------------------------------------------------
 Miles_MdJump:                                                  ; Offset_0x00DB92
+		cmpi.b	#$20,Obj_Ani_Number(a0)
+		bne.s	dontfly
                 tst.b   (Level_Boundaries_Flag).w                    ; $FFFFF668
                 bne.s   Offset_0x00DBC2
+dontfly:
                 bsr     Miles_JumpHeight                       ; Offset_0x00E2F8
                 bsr     Miles_ChgJumpDir                       ; Offset_0x00E0EC
                 bsr     Miles_LevelBoundaries                  ; Offset_0x00E17C
@@ -1296,7 +1299,7 @@ Miles_ChgJumpDir:                                              ; Offset_0x00E0EC
                 move.w  (A4), D6
                 move.w  Acceleration(A4), D5                             ; $0002
                 asl.w   #$01, D5
-                btst    #$03, Obj_Status(A0)                             ; $002A
+                btst    #$04, Obj_Status(A0)                             ; $002A
                 bne.s   Offset_0x00E140
                 move.w  Obj_Speed_X(A0), D0                              ; $0018
                 btst    #$02, (Control_Ports_Logical_Data_2).w       ; $FFFFF66A
@@ -1473,7 +1476,7 @@ Offset_0x00E272:
 Offset_0x00E2EE:
                 rts
 Offset_0x00E2F0:
-                bset    #$04, Obj_Status(A0)                             ; $002A
+              	;bset    #$04, Obj_Status(A0)                             ; $002A
                 rts  
 ;-------------------------------------------------------------------------------                
 Miles_JumpHeight:                                              ; Offset_0x00E2F8
