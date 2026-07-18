@@ -4794,8 +4794,8 @@ Level_FromCheckpoint:
 		move.b	d0,(Time_Over_Flag_P2).w
 		move.w	d0,(Debug_Mode_Flag_Index).w
 		move.w	d0,(Restart_Level_Flag).w
-		move.b	d0,(S2_Teleport_Timer).w
-		move.b	d0,(S2_Teleport_Flag).w
+		;move.b	d0,(S2_Teleport_Timer).w
+		;move.b	d0,(S2_Teleport_Flag).w
 		move.w	d0,(Total_Ring_Count_Address).w
 		move.w	d0,(Total_Ring_Count_Address_P2).w
 		move.w	d0,(Monitors_Broken).w
@@ -10573,7 +10573,7 @@ Exit_Object_HitWall_Left:                                      ; Offset_0x00A164
 ; ->>>
 ;===============================================================================                              
 Touch_Response_2P:                                             ; Offset_0x00A168
-                ;nop
+                nop
                 move.w  Obj_X(A0), D2                                    ; $0010
                 move.w  Obj_Y(A0), D3                                    ; $0014
                 subi.w  #$0004, D2
@@ -10586,7 +10586,7 @@ Touch_Response_2P:                                             ; Offset_0x00A168
                 bra.s   Touch_Process                          ; Offset_0x00A1BA    
 ;-------------------------------------------------------------------------------                   
 Touch_Response:                                                ; Offset_0x00A188
-                ;nop
+                nop
                 jsr     (TouchRings)                           ; Offset_0x0088AE
                 move.w  Obj_X(A0), D2                                    ; $0010
                 move.w  Obj_Y(A0), D3                                    ; $0014
@@ -10830,7 +10830,7 @@ Offset_0x00A3EC:
                 rts  
 ;-------------------------------------------------------------------------------                
 Touch_Hurt:                                                    ; Offset_0x00A3F0
-                ;nop
+                nop
                 tst.b   Obj_P_Invunerblt_Time(A0)                        ; $0034
                 bne.s   Offset_0x00A3EC
                 move.l  A1, A2              
@@ -18965,7 +18965,7 @@ Repeat_TileDrawing:
 RepeatTiles_Index:
 		; these two instructions make a blank Act 1 entry
 		rts
-		;nop
+		nop
                 bra.w	AIz_Do_Ship_Loop
 ; ===========================================================================
 ; Offset_0x02FF6C:
@@ -20778,8 +20778,8 @@ Offset_0x031E62:
                 rts
 ;-------------------------------------------------------------------------------
 ; Offset_0x031E88:  ; Left over ???
-                ;nop
-                ;nop
+                nop
+                nop
                 cmpi.w  #$0004, (Level_Events_Routine_2).w           ; $FFFFEEC2
                 bcs.s   Offset_0x031E9A
                 jmp     (DeleteObject)                         ; Offset_0x011138
@@ -23883,16 +23883,16 @@ Default_Deform:                                                ; Offset_0x0341EA
 Trap_0x0F:                                                     ; Offset_0x034200
                 move.l  Trap_Routines_List(PC, D6), A6         ; Offset_0x034220
                 jsr     (A6)
-                ;nop
-                ;nop
+                nop
+                nop
                 move    SR, D5
                 move.w  (A7), D6
                 andi.w  #$001F, D5
                 andi.w  #$FFE0, D6
                 or.w    D5, D6
                 move.w  D6, (A7)
-                ;nop
-                ;nop
+                nop
+                nop
                 rte  
 ;-------------------------------------------------------------------------------                
 Trap_Routines_List:                                            ; Offset_0x034220
