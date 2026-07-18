@@ -52,7 +52,7 @@ Sonic Alone: Flying Battery Act 1 softlock, no platforms in area
 
 Zones before the listed up here are beatable without debug (AIz to CNz)
 
-(2P versus is bugged and can crash loading the old S2 versus menu, tested on BlastEm)
+2p menu bug "fixed"
 
 Note that in some instances when code is removed it is to "make room" for different code. I can't seem to get it to work in those instances without the game freaking out by breaking all the music.
 
