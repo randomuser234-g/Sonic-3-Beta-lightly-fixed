@@ -6501,16 +6501,17 @@ Offset_0x0055F8:
                 move.l  (A1)+, (A2)+
                 dbra    D1, Offset_0x0055F8
                 rts
-Offset_0x005600:
-                moveq   #$00, D0
-                move.b  (Level_Id_2P).w, D0                          ; $FFFFFF88
-                move.w  D0, D1
-                add.w   D0, D0
-                add.w   D1, D0
-                add.w   D0, D0
-                lea     $00(A5, D0), A5
-                move.w  (A5), D0
-                add.w   $0002(A5), D0
+Offset_0x005600:		;Chk2PZoneCompletion
+		rts
+                ;moveq   #$00, D0
+                ;move.b  (Level_Id_2P).w, D0                          ; $FFFFFF88
+                ;move.w  D0, D1
+                ;add.w   D0, D0
+                ;add.w   D1, D0
+                ;add.w   D0, D0
+                ;lea     $00(A5, D0), A5	;this line may have changed
+                ;move.w  (A5), D0		;there is a bug within checking for zone completion, checking causes crash
+                ;add.w   $0002(A5), D0
                 rts        
 ;-------------------------------------------------------------------------------
 Offset_0x00561A:
