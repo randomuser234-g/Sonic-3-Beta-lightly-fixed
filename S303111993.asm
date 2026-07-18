@@ -6409,11 +6409,11 @@ Offset_0x00549C:
                 bne.s   Offset_0x0054D8
                 bra     Offset_0x00549C
 Offset_0x0054D8:
-		bsr     Offset_0x005600
-                bmi.s   Offset_0x0054EA
-                move.w  #Error_Sfx, D0
-                bsr     Play_Music                             ; Offset_0x001176
-                bra     Offset_0x0054EA				;originally 549C
+		;bsr     Offset_0x005600	;don't bother checking for completion
+                ;bmi.s   Offset_0x0054EA
+                ;move.w  #Error_Sfx, D0
+                ;bsr     Play_Music                             ; Offset_0x001176
+                ;bra     Offset_0x00549C				;originally 549C
 Offset_0x0054EA:
 		jsr	Load_Selected_Level_2P
                 rts
@@ -6475,9 +6475,9 @@ Offset_0x005580:
                 bsr     Offset_0x0056BC
                 lea     (M68K_RAM_Start+$00D8), A2                   ; $FFFF00D8
                 move.l  $0004(A3), A1
-		bsr     Offset_0x005600
-                bmi.s   Offset_0x0055C4
-                lea     (M68K_RAM_Start+$0468), A1                   ; $FFFF0468
+		;bsr     Offset_0x005600
+                ;bmi.s   Offset_0x0055C4
+                ;lea     (M68K_RAM_Start+$0468), A1                   ; $FFFF0468
 Offset_0x0055C4:
                 moveq   #$02, D1
 Offset_0x0055C6:
@@ -6502,7 +6502,6 @@ Offset_0x0055F8:
                 dbra    D1, Offset_0x0055F8
                 rts
 Offset_0x005600:		;Chk2PZoneCompletion
-		rts
                 ;moveq   #$00, D0
                 ;move.b  (Level_Id_2P).w, D0                          ; $FFFFFF88
                 ;move.w  D0, D1
@@ -6529,9 +6528,9 @@ Offset_0x00561A:
                 bsr     Offset_0x0056BC
                 lea     (M68K_RAM_Start+$0270), A2                   ; $FFFF0270
                 lea     (M68K_RAM_Start+$0498), A1                   ; $FFFF0498
-                bsr     Offset_0x005600
-                bmi.s   Offset_0x00565E
-                lea     (M68K_RAM_Start+$0468), A1                   ; $FFFF0468
+                ;bsr     Offset_0x005600
+                ;bmi.s   Offset_0x00565E
+                ;lea     (M68K_RAM_Start+$0468), A1                   ; $FFFF0468
 Offset_0x00565E:
                 moveq   #$02, D1
 Offset_0x005660:
