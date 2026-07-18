@@ -43,9 +43,10 @@ Monitors_Init:
 Offset_0x012FAE:
 		move.b	#$46,Obj_Col_Flags(a0)
 		move.b	Obj_Subtype(a0),Obj_Ani_Number(a0)	; subtype = icon to display
-		tst.w	(Two_Player_Flag).w			; are we in two player mode?
-		beq.s	Monitors_Main				; if not, branch
-		move.b	#9,Obj_Ani_Number(a0)			; use '?' icon
+		;tst.w	(Two_Player_Flag).w			; are we in two player mode?
+		;beq.s	Monitors_Main				; if not, branch
+		;move.b	#9,Obj_Ani_Number(a0)			; use '?' icon
+		;disable 2p code,not used
 ; Offset_0x012FC6:
 Monitors_Main:
 		move.b	Obj_Control_Var_0C(a0),d0
