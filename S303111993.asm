@@ -3978,7 +3978,10 @@ Offset_0x003264:
 		move.w	#$395,(Demo_Timer).w
 		clr.w	(DMA_Buffer_List).w
 		move.l	#DMA_Buffer_List,(DMA_Buffer_List_End).w
-
+                move.l  #$42000000, (VDP_Control_Port)               ; $00C00004
+                lea     (Art_Menu_Font), A0                    ; Offset_0x1095D6
+                bsr     NemesisDec                             ; Offset_0x001390
+		move.l	#Obj_1P2PVSOptions,(Obj_Player_One).w
 		lea	(TitleBanner_Frames).l,a2
 		move.l	(a2)+,d0
 		andi.l	#$FFFFFF,d0
@@ -4056,7 +4059,7 @@ TitleScreen_Loop:
 		or.b	(Control_Ports_Buffer_Data+3).w,d0
 		andi.b	#$80,d0
 		beq.w	TitleScreen_Loop
-		move.b	#gm_S2_Options_Menu, (Game_Mode).w
+		move.b	#gm_PlayMode, (Game_Mode).w
 		move.b	#3,(Life_count).w
 		move.b	#3,(Life_Count_P2).w
 		moveq	#0,d0
@@ -4120,7 +4123,17 @@ TitleScreen_ClrSpecStg:
 ; Leftovers from Sonic 2
 ; Offset_0x00349A:
 Title_Screen_Check_2_Player_Vs:
-		move.b	#gm_S2_Versus_Mode_Menu, (Game_Mode).w
+		subq.b	#1,d0
+		bne.s	Title_Screen_Load_Options_Menu
+		moveq	#1,d1
+		move.w	d1,(Two_Player_Flag_2).w
+		move.w	d1,(Two_Player_Flag).w
+		moveq	#0,d0
+		move.w	d0,(SS_Completed_Flag).w
+		move.l	d0,(Emerald_Collected_Flag_List).w
+		move.l	d0,(Emerald_Collected_Flag_List+4).w
+		move.b	#gm_S2_Versus_Mode_Menu,(Game_Mode).w
+		move.b	#0,(Level_Id_2P).w
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x0034C4:
@@ -4165,11 +4178,8 @@ Demo_Mode_Level_Array:                                         ; Offset_0x003544
                 dc.w    AIz_Act_1                                        ; $0000
                 dc.w    AIz_Act_1                                        ; $0000
 ;-------------------------------------------------------------------------------                
-S2_Demo_Mode_Level_Array:                                      ; Offset_0x00354C
-                dc.w    S2_EHz_Act_1  ; Emerald Hill S2 Left over        ; $0000
-                dc.w    S2_CPz_Act_1  ; Chemical Plant S2 Left over      ; $0D00
-                dc.w    S2_ARz_Act_1  ; Aquatic Ruin Left over           ; $0F00 
-                dc.w    S2_CNz_Act_1  ; Casino Night S2 Left over        ; $0C00     
+;S2_Demo_Mode_Level_Array
+;deleted
 ;-------------------------------------------------------------------------------
 Secret_Codes_Test:                                             ; Offset_0x003554
                 lea     (Secret_Code_Sequence), A0             ; Offset_0x003592
@@ -5167,17 +5177,17 @@ Obj_Clear_Collision_Response_List:                             ; Offset_0x004184
 UpdateWaterSurface:
 		rts
 ; ---------------------------------------------------------------------------
-		tst.b	(Water_Level_Flag).w
-		beq.s	Offset_0x0041AE
-		move.w	(Camera_X).w,d1
-		btst	#0,(Level_Frame_Count+1).w
-		beq.s	Offset_0x0041A4
-		addi.w	#$20,d1
+		;tst.b	(Water_Level_Flag).w
+		;beq.s	Offset_0x0041AE
+		;move.w	(Camera_X).w,d1
+		;btst	#0,(Level_Frame_Count+1).w
+		;beq.s	Offset_0x0041A4
+		;addi.w	#$20,d1
 
-Offset_0x0041A4:
-		move.w	d1,d0
-		addi.w	#$60,d0
-		addi.w	#$120,d1
+;Offset_0x0041A4:
+		;move.w	d1,d0
+		;addi.w	#$60,d0
+		;addi.w	#$120,d1
 
 Offset_0x0041AE:
 		rts
@@ -5782,28 +5792,28 @@ Offset_0x0048DC:
                 rts    
 ;-------------------------------------------------------------------------------
 ; Offset_0x0048DE: ; Sonic 2 Left Over
-                cmpi.b  #S2_EHz_Id, (Current_Zone).w                ; $00, $FFFFFE10
-                bne.s   Offset_0x004916
-                lea     (Demo_Angel_Island), A1                ; Offset_0x004BEA
-                move.w  (Demo_Button_Index_2P).w, D0                 ; $FFFFF732
-                adda.w  D0, A1
-                move.b  (A1), D0
-                lea     (Control_Ports_Buffer_Data+$02).w, A0        ; $FFFFF606
-                move.b  D0, D1
-                moveq   #$00, D2
-                eor.b   D2, D0
-                move.b  D1, (A0)+
-                and.b   D1, D0
-                move.b  D0, (A0)+
-                subq.b  #$01, (Demo_Button_Press_Counter_2P).w       ; $FFFFF734
-                bcc.s   Offset_0x004914
-                move.b  $0003(A1), (Demo_Button_Press_Counter_2P).w  ; $FFFFF734
-                addq.w  #$02, (Demo_Button_Index_2P).w               ; $FFFFF732
-Offset_0x004914:
-                rts
-Offset_0x004916:
-                move.w  #$0000, (Control_Ports_Buffer_Data+$02).w    ; $FFFFF606
-                rts                            
+                ;cmpi.b  #S2_EHz_Id, (Current_Zone).w                ; $00, $FFFFFE10
+                ;bne.s   Offset_0x004916
+                ;lea     (Demo_Angel_Island), A1                ; Offset_0x004BEA
+                ;move.w  (Demo_Button_Index_2P).w, D0                 ; $FFFFF732
+                ;adda.w  D0, A1
+                ;move.b  (A1), D0
+                ;lea     (Control_Ports_Buffer_Data+$02).w, A0        ; $FFFFF606
+                ;move.b  D0, D1
+                ;moveq   #$00, D2
+                ;eor.b   D2, D0
+                ;move.b  D1, (A0)+
+                ;and.b   D1, D0
+                ;move.b  D0, (A0)+
+                ;subq.b  #$01, (Demo_Button_Press_Counter_2P).w       ; $FFFFF734
+                ;bcc.s   Offset_0x004914
+                ;move.b  $0003(A1), (Demo_Button_Press_Counter_2P).w  ; $FFFFF734
+                ;addq.w  #$02, (Demo_Button_Index_2P).w               ; $FFFFF732
+;Offset_0x004914:
+;                rts
+;Offset_0x004916:
+;                move.w  #$0000, (Control_Ports_Buffer_Data+$02).w    ; $FFFFF606
+;                rts                            
 ;===============================================================================
 ; Rotina de controle autom tico do jogador usado no modo de demonstra  o
 ; <<<-
@@ -6325,6 +6335,8 @@ Offset_0x005322:
 ;-------------------------------------------------------------------------------                
 ; Level_Select_Menu_2P:                  
                 lea     (M68K_RAM_Start), A1                         ; $FFFF0000
+                move.w   #45, D0                                  ; $20
+                bsr     Play_Music                             ; Offset_0x001176
                 lea     (Vs_Level_Select_Frame_Mappings), A0   ; Offset_0x006410
                 move.w  #$0070, D0
                 bsr     EnigmaDec                              ; Offset_0x00168A
@@ -6411,7 +6423,7 @@ Load_Selected_Level_2P:                                        ; Offset_0x0054F2
                 move.b  (Level_Id_2P).w, D0                          ; $FFFFFF88
                 add.w   D0, D0
                 move.w  Menu_Level_Select_Array_2P(PC, D0), D0 ; Offset_0x005554
-                bmi.s   Menu_Load_Special_Stage_2P             ; Offset_0x00553C
+                ;bmi.s   Menu_Load_Special_Stage_2P             ; Offset_0x00553C
                 move.w  D0, (Current_ZoneAndAct).w                             ; $FFFFFE10
                 move.w  D0, (Apparent_ZoneAndAct).w                           ; $FFFFEE54
                 move.w  #$0001, (Two_Player_Flag).w                  ; $FFFFFFD8
@@ -6425,12 +6437,12 @@ Load_Selected_Level_2P:                                        ; Offset_0x0054F2
                 move.l  #$00001388, (Next_Extra_Life_Score_P2).w     ; $FFFFFFC4
                 rts
 Menu_Load_Special_Stage_2P:                                    ; Offset_0x00553C
-                move.b  #$04, (Current_SpecialStage).w                   ; $FFFFFE16
-                move.b  #gm_S2_SpecialStage, (Game_Mode).w      ; $10, $FFFFF600
-                moveq   #$01, D0
-                move.w  D0, (Two_Player_Flag).w                      ; $FFFFFFD8
-                move.w  D0, (Two_Player_Flag_2).w                    ; $FFFFFF8A
-                rts  
+                ;move.b  #$04, (Current_SpecialStage).w                   ; $FFFFFE16
+                ;move.b  #gm_S2_SpecialStage, (Game_Mode).w      ; $10, $FFFFF600
+                ;moveq   #$01, D0
+                ;move.w  D0, (Two_Player_Flag).w                      ; $FFFFFFD8
+                ;move.w  D0, (Two_Player_Flag_2).w                    ; $FFFFFF8A
+                ;rts  
 Menu_Level_Select_Array_2P:                                    ; Offset_0x005554               
                 dc.w    $0E00, $0F00, $1100, $1000   
 ;-------------------------------------------------------------------------------
@@ -6607,7 +6619,7 @@ Offset_0x005758:
                 bra     Offset_0x005758
 Offset_0x005794:
                 move.b  (Options_Menu_Cursor).w, D0                  ; $FFFFFF8C
-                bne.s   Offset_0x0057D6
+                bne.s   Offset_0x0057B4
                 moveq   #$00, D0
                 move.w  D0, (Two_Player_Flag).w                      ; $FFFFFFD8
                 move.w  D0, (Two_Player_Flag_2).w                    ; $FFFFFF8A
@@ -6942,23 +6954,23 @@ Menu_Run_SK_Special_Stage:                                     ; Offset_0x005B9E
                 move.b  #gm_SK_Special_Stage, (Game_Mode).w     ; $30, $FFFFF600
                 rts  
 ;-------------------------------------------------------------------------------
-Menu_Run_S2_Special_Stage:                                     ; Offset_0x005BA6
-                move.b  #gm_S2_SpecialStage, (Game_Mode).w      ; $10, $FFFFF600
-                clr.w   (Current_ZoneAndAct).w                                 ; $FFFFFE10
-                clr.w   (Apparent_ZoneAndAct).w                               ; $FFFFEE54
-                move.b  #$03, (Life_count).w                         ; $FFFFFE12
-                move.b  #$03, (Life_Count_P2).w                      ; $FFFFFEC6
-                moveq   #$00, D0
-                move.w  D0, (Ring_count).w                   ; $FFFFFE20
-                move.l  D0, (Timer).w                   ; $FFFFFE22
-                move.l  D0, (Score_Count_Address).w                  ; $FFFFFE26
-                move.w  D0, (Ring_Count_Address_P2).w                ; $FFFFFED0
-                move.l  D0, (Time_Count_Address_P2).w                ; $FFFFFED2
-                move.l  D0, (Score_Count_Address_P2).w               ; $FFFFFED6
-                move.l  #$00001388, (Next_Extra_Life_Score).w        ; $FFFFFFC0
-                move.l  #$00001388, (Next_Extra_Life_Score_P2).w     ; $FFFFFFC4
-                move.w  (Player_Select_Flag).w, (Player_Selected_Flag).w ; $FFFFFF0A
-                rts      
+;Menu_Run_S2_Special_Stage:                                     ; Offset_0x005BA6
+                ;move.b  #gm_S2_SpecialStage, (Game_Mode).w      ; $10, $FFFFF600
+                ;clr.w   (Current_ZoneAndAct).w                                 ; $FFFFFE10
+                ;clr.w   (Apparent_ZoneAndAct).w                               ; $FFFFEE54
+                ;move.b  #$03, (Life_count).w                         ; $FFFFFE12
+                ;move.b  #$03, (Life_Count_P2).w                      ; $FFFFFEC6
+                ;moveq   #$00, D0
+               	;move.w  D0, (Ring_count).w                   ; $FFFFFE20
+                ;move.l  D0, (Timer).w                   ; $FFFFFE22
+                ;move.l  D0, (Score_Count_Address).w                  ; $FFFFFE26
+                ;move.w  D0, (Ring_Count_Address_P2).w                ; $FFFFFED0
+                ;move.l  D0, (Time_Count_Address_P2).w                ; $FFFFFED2
+                ;move.l  D0, (Score_Count_Address_P2).w               ; $FFFFFED6
+                ;move.l  #$00001388, (Next_Extra_Life_Score).w        ; $FFFFFFC0
+                ;move.l  #$00001388, (Next_Extra_Life_Score_P2).w     ; $FFFFFFC4
+                ;move.w  (Player_Select_Flag).w, (Player_Selected_Flag).w ; $FFFFFF0A
+                ;rts      
 ;-------------------------------------------------------------------------------
 Menu_Level_Select_Array:                                       ; Offset_0x005BF2
                 dc.w    AIz_Act_1                                        ; $0000
@@ -7884,103 +7896,103 @@ Offset_0x007C9C:
                 bne     HUD_Debug                              ; Offset_0x007E4A
                 rts
 ;-------------------------------------------------------------------------------
-S2_HUD_Update_2P:                                              ; Offset_0x007CA6
-                tst.w   (Pause_Status).w                             ; $FFFFF63A
-                bne     Offset_0x007D70
-                tst.b   (Update_HUD_timer).w                   ; $FFFFFE1E
-                beq.s   Offset_0x007CE6
-                lea     (Timer).w, A1                   ; $FFFFFE22
-                cmpi.l  #$00093B3B, (A1)+
-                beq     Timer_Over_2P_Sonic                    ; Offset_0x007D90
-                addq.b  #$01, -(A1)
-                cmpi.b  #$3C, (A1)
-                bcs.s   Offset_0x007CE6
-                move.b  #$00, (A1)
-                addq.b  #$01, -(A1)
-                cmpi.b  #$3C, (A1)
-                bcs.s   Offset_0x007CE6
-                move.b  #$00, (A1)
-                addq.b  #$01, -(A1)
-                cmpi.b  #$09, (A1)
-                bcs.s   Offset_0x007CE6
-                move.b  #$09, (A1)
-Offset_0x007CE6:
-                tst.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
-                beq.s   Offset_0x007D1E
-                lea     (Time_Count_Address_P2).w, A1                ; $FFFFFED2
-                cmpi.l  #$00093B3B, (A1)+
-                beq     Timer_Over_2P_Miles                    ; Offset_0x007DAA
-                addq.b  #$01, -(A1)
-                cmpi.b  #$3C, (A1)
-                bcs.s   Offset_0x007D1E
-                move.b  #$00, (A1)
-                addq.b  #$01, -(A1)
-                cmpi.b  #$3C, (A1)
-                bcs.s   Offset_0x007D1E
-                move.b  #$00, (A1)
-                addq.b  #$01, -(A1)
-                cmpi.b  #$09, (A1)
-                bcs.s   Offset_0x007D1E
-                move.b  #$09, (A1)
-Offset_0x007D1E:
-                tst.b   (Update_HUD_lives).w                    ; $FFFFFE1C
-                beq.s   Offset_0x007D2C
-                clr.b   (Update_HUD_lives).w                    ; $FFFFFE1C
-                bsr     HUD_Lives                              ; Offset_0x00804E
-Offset_0x007D2C:
-                tst.b   (HUD_Life_Refresh_Flag_P2).w                 ; $FFFFFEC8
-                beq.s   Offset_0x007D3A
-                clr.b   (HUD_Life_Refresh_Flag_P2).w                 ; $FFFFFEC8
-                bsr     HUD_Lives_P2                           ; Offset_0x008040
-Offset_0x007D3A:
-                move.b  (Update_HUD_timer).w, D0               ; $FFFFFE1E
-                or.b    (HUD_Timer_Refresh_Flag_P2).w, D0            ; $FFFFFECA
-                beq.s   Offset_0x007D70
-                lea     (Loser_Timer_Left).w, A1                     ; $FFFFFEF8
-                tst.w   (A1)+
-                beq.s   Offset_0x007D70
-                subq.b  #$01, -(A1)
-                bhi.s   Offset_0x007D70
-                move.b  #$3C, (A1)
-                cmpi.b  #$0C, -1(A1)
-                bne.s   Offset_0x007D66
-                move.w  #S2_Panic_Snd, D0                                ; $009F
-                jsr     (Play_Music)                           ; Offset_0x001176
-Offset_0x007D66:
-                subq.b  #$01, -(A1)
-                bcc.s   Offset_0x007D70
-                move.w  #$0000, (A1)
-                bsr.s   Offset_0x007D82
-Offset_0x007D70:
-                move.l  #$5E400003, D0
-                moveq   #$00, D1
-                move.w  (VBlank_0_Run_Count).w, D1                   ; $FFFFF628
-                bsr     HUD_Draw_Single_Digit_Number           ; Offset_0x007F7A
-                rts
-Offset_0x007D82:
-                tst.b   (Update_HUD_timer).w                   ; $FFFFFE1E
-                bne.s   Timer_Over_2P_Sonic                    ; Offset_0x007D90
-                tst.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
-                bne.s   Timer_Over_2P_Miles                    ; Offset_0x007DAA
-                rts
+;S2_HUD_Update_2P:                                              ; Offset_0x007CA6
+;                tst.w   (Pause_Status).w                             ; $FFFFF63A
+;                bne     Offset_0x007D70
+;                tst.b   (Update_HUD_timer).w                   ; $FFFFFE1E
+;                beq.s   Offset_0x007CE6
+;                lea     (Timer).w, A1                   ; $FFFFFE22
+;                cmpi.l  #$00093B3B, (A1)+
+;                beq     Timer_Over_2P_Sonic                    ; Offset_0x007D90
+;                addq.b  #$01, -(A1)
+;                cmpi.b  #$3C, (A1)
+;                bcs.s   Offset_0x007CE6
+;                move.b  #$00, (A1)
+;                addq.b  #$01, -(A1)
+;                cmpi.b  #$3C, (A1)
+;                bcs.s   Offset_0x007CE6
+;                move.b  #$00, (A1)
+;                addq.b  #$01, -(A1)
+;                cmpi.b  #$09, (A1)
+;                bcs.s   Offset_0x007CE6
+;                move.b  #$09, (A1)
+;Offset_0x007CE6:
+;                tst.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
+;                beq.s   Offset_0x007D1E
+;                lea     (Time_Count_Address_P2).w, A1                ; $FFFFFED2
+;                cmpi.l  #$00093B3B, (A1)+
+;                beq     Timer_Over_2P_Miles                    ; Offset_0x007DAA
+;                addq.b  #$01, -(A1)
+;                cmpi.b  #$3C, (A1)
+;                bcs.s   Offset_0x007D1E
+;                move.b  #$00, (A1)
+;                addq.b  #$01, -(A1)
+;                cmpi.b  #$3C, (A1)
+;                bcs.s   Offset_0x007D1E
+;                move.b  #$00, (A1)
+;                addq.b  #$01, -(A1)
+;                cmpi.b  #$09, (A1)
+;                bcs.s   Offset_0x007D1E
+;                move.b  #$09, (A1)
+;Offset_0x007D1E:
+;                tst.b   (Update_HUD_lives).w                    ; $FFFFFE1C
+;                beq.s   Offset_0x007D2C
+;                clr.b   (Update_HUD_lives).w                    ; $FFFFFE1C
+;                bsr     HUD_Lives                              ; Offset_0x00804E
+;Offset_0x007D2C:
+;                tst.b   (HUD_Life_Refresh_Flag_P2).w                 ; $FFFFFEC8
+;                beq.s   Offset_0x007D3A
+;                clr.b   (HUD_Life_Refresh_Flag_P2).w                 ; $FFFFFEC8
+;                bsr     HUD_Lives_P2                           ; Offset_0x008040
+;Offset_0x007D3A:
+;                move.b  (Update_HUD_timer).w, D0               ; $FFFFFE1E
+;                or.b    (HUD_Timer_Refresh_Flag_P2).w, D0            ; $FFFFFECA
+;                beq.s   Offset_0x007D70
+;                lea     (Loser_Timer_Left).w, A1                     ; $FFFFFEF8
+;                tst.w   (A1)+
+;                beq.s   Offset_0x007D70
+;                subq.b  #$01, -(A1)
+;                bhi.s   Offset_0x007D70
+;                move.b  #$3C, (A1)
+;                cmpi.b  #$0C, -1(A1)
+;                bne.s   Offset_0x007D66
+;                move.w  #S2_Panic_Snd, D0                                ; $009F
+;                jsr     (Play_Music)                           ; Offset_0x001176
+;Offset_0x007D66:
+;                subq.b  #$01, -(A1)
+;                bcc.s   Offset_0x007D70
+;                move.w  #$0000, (A1)
+;                bsr.s   Offset_0x007D82
+;Offset_0x007D70:
+;                move.l  #$5E400003, D0
+;                moveq   #$00, D1
+;                move.w  (VBlank_0_Run_Count).w, D1                   ; $FFFFF628
+;                bsr     HUD_Draw_Single_Digit_Number           ; Offset_0x007F7A
+;                rts
+;Offset_0x007D82:
+;                tst.b   (Update_HUD_timer).w                   ; $FFFFFE1E
+;                bne.s   Timer_Over_2P_Sonic                    ; Offset_0x007D90
+;                tst.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
+;                bne.s   Timer_Over_2P_Miles                    ; Offset_0x007DAA
+;                rts
 ;-------------------------------------------------------------------------------                
-Timer_Over_2P_Sonic:                                           ; Offset_0x007D90
-                clr.b   (Update_HUD_timer).w                   ; $FFFFFE1E
-                lea     (Obj_Player_One).w, A0                       ; $FFFFB000
-                move.l  A0, A2
-                bsr     Kill_Player                            ; Offset_0x00A4A4
-                move.b  #$01, (Time_Over_flag).w                     ; $FFFFFE1A
-                tst.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
-                beq.s   Offset_0x007DBE
+;Timer_Over_2P_Sonic:                                           ; Offset_0x007D90
+;                clr.b   (Update_HUD_timer).w                   ; $FFFFFE1E
+;                lea     (Obj_Player_One).w, A0                       ; $FFFFB000
+;                move.l  A0, A2
+;                bsr     Kill_Player                            ; Offset_0x00A4A4
+;                move.b  #$01, (Time_Over_flag).w                     ; $FFFFFE1A
+;                tst.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
+;                beq.s   Offset_0x007DBE
 ;-------------------------------------------------------------------------------                 
-Timer_Over_2P_Miles:                                           ; Offset_0x007DAA
-                clr.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
-                lea     (Obj_Player_Two).w, A0                       ; $FFFFB04A
-                move.l  A0, A2
-                bsr     Kill_Player                            ; Offset_0x00A4A4
-                move.b  #$01, (Time_Over_Flag_P2).w                  ; $FFFFFECC
-Offset_0x007DBE:
-                rts
+;Timer_Over_2P_Miles:                                           ; Offset_0x007DAA
+;                clr.b   (HUD_Timer_Refresh_Flag_P2).w                ; $FFFFFECA
+;                lea     (Obj_Player_Two).w, A0                       ; $FFFFB04A
+;                move.l  A0, A2
+;                bsr     Kill_Player                            ; Offset_0x00A4A4
+;                move.b  #$01, (Time_Over_Flag_P2).w                  ; $FFFFFECC
+;Offset_0x007DBE:
+;                rts
 ;------------------------------------------------------------------------------- 
 Offset_0x007DC0:
                 move.l  #$5F400003, (VDP_Control_Port)               ; $00C00004
@@ -10561,7 +10573,7 @@ Exit_Object_HitWall_Left:                                      ; Offset_0x00A164
 ; ->>>
 ;===============================================================================                              
 Touch_Response_2P:                                             ; Offset_0x00A168
-                nop
+                ;nop
                 move.w  Obj_X(A0), D2                                    ; $0010
                 move.w  Obj_Y(A0), D3                                    ; $0014
                 subi.w  #$0004, D2
@@ -10574,7 +10586,7 @@ Touch_Response_2P:                                             ; Offset_0x00A168
                 bra.s   Touch_Process                          ; Offset_0x00A1BA    
 ;-------------------------------------------------------------------------------                   
 Touch_Response:                                                ; Offset_0x00A188
-                nop
+                ;nop
                 jsr     (TouchRings)                           ; Offset_0x0088AE
                 move.w  Obj_X(A0), D2                                    ; $0010
                 move.w  Obj_Y(A0), D3                                    ; $0014
@@ -10818,7 +10830,7 @@ Offset_0x00A3EC:
                 rts  
 ;-------------------------------------------------------------------------------                
 Touch_Hurt:                                                    ; Offset_0x00A3F0
-                nop
+                ;nop
                 tst.b   Obj_P_Invunerblt_Time(A0)                        ; $0034
                 bne.s   Offset_0x00A3EC
                 move.l  A1, A2              
@@ -10956,7 +10968,9 @@ Obj_Miles_Tails:                                               ; Offset_0x00F1A6
 Obj_Miles_Tails_2P:                                            ; Offset_0x00F2AE
                 include 'data\objects\milest2p.asm'               
 Obj_Player_Underwater:                                         ; Offset_0x00F38C
-                include 'data\objects\underwtr.asm'                  
+                include 'data\objects\underwtr.asm'                
+Obj_1P2PVSOptions:                                         ;
+                include 'data\s2_obj\objS2_0x0F.asm'                    
 ;===============================================================================
 ; Rotina para restaurar a m sica da fase ap s o Sonic obter oxig nio
 ; ->>>
@@ -18951,7 +18965,7 @@ Repeat_TileDrawing:
 RepeatTiles_Index:
 		; these two instructions make a blank Act 1 entry
 		rts
-		nop
+		;nop
                 bra.w	AIz_Do_Ship_Loop
 ; ===========================================================================
 ; Offset_0x02FF6C:
@@ -20764,8 +20778,8 @@ Offset_0x031E62:
                 rts
 ;-------------------------------------------------------------------------------
 ; Offset_0x031E88:  ; Left over ???
-                nop
-                nop
+                ;nop
+                ;nop
                 cmpi.w  #$0004, (Level_Events_Routine_2).w           ; $FFFFEEC2
                 bcs.s   Offset_0x031E9A
                 jmp     (DeleteObject)                         ; Offset_0x011138
@@ -23869,16 +23883,16 @@ Default_Deform:                                                ; Offset_0x0341EA
 Trap_0x0F:                                                     ; Offset_0x034200
                 move.l  Trap_Routines_List(PC, D6), A6         ; Offset_0x034220
                 jsr     (A6)
-                nop
-                nop
+                ;nop
+                ;nop
                 move    SR, D5
                 move.w  (A7), D6
                 andi.w  #$001F, D5
                 andi.w  #$FFE0, D6
                 or.w    D5, D6
                 move.w  D6, (A7)
-                nop
-                nop
+                ;nop
+                ;nop
                 rte  
 ;-------------------------------------------------------------------------------                
 Trap_Routines_List:                                            ; Offset_0x034220
