@@ -874,14 +874,19 @@ Offset_0x00DBC2:
                 movem.l A4-A6, -(A7)
                 bsr     Miles_Floor                            ; Offset_0x00E5F0
                 movem.l (A7)+, A4-A6
-                cmpi.w  #$0000, (Player_Selected_Flag).w             ; $FFFFFF08
-                bne.s   Offset_0x00DBFC
+                cmpi.w  #$0002, (Player_Selected_Flag).w             ; $FFFFFF08	;change from checking if s&t then no to checking tails alone then no
+                beq.s   Offset_0x00DBFC
                 lea     (Carrying_Sonic_Data).w, A2                  ; $FFFFF73E
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 move.w  (Control_Ports_Buffer_Data).w, D0            ; $FFFFF604
                 bsr     Offset_0x00D8C6
 Offset_0x00DBFC:
+		btst	#1,(Control_Ports_Logical_Data_2).w	; is down being pressed?
+		bne.s	Miles_FlightCancel				; if yes, branch
                 rts
+Miles_FlightCancel:
+		move.b	#2,Obj_Ani_Number(a0)		;rolling animation
+		rts
 
 ; ===========================================================================
 ; ---------------------------------------------------------------------------
@@ -2050,7 +2055,12 @@ Offset_0x00E902:
                 rts
 ;-------------------------------------------------------------------------------                
 Kill_Miles:                                                    ; Offset_0x00E904
+		cmpi.w  #MGz_Act_2,(Current_Zone).w
+                beq.s   Miles_MarbleGarden2                     ; Offset_0x004BC2
                 jmp     (Kill_Player)                          ; Offset_0x00A4A4
+Miles_MarbleGarden2:
+		jsr	Offset_0x004844
+		rts
 ;-------------------------------------------------------------------------------
 Miles_Death:                                                   ; Offset_0x00E90A
                 bsr     Player_GameOver                        ; Offset_0x00C126

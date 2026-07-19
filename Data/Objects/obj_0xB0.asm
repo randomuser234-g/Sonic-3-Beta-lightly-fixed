@@ -30,6 +30,12 @@ Offset_0x039C96:
                 dc.w    Offset_0x039E38-Offset_0x039C96   
 ;-------------------------------------------------------------------------------
 Offset_0x039CB8:
+                cmpi.w  #Miles_Alone, (Player_Selected_Flag).w  ; is tails alone game?
+                beq.s   MGZ2B_TailsAlreadyExists				;if yes, branch
+		move.l	#Obj_Miles, (Obj_Player_Two).w 				;otherwise, spawn him in
+		move.w	(Obj_Player_One+Obj_X).w,(Obj_Player_Two+Obj_X).w
+		move.w	(Obj_Player_One+Obj_Y).w,(Obj_Player_Two+Obj_Y).w
+MGZ2B_TailsAlreadyExists:
                 lea     Drill_Mobile_Setup_Data(PC), A1        ; Offset_0x03ADF6
                 jsr     (Object_Settings)                      ; Offset_0x041D72
                 bset    #$07, Obj_Art_VRAM(A0)                           ; $000A

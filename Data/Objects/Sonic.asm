@@ -1128,6 +1128,8 @@ Sonic_Boundary_Bottom:
 		jmp	(Kill_Player).l
 Sonic_MarbleGarden:
 		jsr	Offset_0x004844		;MGZ2 boss function
+		lea	(Obj_Player_Two).w,a0
+		jsr	Offset_0x004844
 		rts
 ; ===========================================================================
 ; Offset_0x00B59E:
@@ -2160,7 +2162,12 @@ Offset_0x00C0EC:
 		rts
 ;-------------------------------------------------------------------------------		
 Kill_Sonic:						    ; Offset_0x00C0EE
-		jmp     (Kill_Player)		          ; Offset_0x00A4A4		
+		cmpi.w  #MGz_Act_2,(Current_Zone).w
+                beq.s   Sonic_MarbleGarden2                     ; Offset_0x004BC2
+                jmp     (Kill_Player)                          ; Offset_0x00A4A4
+Sonic_MarbleGarden2:
+		jsr	Offset_0x004844
+		rts	
 ;-------------------------------------------------------------------------------
 Sonic_Death:						   ; Offset_0x00C0F4
 		tst.w   (Debug_Mode_Active).w		        ; $FFFFFFFA
