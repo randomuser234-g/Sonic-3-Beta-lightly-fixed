@@ -71,7 +71,7 @@ Offset_0x00D202:
                 move.b  #$04, Obj_Player_Flip_Speed(A0)                  ; $0031
                 move.b  #$1E, Obj_Subtype(A0)                            ; $002C
                 move.w  #$0000, (Miles_CPU_Routine).w                ; $FFFFF708
-                move.w  #$0258, (Miles_CPU_Ctrl_Auto_Timer).w        ; $FFFFF702
+                move.w  #$0001, (Miles_CPU_Ctrl_Auto_Timer).w        ; $FFFFF702
                 move.w  #$0000, (Miles_CPU_Respawn_Timer).w          ; $FFFFF704
                 move.l  #Obj_Miles_Tails, (Obj_Miles_Tails_RAM).w ; Offset_0x00F1A6, $FFFFCC0A
                 move.w  A0, (Obj_Miles_Tails_RAM+Obj_Control_Var_00).w ; $FFFFCC3A
@@ -106,6 +106,13 @@ Offset_0x00D276:
 Offset_0x00D280:
                 btst    #$00, Obj_Player_Control(A0)                     ; $002E
                 bne.s   Miles_ControlsLock                     ; Offset_0x00D2A2
+		cmpi.b	#1,(Tails_Carry_Sonic).w
+		bne.s	Miles_AfterRemovingFly3
+		lea	(Obj_Player_One).w,a1
+		clr.b	object_control(a1)
+		bset	#1,Obj_Status(a1)
+		move.b	#0,(Tails_Carry_Sonic).w
+Miles_AfterRemovingFly3:
                 movem.l A4-A6, -(A7)
                 moveq   #$00, D0
                 move.b  Obj_Status(A0), D0                               ; $002A
@@ -395,6 +402,21 @@ Offset_0x00D60A:
                 bne     Offset_0x00D724
                 tst.b   Obj_Player_Control(A0)                           ; $002E
                 bmi     Offset_0x00D724
+		cmpi.b	#1,(Tails_Carry_Sonic).w
+		bne.s	Tails_NoSonicControl
+;Tails_SonicControl:
+		move.b	(Control_Ports_Logical_Data).w,d0
+		andi.b	#$0C,d0		;left/right?
+		beq.s	Tails_SonicPressedABC	;if not, check for up
+		or.b	(Control_Ports_Logical_Data_2).w,d0
+		move.b	d0,(Control_Ports_Logical_Data_2).w
+Tails_SonicPressedABC:
+		btst	#0,(Control_Ports_Logical_Data).w	;holding up?
+		beq.s	Tails_SonicNoInputs			;if not, sonic has no inputs
+		ori.w   #$7000,(Control_Ports_Logical_Data_2).w	;give A/B/C inputs to tails
+Tails_SonicNoInputs:
+		rts
+Tails_NoSonicControl:
                 tst.w   Obj_P_Horiz_Ctrl_Lock(A0)                        ; $0032
                 beq.s   Offset_0x00D630
                 tst.w   Obj_Inertia(A0)                                  ; $001C
@@ -619,17 +641,22 @@ Offset_0x00D8C6:
                 tst.b   Obj_Flags(A1)                                    ; $0004
                 bpl.s   Offset_0x00D930
                 cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
-                bcc.s   Offset_0x00D930
+                bhs.s   Offset_0x00D930					;bcc to bhs
                 btst    #$01, Obj_Status(A1)                             ; $002A
                 beq.s   Offset_0x00D930
+		tst.b	Obj_Player_Control(a1)
+		bmi.s	Offset_0x00D930
+		move.b	#1,(Tails_Carry_Sonic).w
                 andi.b  #$70, D0
                 beq     Offset_0x00D944
                 clr.b   Obj_Player_Control(A1)                           ; $002E
+		clr.b	(Tails_Carry_Sonic).w
+		move.b	#2,Obj_Ani_Number(a1)
                 clr.b   (A2)
-                move.b  #$12, $0001(A2)
+                move.b  #$12, $0001(A2)	;---
                 andi.w  #$0F00, D0
-                beq     Offset_0x00D904
-                move.b  #$3C, $0001(A2)
+                beq     Offset_0x00D904	;identical
+                move.b  #$3C, $0001(A2)	;---
 Offset_0x00D904:
                 btst    #$0A, D0
                 beq.s   Offset_0x00D910
@@ -645,6 +672,7 @@ Offset_0x00D91C:
                 rts
 Offset_0x00D930:
                 clr.b   Obj_Player_Control(A1)                           ; $002E
+		clr.b	(Tails_Carry_Sonic).w
                 clr.b   (A2)
                 move.b  #$78, $0001(A2)
                 andi.w  #$7FFF, Obj_Art_VRAM(A1)                         ; $000A
@@ -700,12 +728,12 @@ Offset_0x00D9E4:
                 sub.w   Obj_X(A0), D0                                    ; $0010
                 addi.w  #$0010, D0
                 cmpi.w  #$0020, D0
-                bcc     Offset_0x00DA86
+                bhs     Offset_0x00DA86					;change from bcc to bhs
                 move.w  Obj_Y(A1), D1                                    ; $0014
                 sub.w   Obj_Y(A0), D1                                    ; $0014
-                subi.w  #$0010, D1
-                cmpi.w  #$0018, D1
-                bcc     Offset_0x00DA86
+                subi.w  #$0020, D1					;change $10 to $20
+                cmpi.w  #$0010, D1					;change $18 to $10
+                bhs     Offset_0x00DA86					;change bcc to bhs
                 tst.b   Obj_Player_Control(A1)                           ; $002E
                 bne.s   Offset_0x00DA86
                 cmpi.b  #$04, Obj_Routine(A1)                            ; $0005
@@ -794,6 +822,13 @@ Offset_0x00DB50:
 		rts							; originally water splash
 ;-------------------------------------------------------------------------------
 Miles_MdNormal:                                                ; Offset_0x00DB5A
+		cmpi.b	#1,(Tails_Carry_Sonic).w
+		bne.s	Miles_AfterRemovingFly
+		lea	(Obj_Player_One).w,a1
+		clr.b	object_control(a1)
+		bset	#1,Obj_Status(a1)
+		move.b	#0,(Tails_Carry_Sonic).w
+Miles_AfterRemovingFly:
                 bsr     Miles_Spindash                         ; Offset_0x00E39C
                 bsr     Miles_Jump                             ; Offset_0x00E238
                 bsr     Miles_SlopeResist                      ; Offset_0x00E4DC
@@ -813,10 +848,11 @@ Offset_0x00DB90:
 ;-------------------------------------------------------------------------------
 Miles_MdJump:                                                  ; Offset_0x00DB92
 		cmpi.b	#$20,Obj_Ani_Number(a0)
-		bne.s	dontfly
+		bne.s	Miles_NoFlyPhysics
                 tst.b   (Level_Boundaries_Flag).w                    ; $FFFFF668
                 bne.s   Offset_0x00DBC2
-dontfly:
+Miles_NoFlyPhysics:
+		move.b	#0,(Tails_Carry_Sonic).w
                 bsr     Miles_JumpHeight                       ; Offset_0x00E2F8
                 bsr     Miles_ChgJumpDir                       ; Offset_0x00E0EC
                 bsr     Miles_LevelBoundaries                  ; Offset_0x00E17C
@@ -829,6 +865,7 @@ Offset_0x00DBB8:
                 bsr     Miles_Floor                            ; Offset_0x00E5F0
                 rts
 Offset_0x00DBC2:
+                move.b  #$00, (Miles_CPU_Jumping).w                  ; $FFFFF70F
 		bsr.w	Tails_StartFlying
                 bsr     Miles_ChgJumpDir                       ; Offset_0x00E0EC
                 bsr     Miles_LevelBoundaries                  ; Offset_0x00E17C
@@ -905,6 +942,13 @@ Offset_0x00DC6C:
 
 ;-------------------------------------------------------------------------------
 Miles_MdRoll:                                                  ; Offset_0x00DC74
+		cmpi.b	#1,(Tails_Carry_Sonic).w
+		bne.s	Miles_AfterRemovingFly2
+		lea	(Obj_Player_One).w,a1
+		clr.b	object_control(a1)
+		bset	#1,Obj_Status(a1)
+		move.b	#0,(Tails_Carry_Sonic).w
+Miles_AfterRemovingFly2:
                 tst.b   Obj_Player_Spdsh_Flag(A0)                        ; $003D
                 bne.s   Offset_0x00DC7E
                 bsr     Miles_Jump                             ; Offset_0x00E238
@@ -1517,8 +1561,11 @@ Tails_TestForFlight:
 		move.b	(Control_Ports_Logical_Data_2+1).w,d0
 		andi.b	#$70,d0
 		beq.s	Offset_0x00E39A
+		btst	#00,(Control_Ports_Logical_Data).w	;pressed up?
+		bne.s	Tails_FlyAssistStart	;if yes, bypass cpu check
 		tst.w	(Miles_CPU_Ctrl_Auto_Timer).w
 		beq.s	Offset_0x00E39A
+Tails_FlyAssistStart:
 		; we already checked this earlier...
 		btst	#2,Obj_Status(a0)
 		beq.s	Offset_0x00E382
@@ -1539,7 +1586,6 @@ Offset_0x00E382:
 
 Offset_0x00E394:
 		move.b	#$20,Obj_Ani_Number(a0)
-
 Offset_0x00E39A:
 		rts
 ; End of function Tails_TestForFlight
@@ -1948,7 +1994,14 @@ Offset_0x00E81C:
                 move.b  #$00, Obj_P_Flips_Remaining(A0)                  ; $0030
                 move.b  #$00, Obj_Look_Up_Down_Time(A0)                  ; $0039
                 move.b  #$00, (Level_Boundaries_Flag).w              ; $FFFFF668
+		cmpi.b	#1,(Tails_Carry_Sonic).w
+		bne.s	Miles_AfterRemovingFly4
+		lea	(Obj_Player_One).w,a1
+		clr.b	object_control(a1)
+		bset	#1,Obj_Status(a1)
+		move.b	#0,(Tails_Carry_Sonic).w
                 move.w  #$0000, (Carrying_Sonic_Data).w              ; $FFFFF73E
+Miles_AfterRemovingFly4:
                 cmpi.b  #$14, Obj_Ani_Number(A0)                         ; $0020
                 bne.s   Offset_0x00E86C
                 move.b  #$00, Obj_Ani_Number(A0)                         ; $0020

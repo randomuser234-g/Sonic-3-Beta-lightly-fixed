@@ -2049,7 +2049,12 @@ Offset_0x00BF6A:
 Sonic_ResetOnFloor:
 		cmpi.l	#Obj_Miles,(a0)
 		beq.w	Miles_ResetOnFloor
-
+		cmpi.b	#1,(Tails_Carry_Sonic).w
+		bne.s	Sonic_NotFlying
+		clr.b	object_control(a0)
+		bset	#1,Obj_Status(a0)
+		move.b	#0,(Tails_Carry_Sonic).w
+Sonic_NotFlying:		
 		move.b	Obj_Height_2(a0),d0
 		move.b	Obj_Height_3(a0),Obj_Height_2(a0)
 		move.b	Obj_Width_3(a0),Obj_Width_2(a0)
