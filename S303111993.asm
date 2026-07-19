@@ -5748,15 +5748,23 @@ Offset_0x004842:
 Offset_0x004844: ; Sonic 2 Left over modified for MGz act 2 boss
 		cmpi.b	#6,(Obj_Player_One+Obj_Routine).w	; is the player dead?
 		bcc.s	Offset_0x00486E		; if yes, branch
-		move.w	#0,Obj_Speed_Y(a0)
-		move.w	#$06BA,d0
-		move.w	d0,(Obj_Player_One+Obj_Y).w
-		move.w	(Obj_Player_One+Obj_X).w,(Obj_Player_Two+Obj_X).w
-		move.w	(Obj_Player_One+Obj_Y).w,(Obj_Player_Two+Obj_Y).w
-		rts
+		move.b	#2,Obj_Routine(a0)
+		move.w	#0,Obj_Speed_X(a0)		;no x speed
+		move.w	#0,Obj_Speed_Y(a0)		;no y speed
+		;move.w	#$3C90,Obj_X(a0)			;move to this x coord
+		move.w	#$0760,Obj_Y(a0)
+		bset	#1,Obj_Status(a0)
+		move.b	#1,(Level_Boundaries_Flag).w		;flying status
+                cmpi.w  #Miles_Alone, (Player_Selected_Flag).w  ; is this tails alone game?
+                beq.s   Offset_0x004882				;if yes, branch
+                move.w  #$0006, (Miles_CPU_Routine).w                ; $FFFFF708
+		move.w	(Obj_Player_One+Obj_X).w,(Obj_Player_Two+Obj_X).w;move to this x coord
+		subi.w	#$18,(Obj_Player_Two+Obj_Y).w				;get him flying
+		move.b	#$20,(Obj_Player_Two+Obj_Ani_Number).w		;flying anim
 Offset_0x00486E:
 		rts
 Offset_0x004882:
+		move.b	#$20,(Obj_Player_One+Obj_Ani_Number).w		;flying anim
                 rts
 ;-------------------------------------------------------------------------------               
 Run_Demo_Mode:                                                 ; Offset_0x004884
