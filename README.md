@@ -42,13 +42,13 @@ With debug all zones playable starting from AIz, all characters can use debug mo
 
 Progress without debug:
 
-Tails Alone: Flying Battery Act 2, then softlock
-
 Sonic & Tails: Flying Battery Act 2, then softlock (requires co-op to get to this)
 
 Sonic Alone: Flying Battery Act 1 softlock, no platforms in area
 
 "Knuckles" Alone: Flying Battery Act 1 softlock, no platforms in area
+
+Tails Alone: Carnival night, crash on touching objects, the "fix" from earlier isn't actually doing anything
 
 Zones before the listed up here are beatable without debug (AIz to CNz)
 
