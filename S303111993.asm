@@ -4819,7 +4819,7 @@ Level_FromCheckpoint:
 Offset_0x003CCC:
 		jsr	(ObjectsManager).l
 		jsr	(Load_Ring_Pos).l
-		jsr	(S2_Load_Triangle_Pos).l
+		;jsr	(S2_Load_Triangle_Pos).l
 		jsr	(LRz_Load_Rock_Pos).l
 		jsr	(RunObjects).l
 		jsr	(Build_Sprites).l
@@ -4896,9 +4896,9 @@ Level_MainLoop:
 		bsr.w	WaterEffects
 		bsr.w	UpdateWaterSurface
 		jsr	(Load_Ring_Pos).l
-		cmpi.b	#S2_CNz_Id,(Current_Zone).w
-		bne.s	Offset_0x003E10
-		jsr	(S2_Load_Triangle_Pos).l
+		;cmpi.b	#S2_CNz_Id,(Current_Zone).w
+		;bne.s	Offset_0x003E10
+		;jsr	(S2_Load_Triangle_Pos).l
 
 Offset_0x003E10:
 		cmpi.b	#LRz_Id,(Current_Zone).w
@@ -8632,121 +8632,121 @@ Level_Rings_Mappings:                                          ; Offset_0x008A1E
 ; Rotina para carregar o posiconamento dos tri ngulos na Casino Night
 ; ->>>   Sonic 2 left over
 ;===============================================================================
-S2_Load_Triangle_Pos:                                          ; Offset_0x008A5E
-                moveq   #$00, D0
-                move.b  (CNz_Triangle_Pos_Routine).w, D0             ; $FFFFF71A
-                move.w  Offset_0x008A6C(PC, D0), D0
-                jmp     Offset_0x008A6C(PC, D0)
+;S2_Load_Triangle_Pos:                                          ; Offset_0x008A5E
+;                moveq   #$00, D0
+;                move.b  (CNz_Triangle_Pos_Routine).w, D0             ; $FFFFF71A
+;                move.w  Offset_0x008A6C(PC, D0), D0
+;                jmp     Offset_0x008A6C(PC, D0)
 ;-------------------------------------------------------------------------------
-Offset_0x008A6C:
-                dc.w    Offset_0x008A70-Offset_0x008A6C
-                dc.w    Offset_0x008AC4-Offset_0x008A6C    
+;Offset_0x008A6C:
+;                dc.w    Offset_0x008A70-Offset_0x008A6C
+;                dc.w    Offset_0x008AC4-Offset_0x008A6C    
 ;-------------------------------------------------------------------------------
-Offset_0x008A70:
-                addq.b  #$02, (CNz_Triangle_Pos_Routine).w           ; $FFFFF71A
-                lea     (CNz_Triangles_Act_1), A1              ; Offset_0x008EBC
-                tst.b   (Current_Act).w                                   ; $FFFFFE11
-                beq.s   Offset_0x008A86
-                lea     (CNz_Triangles_Act_2), A1              ; Offset_0x009000
-Offset_0x008A86:
-                move.w  (Camera_X).w, D4                             ; $FFFFEE78
-                subq.w  #$08, D4
-                bhi.s   Offset_0x008A96
-                moveq   #$01, D4
-                bra.s   Offset_0x008A96
-Offset_0x008A92:
-                lea     $0006(A1), A1
-Offset_0x008A96:
-                cmp.w   $0002(A1), D4
-                bhi.s   Offset_0x008A92
-                move.l  A1, (CNz_Triangle_Pos_Start).w               ; $FFFFF71C
-                move.l  A1, (CNz_Triangle_Pos_Start_2P).w            ; $FFFFF724
-                addi.w  #$0150, D4
-                bra.s   Offset_0x008AAE
-Offset_0x008AAA:
-                lea     $0006(A1), A1
-Offset_0x008AAE:
-                cmp.w   $0002(A1), D4
-                bhi.s   Offset_0x008AAA
-                move.l  A1, (CNz_Triangle_Pos_End).w                 ; $FFFFF720
-                move.l  A1, (CNz_Triangle_Pos_End_2P).w              ; $FFFFF728
-                move.b  #$01, (CNz_Triangle_Pos_Flag).w              ; $FFFFF71B
-                rts
+;Offset_0x008A70:
+;                addq.b  #$02, (CNz_Triangle_Pos_Routine).w           ; $FFFFF71A
+;                lea     (CNz_Triangles_Act_1), A1              ; Offset_0x008EBC
+;                tst.b   (Current_Act).w                                   ; $FFFFFE11
+;                beq.s   Offset_0x008A86
+;                lea     (CNz_Triangles_Act_2), A1              ; Offset_0x009000
+;Offset_0x008A86:
+;                move.w  (Camera_X).w, D4                             ; $FFFFEE78
+;                subq.w  #$08, D4
+;                bhi.s   Offset_0x008A96
+;                moveq   #$01, D4
+;                bra.s   Offset_0x008A96
+;Offset_0x008A92:
+;                lea     $0006(A1), A1
+;Offset_0x008A96:
+;                cmp.w   $0002(A1), D4
+;                bhi.s   Offset_0x008A92
+;                move.l  A1, (CNz_Triangle_Pos_Start).w               ; $FFFFF71C
+;                move.l  A1, (CNz_Triangle_Pos_Start_2P).w            ; $FFFFF724
+;                addi.w  #$0150, D4
+;                bra.s   Offset_0x008AAE
+;Offset_0x008AAA:
+;                lea     $0006(A1), A1
+;Offset_0x008AAE:
+;                cmp.w   $0002(A1), D4
+;                bhi.s   Offset_0x008AAA
+;                move.l  A1, (CNz_Triangle_Pos_End).w                 ; $FFFFF720
+;                move.l  A1, (CNz_Triangle_Pos_End_2P).w              ; $FFFFF728
+;                move.b  #$01, (CNz_Triangle_Pos_Flag).w              ; $FFFFF71B
+;                rts
 ;-------------------------------------------------------------------------------                
-Offset_0x008AC4:
-                move.l  (CNz_Triangle_Pos_Start).w, A1               ; $FFFFF71C
-                move.w  (Camera_X).w, D4                             ; $FFFFEE78
-                subq.w  #$08, D4
-                bhi.s   Offset_0x008AD8
-                moveq   #$01, D4
-                bra.s   Offset_0x008AD8    
-Offset_0x008AD4:
-                lea     $0006(A1), A1
-Offset_0x008AD8:
-                cmp.w   $0002(A1), D4
-                bhi.s   Offset_0x008AD4
-                bra.s   Offset_0x008AE2                       
-Offset_0x008AE0:
-                subq.w  #$06, A1
-Offset_0x008AE2:
-                cmp.w   -4(A1), D4
-                bls.s   Offset_0x008AE0
-                move.l  A1, (CNz_Triangle_Pos_Start).w               ; $FFFFF71C
-                move.l  (CNz_Triangle_Pos_End).w, A2                 ; $FFFFF720
-                addi.w  #$0150, D4
-                bra.s   Offset_0x008AFA   
-Offset_0x008AF6:
-                lea     $0006(A2), A2
-Offset_0x008AFA:
-                cmp.w   $0002(A2), D4
-                bhi.s   Offset_0x008AF6
-                bra.s   Offset_0x008B04  
-Offset_0x008B02:
-                subq.w  #$06, A2
-Offset_0x008B04:
-                cmp.w   -4(A2), D4
-                bls.s   Offset_0x008B02
-                move.l  A2, (CNz_Triangle_Pos_End).w                 ; $FFFFF720
-                tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
-                bne.s   Offset_0x008B1E
-                move.l  A1, (CNz_Triangle_Pos_Start_2P).w            ; $FFFFF724
-                move.l  A2, (CNz_Triangle_Pos_End_2P).w              ; $FFFFF728
-                rts
-Offset_0x008B1E:
-                move.l  (CNz_Triangle_Pos_Start_2P).w, A1            ; $FFFFF724
-                move.w  (Camera_X_P2).w, D4                          ; $FFFFEE60
-                subq.w  #$08, D4
-                bhi.s   Offset_0x008B32
-                moveq   #$01, D4
-                bra.s   Offset_0x008B32
-Offset_0x008B2E:
-                lea     $0006(A1), A1
-Offset_0x008B32:
-                cmp.w   $0002(A1), D4
-                bhi.s   Offset_0x008B2E
-                bra.s   Offset_0x008B3C
-Offset_0x008B3A:
-                subq.w  #$06, A1
-Offset_0x008B3C:
-                cmp.w   -4(A1), D4
-                bls.s   Offset_0x008B3A
-                move.l  A1, (CNz_Triangle_Pos_Start_2P).w            ; $FFFFF724
-                move.l  (CNz_Triangle_Pos_End_2P).w, A2              ; $FFFFF728
-                addi.w  #$0150, D4
-                bra.s   Offset_0x008B54   
-Offset_0x008B50:
-                lea     $0006(A2), A2
-Offset_0x008B54:
-                cmp.w   $0002(A2), D4
-                bhi.s   Offset_0x008B50
-                bra.s   Offset_0x008B5E
-Offset_0x008B5C:
-                subq.w  #$06, A2
-Offset_0x008B5E:
-                cmp.w   -4(A2), D4
-                bls.s   Offset_0x008B5C
-                move.l  A2, (CNz_Triangle_Pos_End_2P).w              ; $FFFFF728
-                rts
+;Offset_0x008AC4:
+;                move.l  (CNz_Triangle_Pos_Start).w, A1               ; $FFFFF71C
+;                move.w  (Camera_X).w, D4                             ; $FFFFEE78
+;                subq.w  #$08, D4
+;                bhi.s   Offset_0x008AD8
+;                moveq   #$01, D4
+;                bra.s   Offset_0x008AD8    
+;Offset_0x008AD4:
+;                lea     $0006(A1), A1
+;Offset_0x008AD8:
+;                cmp.w   $0002(A1), D4
+;                bhi.s   Offset_0x008AD4
+;                bra.s   Offset_0x008AE2                       
+;Offset_0x008AE0:
+;                subq.w  #$06, A1
+;Offset_0x008AE2:
+;                cmp.w   -4(A1), D4
+;                bls.s   Offset_0x008AE0
+;                move.l  A1, (CNz_Triangle_Pos_Start).w               ; $FFFFF71C
+;                move.l  (CNz_Triangle_Pos_End).w, A2                 ; $FFFFF720
+;                addi.w  #$0150, D4
+;                bra.s   Offset_0x008AFA   
+;Offset_0x008AF6:
+;                lea     $0006(A2), A2
+;Offset_0x008AFA:
+;                cmp.w   $0002(A2), D4
+;                bhi.s   Offset_0x008AF6
+;                bra.s   Offset_0x008B04  
+;Offset_0x008B02:
+;                subq.w  #$06, A2
+;Offset_0x008B04:
+;                cmp.w   -4(A2), D4
+;                bls.s   Offset_0x008B02
+;                move.l  A2, (CNz_Triangle_Pos_End).w                 ; $FFFFF720
+;                tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
+;                bne.s   Offset_0x008B1E
+;                move.l  A1, (CNz_Triangle_Pos_Start_2P).w            ; $FFFFF724
+;                move.l  A2, (CNz_Triangle_Pos_End_2P).w              ; $FFFFF728
+;                rts
+;Offset_0x008B1E:
+;                move.l  (CNz_Triangle_Pos_Start_2P).w, A1            ; $FFFFF724
+;                move.w  (Camera_X_P2).w, D4                          ; $FFFFEE60
+;                subq.w  #$08, D4
+;                bhi.s   Offset_0x008B32
+;                moveq   #$01, D4
+;                bra.s   Offset_0x008B32
+;Offset_0x008B2E:
+;                lea     $0006(A1), A1
+;Offset_0x008B32:
+;                cmp.w   $0002(A1), D4
+;                bhi.s   Offset_0x008B2E
+;                bra.s   Offset_0x008B3C
+;Offset_0x008B3A:
+;                subq.w  #$06, A1
+;Offset_0x008B3C:
+;                cmp.w   -4(A1), D4
+;                bls.s   Offset_0x008B3A
+;                move.l  A1, (CNz_Triangle_Pos_Start_2P).w            ; $FFFFF724
+;                move.l  (CNz_Triangle_Pos_End_2P).w, A2              ; $FFFFF728
+;                addi.w  #$0150, D4
+;                bra.s   Offset_0x008B54   
+;Offset_0x008B50:
+;                lea     $0006(A2), A2
+;Offset_0x008B54:
+;                cmp.w   $0002(A2), D4
+;                bhi.s   Offset_0x008B50
+;                bra.s   Offset_0x008B5E
+;Offset_0x008B5C:
+;                subq.w  #$06, A2
+;Offset_0x008B5E:
+;                cmp.w   -4(A2), D4
+;                bls.s   Offset_0x008B5C
+;                move.l  A2, (CNz_Triangle_Pos_End_2P).w              ; $FFFFF728
+;                rts
 ;===============================================================================
 ; Rotina para carregar o posiconamento dos tri ngulos na Casino Night
 ; <<<-   Sonic 2 left over

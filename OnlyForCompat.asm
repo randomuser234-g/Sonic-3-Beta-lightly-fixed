@@ -585,6 +585,7 @@ Miles_CPU_Respawn_Y              equ M68K_RAM_Start+$F70C
 Miles_CPU_Jumping                equ M68K_RAM_Start+$F70F
 Ring_Pos_Routine                 equ M68K_RAM_Start+$F710
 Title_Card_Flag                  equ M68K_RAM_Start+$F711
+Tails_Carry_Sonic:               equ M68K_RAM_Start+$F712
 CNz_Triangle_Pos_Routine         equ M68K_RAM_Start+$F71A
 CNz_Triangle_Pos_Flag            equ M68K_RAM_Start+$F71B
 CNz_Triangle_Pos_Start           equ M68K_RAM_Start+$F71C
