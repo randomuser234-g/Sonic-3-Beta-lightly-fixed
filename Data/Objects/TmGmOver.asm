@@ -55,24 +55,24 @@ Offset_0x0244D6:
 Offset_0x0244F6:
                 clr.l   (Saved_Time).w                               ; $FFFFFE38
                 move.w  #$0001, (Restart_Level_Flag).w               ; $FFFFFE02
-Offset_0x024500:
-                tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
-                beq.s   Offset_0x024540
-                move.w  #$0000, (Restart_Level_Flag).w               ; $FFFFFE02
-                move.b  #$18, (Game_Mode).w                          ; $FFFFF600
-                move.w  #$0000, (Results_Screen_2P).w                ; $FFFFFF02
-                tst.b   (Time_Over_flag).w                           ; $FFFFFE1A
-                bne.s   Offset_0x024540
-                tst.b   (Time_Over_Flag_P2).w                        ; $FFFFFECC
-                bne.s   Offset_0x024540
-                move.w  #$0001, (Game_Over_2P_Flag).w                ; $FFFFFF98
-                move.w  #$0001, (Results_Screen_2P).w                ; $FFFFFF02
-                move.w  #$FFFF, (A4)
-                tst.b   Obj_Player_One_Or_Two(A0)                        ; $003F
-                beq.s   Offset_0x02453C
-                addq.w  #$01, A4
-Offset_0x02453C:
-                move.b  #$FE, (A4)
+Offset_0x024500:	;skip two player checks
+                ;tst.w   (Two_Player_Flag).w                          ; $FFFFFFD8
+                ;beq.s   Offset_0x024540
+                ;move.w  #$0000, (Restart_Level_Flag).w               ; $FFFFFE02
+                ;move.b  #$18, (Game_Mode).w                          ; $FFFFF600
+                ;move.w  #$0000, (Results_Screen_2P).w                ; $FFFFFF02
+                ;tst.b   (Time_Over_flag).w                           ; $FFFFFE1A
+                ;bne.s   Offset_0x024540
+                ;tst.b   (Time_Over_Flag_P2).w                        ; $FFFFFECC
+                ;bne.s   Offset_0x024540
+                ;move.w  #$0001, (Game_Over_2P_Flag).w                ; $FFFFFF98
+                ;move.w  #$0001, (Results_Screen_2P).w                ; $FFFFFF02
+                ;move.w  #$FFFF, (A4)
+                ;tst.b   Obj_Player_One_Or_Two(A0)                        ; $003F
+                ;beq.s   Offset_0x02453C
+                ;addq.w  #$01, A4
+;Offset_0x02453C:
+                ;move.b  #$FE, (A4)
 Offset_0x024540:
                 jmp     (DisplaySprite)                        ; Offset_0x011148                                                            
 ;===============================================================================

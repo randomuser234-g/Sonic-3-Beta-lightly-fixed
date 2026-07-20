@@ -98,11 +98,12 @@ SolidObject_Monitor_Sonic:
 SolidObject_Monitor_Tails:
 		btst	d6,Obj_Status(a0)			; is Tails standing on the monitor?
 		bne.s	Monitors_ChkOverEdge			; if yes, branch
-		tst.w	(Two_Player_Flag).w			; is it two player mode?
-		beq.w	SolidObject_cont			; if not, branch
-		cmpi.b	#2,Obj_Ani_Number(a1)			; is Tails spinning?
-		bne.w	SolidObject_cont			; if not, branch
-		rts
+		bra.w	SolidObject_cont			;don't have two player checks, not used
+		;tst.w	(Two_Player_Flag).w			; is it two player mode?
+		;beq.w	SolidObject_cont			; if not, branch
+		;cmpi.b	#2,Obj_Ani_Number(a1)			; is Tails spinning?
+		;bne.w	SolidObject_cont			; if not, branch
+		;rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x01305A:
 Monitors_ChkOverEdge:

@@ -2546,42 +2546,44 @@ Offset_0x00C58E:
 		bra     Offset_0x00C33A      
 ;-------------------------------------------------------------------------------
 Sonic_Animate_Data:				            ; Offset_0x00C5A4
-		dc.w    Offset_0x00C5EC-Sonic_Animate_Data
-		dc.w    Offset_0x00C5F6-Sonic_Animate_Data
-		dc.w    Offset_0x00C600-Sonic_Animate_Data
-		dc.w    Offset_0x00C60A-Sonic_Animate_Data
-		dc.w    Offset_0x00C614-Sonic_Animate_Data
-		dc.w    Offset_0x00C61E-Sonic_Animate_Data
-		dc.w    Offset_0x00C6D4-Sonic_Animate_Data
-		dc.w    Offset_0x00C6DA-Sonic_Animate_Data
-		dc.w    Offset_0x00C6DF-Sonic_Animate_Data
-		dc.w    Offset_0x00C6E4-Sonic_Animate_Data
-		dc.w    Offset_0x00C6F0-Sonic_Animate_Data
-		dc.w    Offset_0x00C6F4-Sonic_Animate_Data
-		dc.w    Offset_0x00C6F8-Sonic_Animate_Data
-		dc.w    Offset_0x00C6FE-Sonic_Animate_Data
-		dc.w    Offset_0x00C705-Sonic_Animate_Data
-		dc.w    Offset_0x00C709-Sonic_Animate_Data
-		dc.w    Offset_0x00C710-Sonic_Animate_Data
-		dc.w    Offset_0x00C714-Sonic_Animate_Data
-		dc.w    Offset_0x00C718-Sonic_Animate_Data
-		dc.w    Offset_0x00C71E-Sonic_Animate_Data
-		dc.w    Offset_0x00C723-Sonic_Animate_Data
-		dc.w    Offset_0x00C727-Sonic_Animate_Data
-		dc.w    Offset_0x00C72E-Sonic_Animate_Data
-		dc.w    Offset_0x00C731-Sonic_Animate_Data
-		dc.w    Offset_0x00C734-Sonic_Animate_Data
-		dc.w    Offset_0x00C737-Sonic_Animate_Data
-		dc.w    Offset_0x00C737-Sonic_Animate_Data
-		dc.w    Offset_0x00C73A-Sonic_Animate_Data
-		dc.w    Offset_0x00C73E-Sonic_Animate_Data
-		dc.w    Offset_0x00C741-Sonic_Animate_Data
-		dc.w    Offset_0x00C745-Sonic_Animate_Data
-		dc.w    Offset_0x00C7D9-Sonic_Animate_Data
-		dc.w    Offset_0x00C74D-Sonic_Animate_Data
-		dc.w    Offset_0x00C751-Sonic_Animate_Data
-		dc.w    Offset_0x00C755-Sonic_Animate_Data
-		dc.w    Offset_0x00C75F-Sonic_Animate_Data
+		dc.w    Offset_0x00C5EC-Sonic_Animate_Data	;$00
+		dc.w    Offset_0x00C5F6-Sonic_Animate_Data	;$01
+		dc.w    Offset_0x00C600-Sonic_Animate_Data	;$02
+		dc.w    Offset_0x00C60A-Sonic_Animate_Data	;$03
+		dc.w    Offset_0x00C614-Sonic_Animate_Data	;$04
+		dc.w    Offset_0x00C61E-Sonic_Animate_Data	;$05
+		dc.w    Offset_0x00C6D4-Sonic_Animate_Data	;$06
+		dc.w    Offset_0x00C6DA-Sonic_Animate_Data	;$07
+		dc.w    Offset_0x00C6DF-Sonic_Animate_Data	;$08
+		dc.w    Offset_0x00C6E4-Sonic_Animate_Data	;$09
+		dc.w    Offset_0x00C6F0-Sonic_Animate_Data	;$0A
+		dc.w    Offset_0x00C6F4-Sonic_Animate_Data	;$0B
+		dc.w    Offset_0x00C6F8-Sonic_Animate_Data	;$0C
+		dc.w    Offset_0x00C6FE-Sonic_Animate_Data	;$0D
+		dc.w    Offset_0x00C705-Sonic_Animate_Data	;$0E
+		dc.w    Offset_0x00C709-Sonic_Animate_Data	;$0F
+		dc.w    Offset_0x00C710-Sonic_Animate_Data	;$10
+		dc.w    Offset_0x00C714-Sonic_Animate_Data	;$11
+		dc.w    Offset_0x00C718-Sonic_Animate_Data	;$12
+		dc.w    Offset_0x00C71E-Sonic_Animate_Data	;$13
+		dc.w    Offset_0x00C723-Sonic_Animate_Data	;$14
+		dc.w    Offset_0x00C727-Sonic_Animate_Data	;$15
+		dc.w    Offset_0x00C72E-Sonic_Animate_Data	;$16
+		dc.w    Offset_0x00C731-Sonic_Animate_Data	;$17
+		dc.w    Offset_0x00C734-Sonic_Animate_Data	;$18
+		dc.w    Offset_0x00C737-Sonic_Animate_Data	;$19
+		dc.w    Offset_0x00C737-Sonic_Animate_Data	;$1A
+		dc.w    Offset_0x00C73A-Sonic_Animate_Data	;$1B
+		dc.w    Offset_0x00C73E-Sonic_Animate_Data	;$1C
+		dc.w    Offset_0x00C741-Sonic_Animate_Data	;$1D
+		dc.w    Offset_0x00C745-Sonic_Animate_Data	;$1E
+		dc.w    Offset_0x00C7D9-Sonic_Animate_Data	;$1F
+		dc.w    Offset_0x00C74D-Sonic_Animate_Data	;$20
+		dc.w    Offset_0x00C751-Sonic_Animate_Data	;$21
+		dc.w    Offset_0x00C755-Sonic_Animate_Data	;$22	s3 specific animation
+		dc.w    Offset_0x00C75F-Sonic_Animate_Data	;$23	s3 specific animation
+		dc.w    Offset_0x00C73E-Sonic_Animate_Data	;$24	copy paste for tails haul ass
+		dc.w    Offset_0x00C73E-Sonic_Animate_Data	;$25	copy paste for tails fly
 Offset_0x00C5EC:
 		dc.b    $FF, $0F, $10, $11, $12, $13, $14, $0D
 		dc.b    $0E, $FF

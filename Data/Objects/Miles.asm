@@ -294,7 +294,7 @@ Miles_CPU_Flying:                                              ; Offset_0x00D49C
                 move.b  #$02, Obj_Status(A0)                             ; $002A
                 move.w  #$0000, Obj_X(A0)                                ; $0010
                 move.w  #$0000, Obj_Y(A0)                                ; $0014
-                move.b  #$20, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
                 rts
 Offset_0x00D4DA:
                 move.w  #$0000, (Miles_CPU_Respawn_Timer).w          ; $FFFFF704
@@ -394,7 +394,7 @@ Miles_CPU_Normal:                                              ; Offset_0x00D5DC
                 move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
                 move.b  #$81, Obj_Player_Control(A0)                     ; $002E
                 move.b  #$02, Obj_Status(A0)                             ; $002A
-                move.b  #$20, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
                 rts
 Offset_0x00D60A:
                 bsr     Miles_CPU_Check_Despawn                ; Offset_0x00D768
@@ -519,7 +519,7 @@ Miles_CPU_Despawn:                                             ; Offset_0x00D730
                 move.b  #$02, Obj_Status(A0)                             ; $002A
                 move.w  #$4000, Obj_X(A0)                                ; $0010
                 move.w  #$0000, Obj_Y(A0)                                ; $0014
-                move.b  #$20, Obj_Ani_Number(A0)                         ; $0020
+                move.b  #$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
                 move.b  #$00, ($FFFFF668).w
                 rts     
 ;-------------------------------------------------------------------------------  
@@ -847,7 +847,7 @@ Offset_0x00DB90:
                 rts   
 ;-------------------------------------------------------------------------------
 Miles_MdJump:                                                  ; Offset_0x00DB92
-		cmpi.b	#$20,Obj_Ani_Number(a0)
+		cmpi.b	#$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
 		bne.s	Miles_NoFlyPhysics
                 tst.b   (Level_Boundaries_Flag).w                    ; $FFFFF668
                 bne.s   Offset_0x00DBC2
@@ -1590,7 +1590,7 @@ Offset_0x00E382:
 		move.b	#2,(Level_Boundaries_Flag).w
 
 Offset_0x00E394:
-		move.b	#$20,Obj_Ani_Number(a0)
+		move.b	#$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
 Offset_0x00E39A:
 		rts
 ; End of function Tails_TestForFlight
@@ -2329,39 +2329,44 @@ Offset_0x00EBDE:
                 rts       
 ;-------------------------------------------------------------------------------
 Miles_Animate_Data:                                            ; Offset_0x00EC08 
-                dc.w    Offset_0x00EC4A-Miles_Animate_Data
-                dc.w    Offset_0x00EC54-Miles_Animate_Data
-                dc.w    Offset_0x00EC5E-Miles_Animate_Data
-                dc.w    Offset_0x00EC63-Miles_Animate_Data
-                dc.w    Offset_0x00EC68-Miles_Animate_Data
-                dc.w    Offset_0x00EC72-Miles_Animate_Data
-                dc.w    Offset_0x00ECB0-Miles_Animate_Data
-                dc.w    Offset_0x00ECC8-Miles_Animate_Data
-                dc.w    Offset_0x00ECCB-Miles_Animate_Data
-                dc.w    Offset_0x00ECCE-Miles_Animate_Data
-                dc.w    Offset_0x00ECD3-Miles_Animate_Data
-                dc.w    Offset_0x00ECD6-Miles_Animate_Data
-                dc.w    Offset_0x00ECDC-Miles_Animate_Data
-                dc.w    Offset_0x00ECE0-Miles_Animate_Data
-                dc.w    Offset_0x00ECE7-Miles_Animate_Data
-                dc.w    Offset_0x00ECEB-Miles_Animate_Data
-                dc.w    Offset_0x00ECF2-Miles_Animate_Data
-                dc.w    Offset_0x00ED01-Miles_Animate_Data
-                dc.w    Offset_0x00ED05-Miles_Animate_Data
-                dc.w    Offset_0x00ED0B-Miles_Animate_Data
-                dc.w    Offset_0x00ED10-Miles_Animate_Data
-                dc.w    Offset_0x00ED14-Miles_Animate_Data
-                dc.w    Offset_0x00ED1B-Miles_Animate_Data
-                dc.w    Offset_0x00ED1E-Miles_Animate_Data
-                dc.w    Offset_0x00ED21-Miles_Animate_Data
-                dc.w    Offset_0x00ED24-Miles_Animate_Data
-                dc.w    Offset_0x00ED27-Miles_Animate_Data
-                dc.w    Offset_0x00ED2A-Miles_Animate_Data
-                dc.w    Offset_0x00ED2E-Miles_Animate_Data
-                dc.w    Offset_0x00ED31-Miles_Animate_Data
-                dc.w    Offset_0x00ED3B-Miles_Animate_Data
-                dc.w    Offset_0x00ED45-Miles_Animate_Data
-                dc.w    Offset_0x00ED4F-Miles_Animate_Data
+                dc.w    Offset_0x00EC4A-Miles_Animate_Data	;$00
+                dc.w    Offset_0x00EC54-Miles_Animate_Data	;$01
+                dc.w    Offset_0x00EC5E-Miles_Animate_Data	;$02
+                dc.w    Offset_0x00EC63-Miles_Animate_Data	;$03
+                dc.w    Offset_0x00EC68-Miles_Animate_Data	;$04
+                dc.w    Offset_0x00EC72-Miles_Animate_Data	;$05
+                dc.w    Offset_0x00ECB0-Miles_Animate_Data	;$06
+                dc.w    Offset_0x00ECC8-Miles_Animate_Data	;$07
+                dc.w    Offset_0x00ECCB-Miles_Animate_Data	;$08
+                dc.w    Offset_0x00ECCE-Miles_Animate_Data	;$09
+                dc.w    Offset_0x00ECD3-Miles_Animate_Data	;$0A
+                dc.w    Offset_0x00ECD6-Miles_Animate_Data	;$0B
+                dc.w    Offset_0x00ECDC-Miles_Animate_Data	;$0C
+                dc.w    Offset_0x00ECE0-Miles_Animate_Data	;$0D
+                dc.w    Offset_0x00ECE7-Miles_Animate_Data	;$0E
+                dc.w    Offset_0x00ECEB-Miles_Animate_Data	;$0F
+                dc.w    Offset_0x00ECF2-Miles_Animate_Data	;$10
+                dc.w    Offset_0x00ED01-Miles_Animate_Data	;$11
+                dc.w    Offset_0x00ED05-Miles_Animate_Data	;$12
+                dc.w    Offset_0x00ED0B-Miles_Animate_Data	;$13
+                dc.w    Offset_0x00ED10-Miles_Animate_Data	;$14
+                dc.w    Offset_0x00ED14-Miles_Animate_Data	;$15
+                dc.w    Offset_0x00ED1B-Miles_Animate_Data	;$16
+                dc.w    Offset_0x00ED1E-Miles_Animate_Data	;$17
+                dc.w    Offset_0x00ED21-Miles_Animate_Data	;$18
+                dc.w    Offset_0x00ED24-Miles_Animate_Data	;$19
+                dc.w    Offset_0x00ED27-Miles_Animate_Data	;$1A
+                dc.w    Offset_0x00ED2A-Miles_Animate_Data	;$1B
+                dc.w    Offset_0x00ED2E-Miles_Animate_Data	;$1C	;blank
+                dc.w    Offset_0x00ED31-Miles_Animate_Data	;$1D	;dummy3	;balance3
+                dc.w    Offset_0x00ED3B-Miles_Animate_Data	;$1E	;dummy4	;balance4
+                dc.w    Offset_0x00ED31-Miles_Animate_Data	;$1F	;transform
+                dc.w    Offset_0x00ED31-Miles_Animate_Data	;$20	;lying
+                dc.w    Offset_0x00ED31-Miles_Animate_Data	;$21	;liedown
+                dc.w    Offset_0x00ED31-Miles_Animate_Data	;$22	;s3 specific
+                dc.w    Offset_0x00ED31-Miles_Animate_Data	;$23	;s3 specific
+                dc.w    Offset_0x00ED45-Miles_Animate_Data	;$24	haulass
+                dc.w    Offset_0x00ED4F-Miles_Animate_Data	;$25	fly
 Offset_0x00EC4A:
                 dc.b    $FF, $10, $11, $12, $13, $14, $15, $0E
                 dc.b    $0F, $FF
@@ -2746,11 +2751,16 @@ Offset_0x00F060:
                 dc.w    Offset_0x00F109-Offset_0x00F060
                 dc.w    Offset_0x00F109-Offset_0x00F060
                 dc.w    Offset_0x00F10C-Offset_0x00F060
-                dc.w    Offset_0x00F10F-Offset_0x00F060
-                dc.w    Offset_0x00F112-Offset_0x00F060
-                dc.w    Offset_0x00F115-Offset_0x00F060
-                dc.w    Offset_0x00F118-Offset_0x00F060
-                dc.w    Offset_0x00F11E-Offset_0x00F060
+                dc.w    Offset_0x00F10F-Offset_0x00F060	;blank
+                dc.w    Offset_0x00F112-Offset_0x00F060	;dummy3
+                dc.w    Offset_0x00F115-Offset_0x00F060	;dummy4
+                dc.w    Offset_0x00F112-Offset_0x00F060	;transform
+                dc.w    Offset_0x00F112-Offset_0x00F060	;lying
+                dc.w    Offset_0x00F112-Offset_0x00F060	;liedown
+                dc.w    Offset_0x00F112-Offset_0x00F060	;s3 specific
+                dc.w    Offset_0x00F112-Offset_0x00F060	;s3specific
+                dc.w    Offset_0x00F118-Offset_0x00F060	;haulass, was $1F
+                dc.w    Offset_0x00F11E-Offset_0x00F060;$25 fly, was $20
 Offset_0x00F0A2:
                 dc.b    $FF, $01, $02, $03, $02, $FF
 Offset_0x00F0A8:
