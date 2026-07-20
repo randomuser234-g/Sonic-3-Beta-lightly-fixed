@@ -5760,11 +5760,13 @@ Offset_0x004844: ; Sonic 2 Left over modified for MGz act 2 boss
                 move.w  #$0006, (Miles_CPU_Routine).w                ; $FFFFF708
 		move.w	(Obj_Player_One+Obj_X).w,(Obj_Player_Two+Obj_X).w;move to this x coord
 		subi.w	#$18,(Obj_Player_Two+Obj_Y).w				;get him flying
-		move.b	#$20,(Obj_Player_Two+Obj_Ani_Number).w		;flying anim
+		move.b	#$25,(Obj_Player_Two+Obj_Ani_Number).w		;used to be $20, flying anim
+		move.b  #$01, Obj_Ani_Frame(A0)		          ; $0023
 Offset_0x00486E:
 		rts
 Offset_0x004882:
-		move.b	#$20,(Obj_Player_One+Obj_Ani_Number).w		;flying anim
+		move.b	#$25,(Obj_Player_One+Obj_Ani_Number).w		;used to be $20, flying anim
+		move.b  #$01, Obj_Ani_Frame(A0)		          ; $0023
                 rts
 ;-------------------------------------------------------------------------------               
 Run_Demo_Mode:                                                 ; Offset_0x004884
