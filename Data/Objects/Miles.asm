@@ -1444,19 +1444,26 @@ Miles_MarbleGarden:
 ;-------------------------------------------------------------------------------                
 Miles_Roll:                                                    ; Offset_0x00E1D2
                 tst.b   Obj_Player_Status(A0)                            ; $002F
-                bmi.s   Offset_0x00E1F8
+                bmi.s   Miles_NoRoll
+                move.b  (Control_Ports_Logical_Data_2).w, D0         ; $FFFFF66A		;left or right?
+                andi.b  #$0C, D0							;if not pressed, branch
+                bne.s   Miles_NoRoll
+                btst    #$01, (Control_Ports_Logical_Data_2).w       ; $FFFFF66A	;down?
+;                bne.s   Offset_0x00E1FA							;if not, branch
+                beq.w   Sonic_ChkWalk						;if not, branch		
+
+MilesRoll_AfterInputs
                 move.w  Obj_Inertia(A0), D0                              ; $001C
                 bpl.s   Offset_0x00E1E0
                 neg.w   D0
 Offset_0x00E1E0:
-                cmpi.w  #$0080, D0
-                bcs.s   Offset_0x00E1F8
-                move.b  (Control_Ports_Logical_Data_2).w, D0         ; $FFFFF66A
-                andi.b  #$0C, D0
-                bne.s   Offset_0x00E1F8
-                btst    #$01, (Control_Ports_Logical_Data_2).w       ; $FFFFF66A
-                bne.s   Offset_0x00E1FA
-Offset_0x00E1F8:
+                cmpi.w  #$0100, D0
+                bhs.s   Offset_0x00E1FA
+		btst	#3,Obj_Player_Status(a0)
+		bne.s	Miles_NoRoll
+		move.b	#8, Obj_Ani_Number(a0)	; "duck" animation
+;Offset_0x00E1F8:
+Miles_NoRoll:
                 rts
 Offset_0x00E1FA:
                 btst    #$02, Obj_Status(A0)                             ; $002A

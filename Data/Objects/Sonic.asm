@@ -1147,25 +1147,36 @@ Sonic_Boundary_Sides:
 ; ---------------------------------------------------------------------------
 
 ; ||||||||||||||| S U B R O U T I N E |||||||||||||||||||||||||||||||||||||||
-
+;ducking changed to final s3
 ; Offset_0x00B5B6:
 Sonic_Roll:
 		tst.b	Obj_Player_Status(a0)
 		bmi.s	Sonic_NoRoll
+
+		move.b	(Control_Ports_Logical_Data).w,d0 
+		andi.b	#$C,d0					; is left/right being pressed?
+		bne.s	Sonic_NoRoll				; if yes, branch
+		btst	#1,(Control_Ports_Logical_Data).w	; is down being pressed?
+		beq.s	Sonic_ChkWalk				; if not, branch
+
 		move.w	Obj_Inertia(a0),d0
 		bpl.s	Offset_0x00B5C4
 		neg.w	d0
 
 Offset_0x00B5C4:
-		cmpi.w	#$80,d0					; is Sonic moving at $80 speed or faster?
-		bcs.s	Sonic_NoRoll				; if not, branch
-		move.b	(Control_Ports_Logical_Data).w,d0 
-		andi.b	#$C,d0					; is left/right being pressed?
-		bne.s	Sonic_NoRoll				; if yes, branch
-		btst	#1,(Control_Ports_Logical_Data).w	; is down being pressed?
-		bne.s	Sonic_ChkRoll				; if yes, branch
+		cmpi.w	#$100,d0					; is Sonic moving at $100 speed or faster?
+		bhs.s	Sonic_ChkRoll				; if yes, branch
+		btst	#3,Obj_Player_Status(a0)
+		bne.s	Sonic_NoRoll
+		move.b	#8, Obj_Ani_Number(a0)	; "duck" animation
 ; Offset_0x00B5DC:
 Sonic_NoRoll:
+		rts
+; ---------------------------------------------------------------------------
+Sonic_ChkWalk:
+	cmpi.b	#8, Obj_Ani_Number(a0)	; check if "duck" animation
+	bne.s	Sonic_NoRoll			;if yes, branch
+	move.b	#0, Obj_Ani_Number(a0)	; use "walking" animation
 		rts
 ; ---------------------------------------------------------------------------
 ; Offset_0x00B5DE:
@@ -1339,7 +1350,9 @@ Sonic_CheckGoSuper:
 		move.w	#$100,Deceleration(a4)
 		move.b	#$0,Obj_P_Invcbility_Time(a0)
 		bset	#1,Obj_Player_Status(a0)
-		move.w	#44,d0
+		;move.w	#Super_Form_Change_Sfx,d0
+		;jsr	(Play_Music).l
+		moveq	#Invincibility_Snd,d0
 		jmp	(Play_Music).l
 
 Offset_0x00B7B6:
