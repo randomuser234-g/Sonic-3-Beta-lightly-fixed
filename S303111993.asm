@@ -3339,7 +3339,10 @@ PalCycle_SuperSonic:                                           ; Offset_0x002AB8
                 addq.w  #$08, (Super_Sonic_Palette_Frame).w          ; $FFFFF65C
                 cmpi.w  #$0030, (Super_Sonic_Palette_Frame).w        ; $FFFFF65C
                 bcs.s   Offset_0x002AF4
-                move.b  #$FF, (Super_Sonic_Palette_Status).w         ; $FFFFF65F
+		;moveq	#Invincibility_Snd,d0
+		;jsr	(Play_Music).l
+                ;move.w  (Super_Sonic_Palette_Frame).w, D0            ; $FFFFF65C	;move back into d0
+                move.b  #$FF, (Super_Sonic_Palette_Status).w         ; $FFFFF65F	;done with super
                 move.b  #$00, (Obj_Player_One+Obj_Timer).w           ; $FFFFB02E
 Offset_0x002AF4:
                 lea     (Palette_Row_0_Offset+$04).w, A1             ; $FFFFED04
@@ -6051,8 +6054,7 @@ SignpostUpdateTailsBounds:
 		rts
 ; Offset_0x004BE8 Exit_S2_Check_End_Level_Art_Load:
 SignpostUpdateEnd:
-		jsr	Menu_Game_Reset
-		rts
+		jmp	Menu_Game_Reset
 ; End of function CheckLoadSignpostArt
 
 ;===============================================================================
@@ -8233,55 +8235,56 @@ Offset_0x007FA8:
                 dbra    D6, Offset_0x007F92
                 rts    
 ;-------------------------------------------------------------------------------
-S2_HUD_Level_Results: 
+;removed s2 leftover
+;S2_HUD_Level_Results: 
 ; HUD_Draw_Four_Digit_Number:                                  ; Offset_0x007FDE
-                lea     (HUD_Val_001000), A2                   ; Offset_0x007F6A
-                moveq   #$03, D6
-                moveq   #$00, D4
-                lea     HUD_Art_Numbers(PC), A1                ; Offset_0x0080BA
-Offset_0x007FEC:
-                moveq   #$00, D2
-                move.l  (A2)+, D3
-Offset_0x007FF0:
-                sub.l   D3, D1
-                bcs.s   Offset_0x007FF8
-                addq.w  #$01, D2
-                bra.s   Offset_0x007FF0
-Offset_0x007FF8:
-                add.l   D3, D1
-                tst.w   D2
-                beq.s   Offset_0x008002
-                move.w  #$0001, D4
-Offset_0x008002:
-                tst.w   D4
-                beq.s   Offset_0x008032
-                lsl.w   #$06, D2
-                lea     $00(A1, D2), A3
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-                move.l  (A3)+, (A6)
-Offset_0x00802C:
-                dbra    D6, Offset_0x007FEC
-                rts
-Offset_0x008032:
-                moveq   #$0F, D5
-Offset_0x008034:
-                move.l  #$00000000, (A6)
-                dbra    D5, Offset_0x008034
-                bra.s   Offset_0x00802C    
+                ;lea     (HUD_Val_001000), A2                   ; Offset_0x007F6A
+                ;moveq   #$03, D6
+                ;moveq   #$00, D4
+                ;lea     HUD_Art_Numbers(PC), A1                ; Offset_0x0080BA
+;Offset_0x007FEC:
+                ;moveq   #$00, D2
+                ;move.l  (A2)+, D3
+;Offset_0x007FF0:
+                ;sub.l   D3, D1
+                ;bcs.s   Offset_0x007FF8
+                ;addq.w  #$01, D2
+                ;bra.s   Offset_0x007FF0
+;Offset_0x007FF8:
+                ;add.l   D3, D1
+                ;tst.w   D2
+                ;beq.s   Offset_0x008002
+                ;move.w  #$0001, D4
+;Offset_0x008002:
+                ;tst.w   D4
+                ;beq.s   Offset_0x008032
+                ;lsl.w   #$06, D2
+                ;lea     $00(A1, D2), A3
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+                ;move.l  (A3)+, (A6)
+;Offset_0x00802C:
+                ;dbra    D6, Offset_0x007FEC
+                ;rts
+;Offset_0x008032:
+                ;moveq   #$0F, D5
+;Offset_0x008034:
+                ;move.l  #$00000000, (A6)
+                ;dbra    D5, Offset_0x008034
+                ;bra.s   Offset_0x00802C    
 ;-------------------------------------------------------------------------------   
 HUD_Lives_P2:                                                  ; Offset_0x008040
                 move.l  #$5FA00003, D0
