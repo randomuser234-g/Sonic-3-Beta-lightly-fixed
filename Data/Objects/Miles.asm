@@ -294,7 +294,7 @@ Miles_CPU_Flying:                                              ; Offset_0x00D49C
                 move.b  #$02, Obj_Status(A0)                             ; $002A
                 move.w  #$0000, Obj_X(A0)                                ; $0010
                 move.w  #$0000, Obj_Y(A0)                                ; $0014
-                move.b  #$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
+		jsr	Miles_FlyAnim
                 rts
 Offset_0x00D4DA:
                 move.w  #$0000, (Miles_CPU_Respawn_Timer).w          ; $FFFFF704
@@ -394,7 +394,7 @@ Miles_CPU_Normal:                                              ; Offset_0x00D5DC
                 move.w  #$0000, Obj_Player_Spdsh_Cnt(A0)                 ; $003E
                 move.b  #$81, Obj_Player_Control(A0)                     ; $002E
                 move.b  #$02, Obj_Status(A0)                             ; $002A
-                move.b  #$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
+ 		jsr	Miles_FlyAnim
                 rts
 Offset_0x00D60A:
                 bsr     Miles_CPU_Check_Despawn                ; Offset_0x00D768
@@ -519,7 +519,7 @@ Miles_CPU_Despawn:                                             ; Offset_0x00D730
                 move.b  #$02, Obj_Status(A0)                             ; $002A
                 move.w  #$4000, Obj_X(A0)                                ; $0010
                 move.w  #$0000, Obj_Y(A0)                                ; $0014
-                move.b  #$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
+		jsr	Miles_FlyAnim
                 move.b  #$00, ($FFFFF668).w
                 rts     
 ;-------------------------------------------------------------------------------  
@@ -881,11 +881,11 @@ Offset_0x00DBC2:
                 move.w  (Control_Ports_Buffer_Data).w, D0            ; $FFFFF604
                 bsr     Offset_0x00D8C6
 Offset_0x00DBFC:
-		btst	#1,(Control_Ports_Logical_Data_2).w	; is down being pressed?
-		bne.s	Miles_FlightCancel				; if yes, branch
-                rts
-Miles_FlightCancel:
-		move.b	#2,Obj_Ani_Number(a0)		;rolling animation
+		;btst	#1,(Control_Ports_Logical_Data_2).w	; is down being pressed?
+		;bne.s	Miles_FlightCancel				; if yes, branch
+                ;rts
+;Miles_FlightCancel:
+		;move.b	#2,Obj_Ani_Number(a0)		;rolling animation
 		rts
 
 ; ===========================================================================
@@ -899,6 +899,7 @@ Miles_FlightCancel:
 
 ; Offset_0x00DBFE:
 Tails_StartFlying:
+		jsr	Miles_FlyAnim
 		cmpi.b	#1,(Level_Boundaries_Flag).w
 		bne.s	Offset_0x00DC3E
 		move.b	(Control_Ports_Logical_Data_2+1).w,d0
@@ -921,6 +922,15 @@ Offset_0x00DC28:
 
 Offset_0x00DC3C:
                 rts
+Miles_FlyAnim:
+		move.b	#$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
+		;move.b	(Level_Frame_Count+1).w,d0		;commented out code, prototype sound driver can't keep up and mutes the sound most of the time
+		;addq.b	#8,d0
+		;andi.b	#$F,d0
+		;bne.s	Offset_0x00DC3C
+		;move.w	#Flying_Sfx,d0				;tails flying sound		
+		;jmp	(Play_Music).l
+		rts
 ; ---------------------------------------------------------------------------
 
 Offset_0x00DC3E:
@@ -1439,7 +1449,7 @@ Offset_0x00E1BA:
                 bra.s   Offset_0x00E1A4      
 		rts
 Miles_MarbleGarden:
-		jsr	Offset_0x004844		;
+		jsr	Offset_0x004844		;Players_MarbleGarden
 		rts
 ;-------------------------------------------------------------------------------                
 Miles_Roll:                                                    ; Offset_0x00E1D2
@@ -1597,7 +1607,7 @@ Offset_0x00E382:
 		move.b	#2,(Level_Boundaries_Flag).w
 
 Offset_0x00E394:
-		move.b	#$25, Obj_Ani_Number(A0)                         ; $0020	used to be $20, flying
+		jsr	Miles_FlyAnim
 Offset_0x00E39A:
 		rts
 ; End of function Tails_TestForFlight
@@ -2872,7 +2882,7 @@ Offset_0x00F17C:
                 jsr     (DMA_68KtoVRAM)                        ; Offset_0x0012FC
                 dbra    D5, Offset_0x00F17C
 Offset_0x00F1A4:
-                rts                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                rts
 ;===============================================================================
 ; Objeto Miles
 ; <<<-  

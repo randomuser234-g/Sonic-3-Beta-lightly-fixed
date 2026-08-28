@@ -599,6 +599,7 @@ Offset_0x035392:
                 move.b  #$09, Obj_Map_Id(A0)                             ; $0022
                 move.w  #$0200, Obj_Speed_X(A0)                          ; $0018
                 move.w  #$FF00, Obj_Speed_Y(A0)                          ; $001A
+		jsr	LevelResults_SkipRoutine		;spawn Obj_LevelResults
                 rts     
 ;-------------------------------------------------------------------------------
 Offset_0x0353B2:

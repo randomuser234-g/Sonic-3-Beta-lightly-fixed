@@ -299,12 +299,14 @@ Offset_0x0437D8:
 ;-------------------------------------------------------------------------------                
 Offset_0x0437EE:                
                 move.b  #$1A, Obj_Ani_Number(A1)                         ; $0020
-                move.b  D0, Obj_Routine(A0)                              ; $0005
                 move.b  #$81, Obj_Timer(A1)                              ; $002E
                 clr.b   Obj_Control_Var_0D(A1)                           ; $003D
                 clr.w   Obj_Speed_X(A1)                                  ; $0018
                 clr.w   Obj_Speed_Y(A1)                                  ; $001A
                 clr.w   Obj_Inertia(A1)                                  ; $001C
+No_Pose_Load_Level_Results:
+                move.b  D0, Obj_Routine(A0)                              ; $0005
+LevelResults_SkipRoutine:
                 jsr     (AllocateObject)                     ; Offset_0x011DD8
                 bne.s   Offset_0x04381C
                 move.l  #Obj_LevelResults, (A1)               ; Offset_0x0247D0
@@ -320,11 +322,11 @@ Set_End_Pose_And_Load_Level_Results:                           ; Offset_0x04381E
 Offset_0x04382C:
                 subq.w  #$01, Obj_Timer(A0)                              ; $002E
                 bpl     Offset_0x043558
+                move.w  #$FF00, Obj_Speed_X(A0)                          ; $0018
                 lea     (Obj_Player_One).w, A1                       ; $FFFFB000
                 btst    #$01, Obj_Status(A1)                             ; $002A
-                bne     Offset_0x043558
-                move.w  #$FF00, Obj_Speed_X(A0)                          ; $0018
-                bra.s   Offset_0x0437EE         
+                beq     Offset_0x0437EE
+                bra.s   No_Pose_Load_Level_Results
 ;-------------------------------------------------------------------------------
 Offset_0x04384A:
                 move.w  D2, D5

@@ -154,8 +154,7 @@ Offset_0x03B1DC:
 Offset_0x03B20E:
                 clr.b   (Boss_Flag).w                                ; $FFFFF7AA
                 jsr     After_Boss_Clean_Up(PC)                ; Offset_0x041ACA
-                jsr     (AllocateObject)                     ; Offset_0x011DD8
-                move.l  #Obj_LevelResults, (A1)             ; Offset_0x0311BC
+		jsr	LevelResults_SkipRoutine		;spawn Obj_LevelResults
                 jmp     Go_Delete_Object_A0_2(PC)              ; Offset_0x042D4C    
 ;-------------------------------------------------------------------------------
 Offset_0x03B220:
