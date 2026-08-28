@@ -271,6 +271,8 @@ Got_Water_Shield_Sfx     equ $003F
 Got_Lightning_Shield_Sfx equ $0041
 Fire_Shield_Sfx          equ $0043
 Hyper_Form_Change_Sfx    equ $0046
+Flying_Sfx		 equ $0048
+Tired_Sfx		 equ $0049
 Grab_Sfx                 equ $004A
 Waterfall_Splash_Sfx     equ $004F
 Projectile_Sfx           equ $0051

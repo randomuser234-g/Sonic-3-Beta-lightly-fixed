@@ -5749,6 +5749,7 @@ Offset_0x004842:
                 rts
 ;-------------------------------------------------------------------------------  
 Offset_0x004844: ; Sonic 2 Left over modified for MGz act 2 boss
+;Players_MarbleGarden
 		cmpi.b	#6,(Obj_Player_One+Obj_Routine).w	; is the player dead?
 		bcc.s	Offset_0x00486E		; if yes, branch
 		move.b	#2,Obj_Routine(a0)
@@ -10772,7 +10773,26 @@ Touch_Enemy:                                                   ; Offset_0x00A314
                 cmpi.b  #$09, Obj_Ani_Number(A0)                         ; $0020
                 beq.s   Offset_0x00A32E
                 cmpi.b  #$02, Obj_Ani_Number(A0)                         ; $0020
-                bne     Touch_Enemy_Hurt                       ; Offset_0x00A3E4
+                beq.s   Offset_0x00A32E                       ; Offset_0x00A3E4
+		cmpi.b	#1,Obj_Player_Selected(a0)			; Is player Tails?	;character_id
+		beq.s	Touch_MilesEnemy				; If yes, branch
+		bra.w	Touch_Enemy_Hurt
+
+Touch_MilesEnemy:
+		tst.b	(Level_Boundaries_Flag).w			; Is Tails flying ("gravity-affected")?	;double_jump_flag
+		beq.w	Touch_Enemy_Hurt				; If not, branch
+		btst	#6,Obj_Status(a0)		; Is Tails underwater?
+		bne.w	Touch_Enemy_Hurt				; If not, branch
+		move.w	Obj_X(a0),d1
+		move.w	Obj_Y(a0),d2
+		sub.w	Obj_X(a1),d1
+		sub.w	Obj_Y(a1),d2		;x_pos,y_pos
+		jsr	(CalcAngle).l		;GetArcTan
+		subi.b	#$20,d0
+		cmpi.b	#$40,d0
+		bhs.w	Touch_Enemy_Hurt
+
+
 Offset_0x00A32E:
                 tst.b   Obj_Col_Prop(A1)                                 ; $0029
                 beq.s   Touch_Enemy_Normal                     ; Offset_0x00A35A
