@@ -5758,19 +5758,22 @@ Offset_0x004844: ; Sonic 2 Left over modified for MGz act 2 boss
 		;move.w	#$3C90,Obj_X(a0)			;move to this x coord
 		move.w	#$0760,Obj_Y(a0)
 		bset	#1,Obj_Status(a0)
-		move.b	#1,(Level_Boundaries_Flag).w		;flying status
+		bclr	#2,Obj_Status(a0)
+		bclr	#3,Obj_Status(a0)
+		move.b	#1,Obj_Ani_Flag(a0)		;force animation restart
+		move.b	#0,Obj_Ani_Number(a0)		;walk animation
                 cmpi.w  #Miles_Alone, (Player_Selected_Flag).w  ; is this tails alone game?
                 beq.s   Offset_0x004882				;if yes, branch
                 move.w  #$0006, (Miles_CPU_Routine).w                ; $FFFFF708
 		move.w	(Obj_Player_One+Obj_X).w,(Obj_Player_Two+Obj_X).w;move to this x coord
 		subi.w	#$18,(Obj_Player_Two+Obj_Y).w				;get him flying
 		move.b	#$25,(Obj_Player_Two+Obj_Ani_Number).w		;used to be $20, flying anim
-		move.b  #$01, Obj_Ani_Frame(A0)		          ; $0023
+		move.b	#1,(Level_Boundaries_Flag).w		;flying status
 Offset_0x00486E:
 		rts
 Offset_0x004882:
 		move.b	#$25,(Obj_Player_One+Obj_Ani_Number).w		;used to be $20, flying anim
-		move.b  #$01, Obj_Ani_Frame(A0)		          ; $0023
+		move.b	#1,(Level_Boundaries_Flag).w		;flying status
                 rts
 ;-------------------------------------------------------------------------------               
 Run_Demo_Mode:                                                 ; Offset_0x004884
