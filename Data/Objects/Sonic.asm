@@ -1128,8 +1128,10 @@ Sonic_Boundary_Bottom:
 		jmp	(Kill_Player).l
 Sonic_MarbleGarden:
 		jsr	Offset_0x004844		;MGZ2 boss function
-		lea	(Obj_Player_Two).w,a0
+		movem.l	d0-a6,-(sp)		;back up registers
+		lea	(Obj_Player_Two).w,a0	;p2
 		jsr	Offset_0x004844
+		movem.l	(sp)+,d0-a6		;restore
 		rts
 ; ===========================================================================
 ; Offset_0x00B59E:
@@ -2697,38 +2699,44 @@ Offset_0x00C75F:
 		dc.b    $00
 ;-------------------------------------------------------------------------------
 Super_Sonic_Animate_Data:				      ; Offset_0x00C768
-		dc.w    Offset_0x00C7A8-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C7B2-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C600-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C60A-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C7BC-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C7C6-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C7CC-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C6DA-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C7D6-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C6E4-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C6F0-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C6F4-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C6F8-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C6FE-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C705-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C709-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C710-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C714-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C718-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C71E-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C723-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C727-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C72E-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C731-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C734-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C737-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C737-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C73A-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C73E-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C741-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C745-Super_Sonic_Animate_Data
-		dc.w    Offset_0x00C7D9-Super_Sonic_Animate_Data
+		dc.w    Offset_0x00C7A8-Super_Sonic_Animate_Data	;0
+		dc.w    Offset_0x00C7B2-Super_Sonic_Animate_Data	;1
+		dc.w    Offset_0x00C600-Super_Sonic_Animate_Data	;2
+		dc.w    Offset_0x00C60A-Super_Sonic_Animate_Data	;3
+		dc.w    Offset_0x00C7BC-Super_Sonic_Animate_Data	;4
+		dc.w    Offset_0x00C7C6-Super_Sonic_Animate_Data	;5
+		dc.w    Offset_0x00C7CC-Super_Sonic_Animate_Data	;6
+		dc.w    Offset_0x00C6DA-Super_Sonic_Animate_Data	;7
+		dc.w    Offset_0x00C7D6-Super_Sonic_Animate_Data	;8
+		dc.w    Offset_0x00C6E4-Super_Sonic_Animate_Data	;9
+		dc.w    Offset_0x00C6F0-Super_Sonic_Animate_Data	;A
+		dc.w    Offset_0x00C6F4-Super_Sonic_Animate_Data	;B
+		dc.w    Offset_0x00C6F8-Super_Sonic_Animate_Data	;C
+		dc.w    Offset_0x00C6FE-Super_Sonic_Animate_Data	;D
+		dc.w    Offset_0x00C705-Super_Sonic_Animate_Data	;E
+		dc.w    Offset_0x00C709-Super_Sonic_Animate_Data	;F
+		dc.w    Offset_0x00C710-Super_Sonic_Animate_Data	;10
+		dc.w    Offset_0x00C714-Super_Sonic_Animate_Data	;11
+		dc.w    Offset_0x00C718-Super_Sonic_Animate_Data	;12
+		dc.w    Offset_0x00C71E-Super_Sonic_Animate_Data	;13
+		dc.w    Offset_0x00C723-Super_Sonic_Animate_Data	;14
+		dc.w    Offset_0x00C727-Super_Sonic_Animate_Data	;15
+		dc.w    Offset_0x00C72E-Super_Sonic_Animate_Data	;16
+		dc.w    Offset_0x00C731-Super_Sonic_Animate_Data	;17
+		dc.w    Offset_0x00C734-Super_Sonic_Animate_Data	;18
+		dc.w    Offset_0x00C737-Super_Sonic_Animate_Data	;19
+		dc.w    Offset_0x00C737-Super_Sonic_Animate_Data	;1A
+		dc.w    Offset_0x00C73A-Super_Sonic_Animate_Data	;1B
+		dc.w    Offset_0x00C73E-Super_Sonic_Animate_Data	;1C
+		dc.w    Offset_0x00C741-Super_Sonic_Animate_Data	;1D
+		dc.w    Offset_0x00C745-Super_Sonic_Animate_Data	;1E
+		dc.w    Offset_0x00C7D9-Super_Sonic_Animate_Data	;1F
+		dc.w    Offset_0x00C74D-Sonic_Animate_Data		;$20	;lying
+		dc.w    Offset_0x00C751-Sonic_Animate_Data		;$21	;lie down
+		dc.w    Offset_0x00C755-Sonic_Animate_Data		;$22	s3 specific animation
+		dc.w    Offset_0x00C75F-Sonic_Animate_Data		;$23	s3 specific animation
+		dc.w    Offset_0x00C73E-Super_Sonic_Animate_Data	;$24	copy paste for tails haul ass
+		dc.w    Offset_0x00C73E-Super_Sonic_Animate_Data	;$25	copy paste for tails fly
 Offset_0x00C7A8:
 		dc.b    $FF, $77, $78, $79, $7A, $7B, $7C, $75
 		dc.b    $76, $FF

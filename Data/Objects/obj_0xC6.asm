@@ -168,15 +168,15 @@ Offset_0x04364C:
                 move.w  D0, A1
                 tst.w   Obj_Speed_Y(A1)                                  ; $001A
                 bpl.s   Offset_0x043676
-                cmpi.b  #$02, Obj_Ani_Number(A1)                         ; $0020
-                beq.s   Offset_0x043688
+                cmpi.b  #$02, Obj_Ani_Number(A1)                         ; $0020	;rolling?
+                beq.s   Offset_0x043688					;if yes, coontinue
 Offset_0x043676:
                 swap.w  D0
                 move.w  D0, A1
                 tst.w   Obj_Speed_Y(A1)                                  ; $001A
                 bpl.s   Offset_0x04369C
-                cmpi.b  #$02, Obj_Ani_Number(A1)                         ; $0020
-                bne.s   Offset_0x04369C
+                ;cmpi.b  #$02, Obj_Ani_Number(A1)                         ; $0020	;remove check
+                ;bne.s   Offset_0x04369C
 Offset_0x043688:
                 move.l  #Offset_0x0436A8, (A0)
                 subq.b  #$08, Obj_Control_Var_13(A0)                     ; $0043
